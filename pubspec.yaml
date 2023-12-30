@@ -65,6 +65,41 @@ flutter:
     - assets/menu.svg
     - assets/call.svg
     - assets/hotel.png
+    - assets/filtr.svg
+    - assets/sea.png
+    - assets/time1.svg
+    - assets/time12.svg
+    - assets/time24.svg
+    - assets/stars.svg
+    - assets/tv.svg
+    - assets/food.svg
+    - assets/bathrobe.svg
+    - assets/bar.svg
+    - assets/cleaning.svg
+    - assets/payment.svg
+    - assets/parking.svg
+    - assets/wi-fi.svg
+    - assets/hotel2.png
+    - assets/Icon_hotels.svg
+    - assets/Icon_rooms.svg
+    - assets/Icon_interiors.svg
+    - assets/Map.png
+    - assets/logo2.svg
+    - assets/wa.svg
+    - assets/tg.svg
+    - assets/viber.svg
+    - assets/vk.svg
+    - assets/right.svg
+    - assets/left.svg
+    - assets/mark.svg
+    - assets/loc.svg
+    - assets/infr.svg
+    - assets/number.svg
+    - assets/iconFood.svg
+    - assets/1.png
+    - assets/2.png
+    - assets/3.png
+    - assets/4.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
