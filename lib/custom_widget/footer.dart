@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../page/about_us.dart';
 import '../palette.dart';
 
 Widget Footer(context){
@@ -449,7 +450,12 @@ Widget Footer(context){
                   children: [
                     TextButton(
                         onPressed: () {
-
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => const AboutUs(),
+                            ),
+                          );
                         },
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,

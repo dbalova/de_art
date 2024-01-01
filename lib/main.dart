@@ -115,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           'Четыре великолепных бутик-отеля «Де-Арт 13» рассчитаны на небольшое количество постояльцев, которым предлагаются номера с уникальными, продуманными до мелочей интерьерами.',
                           style: TextStyle(fontSize: 15, color: Colors.white),
                         ),
-                        button(
+                        RedButton(
                             Color.fromRGBO(255, 255, 255, 1),
                             "Бронировать",
                             Color.fromRGBO(114, 40, 57, 1),
@@ -526,7 +526,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 SvgPicture.asset(
                                   'assets/stars.svg',
                                 ),
-                                button(Palette().red, "Бронировать",
+                                RedButton(Palette().red, "Бронировать",
                                     Palette().white, 15, FontWeight.normal),
                               ],
                             )),
@@ -535,7 +535,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
           ),
-          button(Palette().red, "Все номера", Palette().white, 15,
+          RedButton(Palette().red, "Все номера", Palette().white, 15,
               FontWeight.bold),
           Padding(
               padding:
@@ -783,7 +783,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Padding(
                       padding: EdgeInsets.only(
                           top: 24, bottom: 12, left: 12, right: 12),
-                      child: button(Palette().red, "Посмотреть номера",
+                      child: RedButton(Palette().red, "Посмотреть номера",
                           Colors.white, 13, FontWeight.bold)),
                 ],
               )
@@ -918,7 +918,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Padding(
                       padding: EdgeInsets.only(
                           top: 24, bottom: 12, left: 12, right: 12),
-                      child: button(Palette().red, "Посмотреть номера",
+                      child: RedButton(Palette().red, "Посмотреть номера",
                           Colors.white, 13, FontWeight.bold)),
                 ],
               )
@@ -1053,7 +1053,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Padding(
                       padding: EdgeInsets.only(
                           top: 24, bottom: 12, left: 12, right: 12),
-                      child: button(Palette().red, "Посмотреть номера",
+                      child: RedButton(Palette().red, "Посмотреть номера",
                           Colors.white, 13, FontWeight.bold)),
                 ],
               )
@@ -1188,7 +1188,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Padding(
                       padding: EdgeInsets.only(
                           top: 24, bottom: 12, left: 12, right: 12),
-                      child: button(Palette().red, "Посмотреть номера",
+                      child: RedButton(Palette().red, "Посмотреть номера",
                           Colors.white, 13, FontWeight.bold)),
                 ],
               )

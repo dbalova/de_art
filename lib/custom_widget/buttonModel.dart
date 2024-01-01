@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-Widget button(Color _color,String _text,Color _textColor, double _sizeText, FontWeight _weightText){
+Widget RedButton(Color _color,String _text,Color _textColor, double _sizeText, FontWeight _weightText){
   return Container(
     padding: EdgeInsets.only(top: 15, bottom: 15,left: 24,right: 24),
     decoration: BoxDecoration(
