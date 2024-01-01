@@ -1,3 +1,4 @@
+import 'package:de_art/page/rules_of_accommodation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -489,7 +490,14 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => const RulesOfAccommodation(),
+                            ),
+                          );
+                        },
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,

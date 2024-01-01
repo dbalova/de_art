@@ -88,6 +88,12 @@ flutter:
     - assets/Icon_Djakuzi.svg
     - assets/Kamin.svg
     - assets/Icon_Matras.svg
+    - assets/IconBreakRoom.svg
+    - assets/IconFireExtinguisher.svg
+    - assets/IconLightOff.svg
+    - assets/IconPencilNote.svg
+    - assets/IconPeople.svg
+    - assets/IconTimeToPay.svg
     - assets/Icon_Calendar.svg
     - assets/Icon_dollar_down.svg
     - assets/Icon_interiors.svg
