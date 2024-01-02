@@ -93,9 +93,33 @@ flutter:
     - assets/IconLightOff.svg
     - assets/IconHuman.svg
     - assets/IconBus.svg
+    - assets/IconClock.svg
+    - assets/IconTelegram.svg
+    - assets/IconViber.svg
+    - assets/IconVK.svg
+    - assets/IconWhatsApp.svg
+    - assets/Icon_Air.svg
     - assets/IconPencilNote.svg
     - assets/IconPeople.svg
     - assets/IconTimeToPay.svg
+    - assets/IconBath.svg
+    - assets/IconBathMassage.svg
+    - assets/IconBed.svg
+    - assets/IconChair.svg
+    - assets/IconReceptionHelp.svg
+    - assets/IconTV.svg
+    - assets/IconBar.svg
+    - assets/IconBathrobe.svg
+    - assets/IconCleaning.svg
+    - assets/IconDish.svg
+    - assets/IconParking.svg
+    - assets/IconTelevision.svg
+    - assets/IconWallet.svg
+    - assets/IconWIFI.svg
+    - assets/IconBEST.svg
+    - assets/IconCarWash.svg
+    - assets/IconAB.svg
+    - assets/IconCH.svg
     - assets/Icon_Calendar.svg
     - assets/Icon_dollar_down.svg
     - assets/Icon_interiors.svg
