@@ -91,6 +91,8 @@ flutter:
     - assets/IconBreakRoom.svg
     - assets/IconFireExtinguisher.svg
     - assets/IconLightOff.svg
+    - assets/IconHuman.svg
+    - assets/IconBus.svg
     - assets/IconPencilNote.svg
     - assets/IconPeople.svg
     - assets/IconTimeToPay.svg

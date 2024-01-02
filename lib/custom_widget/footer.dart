@@ -1,3 +1,5 @@
+import 'package:de_art/custom_widget/testTabBar.dart';
+import 'package:de_art/page/contacts.dart';
 import 'package:de_art/page/rules_of_accommodation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -468,7 +470,14 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => const Contacts(),
+                            ),
+                          );
+                        },
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -530,7 +539,14 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => const TabBarExample(),
+                            ),
+                          );
+                        },
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
