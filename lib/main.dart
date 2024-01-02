@@ -1,5 +1,9 @@
 import 'package:de_art/custom_widget/buttonModel.dart';
+
 import 'package:de_art/page/select_hotel.dart';
+
+import 'package:de_art/page/room_page.dart';
+
 import 'package:de_art/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -793,8 +797,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   Padding(
                       padding: EdgeInsets.only(
                           top: 24, bottom: 12, left: 12, right: 12),
-                      child: RedButton(Palette().red, "Посмотреть номера",
-                          Colors.white, 13, FontWeight.bold)),
+                      child: GestureDetector(
+                        onTap: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => const RoomPage(),
+                            ),
+                          );
+                        },
+                        child: RedButton(Palette().red, "Посмотреть номера",
+                            Colors.white, 13, FontWeight.bold),
+                      )),
                 ],
               )
             ],
