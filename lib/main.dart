@@ -1,4 +1,5 @@
 import 'package:de_art/custom_widget/buttonModel.dart';
+import 'package:de_art/page/reviews_page.dart';
 
 import 'package:de_art/page/select_hotel.dart';
 
@@ -13,7 +14,11 @@ import 'custom_widget/footer.dart';
 void main() {
   runApp(const MyApp());
 }
-
+bool? _isJacuzzi;
+bool? _isParcking;
+bool? _isBar;
+List<bool> _typeRoom = [false,false,false];
+List<bool> _cost = [false,false,false];
 List<bool> _metro = [false, false, false, false];
 List<bool> _time = [
   false,
@@ -148,7 +153,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
           ),
-          Column(
+         Container(
+             padding: EdgeInsets.only(left: 8,right: 8),
+
+             child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.asset("assets/Map.png"),
               Padding(
@@ -168,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                   )),
               Text("Метро:", style: TextStyle(fontWeight: FontWeight.bold)),
-              Wrap(
+              Row(
                 children: [
                   GestureDetector(
                       onTap: () {
@@ -184,7 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(100)),
                               color: _metro[0]
-                                  ? Colors.yellowAccent
+                                  ? Palette().yellow
                                   : Colors.grey.shade300),
                           child: Text('Профсоюзная'))),
                   GestureDetector(
@@ -201,7 +210,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(100)),
                               color: _metro[1]
-                                  ? Colors.yellowAccent
+                                  ?Palette().yellow
                                   : Colors.grey.shade300),
                           child: Text('Таганская'))),
                   GestureDetector(
@@ -218,30 +227,34 @@ class _MyHomePageState extends State<MyHomePage> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(100)),
                               color: _metro[2]
-                                  ? Colors.yellowAccent
+                                  ? Palette().yellow
                                   : Colors.grey.shade300),
                           child: Text('Новокосино'))),
-                  GestureDetector(
-                      onTap: () {
-                        _metro[3] = !_metro[3];
-                        setState(() {});
-                      },
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 8, bottom: 8, left: 4, right: 4),
-                          padding: EdgeInsets.only(
-                              top: 10, bottom: 10, left: 12, right: 12),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(100)),
-                              color: _metro[3]
-                                  ? Colors.yellowAccent
-                                  : Colors.grey.shade300),
-                          child: Text('Текстильщики'))),
+
                 ],
               ),
+             Align(
+                 alignment: Alignment.centerLeft,
+                 child: GestureDetector(
+                  onTap: () {
+                    _metro[3] = !_metro[3];
+                    setState(() {});
+                  },
+                  child: Container(
+
+                      margin: EdgeInsets.only(
+                          top: 8, bottom: 8, left: 4, right: 4),
+                      padding: EdgeInsets.only(
+                          top: 10, bottom: 10, left: 12, right: 12),
+                      decoration: BoxDecoration(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(100)),
+                          color: _metro[3]
+                              ? Palette().yellow
+                              : Colors.grey.shade300),
+                      child: Text('Текстильщики')))),
               Text("Время:", style: TextStyle(fontWeight: FontWeight.bold)),
-              Wrap(
+              Row(
                 children: [
                   GestureDetector(
                       onTap: () {
@@ -257,7 +270,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(100)),
                               color: _time[0]
-                                  ? Colors.yellowAccent
+                                  ? Palette().yellow
                                   : Colors.grey.shade300),
                           child: Text('От 1 часа'))),
                   GestureDetector(
@@ -274,7 +287,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(100)),
                               color: _time[1]
-                                  ? Colors.yellowAccent
+                                  ? Palette().yellow
                                   : Colors.grey.shade300),
                           child: Text('От 2 часов'))),
                   GestureDetector(
@@ -291,9 +304,13 @@ class _MyHomePageState extends State<MyHomePage> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(100)),
                               color: _time[2]
-                                  ? Colors.yellowAccent
+                                  ? Palette().yellow
                                   : Colors.grey.shade300),
                           child: Text('От 3 часов'))),
+
+                ],
+              ),Row(
+                children: [
                   GestureDetector(
                       onTap: () {
                         _time[3] = !_time[3];
@@ -306,9 +323,9 @@ class _MyHomePageState extends State<MyHomePage> {
                               top: 10, bottom: 10, left: 12, right: 12),
                           decoration: BoxDecoration(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(100)),
+                              BorderRadius.all(Radius.circular(100)),
                               color: _time[3]
-                                  ? Colors.yellowAccent
+                                  ? Palette().yellow
                                   : Colors.grey.shade300),
                           child: Text('На ночь'))),
                   GestureDetector(
@@ -323,16 +340,16 @@ class _MyHomePageState extends State<MyHomePage> {
                               top: 10, bottom: 10, left: 12, right: 12),
                           decoration: BoxDecoration(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(100)),
+                              BorderRadius.all(Radius.circular(100)),
                               color: _time[4]
-                                  ? Colors.yellowAccent
+                                  ? Palette().yellow
                                   : Colors.grey.shade300),
                           child: Text('На сутки'))),
                 ],
               ),
               Text("Тип кровати:",
                   style: TextStyle(fontWeight: FontWeight.bold)),
-              Wrap(
+              Row(
                 children: [
                   GestureDetector(
                       onTap: () {
@@ -348,7 +365,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(100)),
                               color: _typeBed[0]
-                                  ? Colors.yellowAccent
+                                  ? Palette().yellow
                                   : Colors.grey.shade300),
                           child: Text('Круглая'))),
                   GestureDetector(
@@ -365,12 +382,80 @@ class _MyHomePageState extends State<MyHomePage> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(100)),
                               color: _typeBed[1]
-                                  ? Colors.yellowAccent
+                                  ? Palette().yellow
                                   : Colors.grey.shade300),
                           child: Text('Обычная двуспальная'))),
+
+                ],
+              ),
+            Align(
+                alignment: Alignment.centerLeft,
+                child:  GestureDetector(
+                  onTap: () {
+                    _typeBed[2] = !_typeBed[2];
+                    setState(() {});
+                  },
+                  child: Container(
+                      margin: EdgeInsets.only(
+                          top: 8, bottom: 8, left: 4, right: 4),
+                      padding: EdgeInsets.only(
+                          top: 10, bottom: 10, left: 12, right: 12),
+                      decoration: BoxDecoration(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(100)),
+                          color: _typeBed[2]
+                              ? Palette().yellow
+                              : Colors.grey.shade300),
+                      child: Text('Большая двуспальная')))),
+              Text("Стоимость:",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              Row(
+                children: [
+                  Text("От"),
+                  Container(
+                    width: MediaQuery.of(context).size.width/5,
+                      margin: EdgeInsets.only(
+                          top: 8, bottom: 8, left: 4, right: 4),
+                      padding: EdgeInsets.only(
+                          left: 12, right: 12),
+                      decoration: BoxDecoration(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(100)),
+                          color:  Colors.grey.shade300),
+                      child: TextField(
+
+                        decoration: const InputDecoration(
+                          isDense: true,
+                            border: InputBorder.none, ),
+
+                      )),
+              Text("До"),
+                  Container(
+                      width: MediaQuery.of(context).size.width/5,
+                      margin: EdgeInsets.only(
+                          top: 8, bottom: 8, left: 4, right: 4),
+                      padding: EdgeInsets.only(
+                          left: 12, right: 12),
+                      decoration: BoxDecoration(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(100)),
+                          color:  Colors.grey.shade300),
+                      child: TextField(
+
+                        decoration: const InputDecoration(
+                          isDense: true,
+                          border: InputBorder.none, ),
+
+                      )),
+
+                ],
+              ),
+
+              Row(
+                children: [
                   GestureDetector(
                       onTap: () {
-                        _typeBed[2] = !_typeBed[2];
+                        _cost[0] = !_cost[0];
                         setState(() {});
                       },
                       child: Container(
@@ -380,15 +465,281 @@ class _MyHomePageState extends State<MyHomePage> {
                               top: 10, bottom: 10, left: 12, right: 12),
                           decoration: BoxDecoration(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(100)),
-                              color: _typeBed[2]
-                                  ? Colors.yellowAccent
+                              BorderRadius.all(Radius.circular(100)),
+                              color: _cost[0]
+                                  ? Palette().yellow
                                   : Colors.grey.shade300),
-                          child: Text('Большая двуспальная'))),
+                          child: Text('До 550 в час'))),
+                  GestureDetector(
+                      onTap: () {
+                        _cost[1] = !_cost[1];
+                        setState(() {});
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(
+                              top: 8, bottom: 8, left: 4, right: 4),
+                          padding: EdgeInsets.only(
+                              top: 10, bottom: 10, left: 12, right: 12),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(100)),
+                              color: _cost[1]
+                                  ? Palette().yellow
+                                  : Colors.grey.shade300),
+                          child: Text('До 750 в час'))),
+                  GestureDetector(
+                      onTap: () {
+                        _cost[2] = !_cost[2];
+                        setState(() {});
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(
+                              top: 8, bottom: 8, left: 4, right: 4),
+                          padding: EdgeInsets.only(
+                              top: 10, bottom: 10, left: 12, right: 12),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(100)),
+                              color: _cost[2]
+                                  ? Palette().yellow
+                                  : Colors.grey.shade300),
+                          child: Text('До 1100 в час'))),
+
                 ],
               ),
+              Text("Тип номера:",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              Row(
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        _typeRoom[0] = !_typeRoom[0];
+                        setState(() {});
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(
+                              top: 8, bottom: 8, left: 4, right: 4),
+                          padding: EdgeInsets.only(
+                              top: 10, bottom: 10, left: 12, right: 12),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(100)),
+                              color: _typeRoom[0]
+                                  ? Palette().yellow
+                                  : Colors.grey.shade300),
+                          child: Text('Эконом'))),
+                  GestureDetector(
+                      onTap: () {
+                        _typeRoom[1] = !_typeRoom[1];
+                        setState(() {});
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(
+                              top: 8, bottom: 8, left: 4, right: 4),
+                          padding: EdgeInsets.only(
+                              top: 10, bottom: 10, left: 12, right: 12),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(100)),
+                              color: _typeRoom[1]
+                                  ? Palette().yellow
+                                  : Colors.grey.shade300),
+                          child: Text('Люкс'))),
+                  GestureDetector(
+                      onTap: () {
+                        _typeRoom[2] = !_typeRoom[2];
+                        setState(() {});
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(
+                              top: 8, bottom: 8, left: 4, right: 4),
+                          padding: EdgeInsets.only(
+                              top: 10, bottom: 10, left: 12, right: 12),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(100)),
+                              color: _typeRoom[2]
+                                  ? Palette().yellow
+                                  : Colors.grey.shade300),
+                          child: Text('Делюкс'))),
+
+                ],
+              ),
+
+              Text("Джакузи:",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              Row(
+                children: [
+
+                  GestureDetector(
+                      onTap: () {
+                        _isJacuzzi=true;
+                        setState(() {});
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(
+                              top: 8, bottom: 8, left: 4, right: 4),
+                          padding: EdgeInsets.only(
+                              top: 10, bottom: 10, left: 12, right: 12),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(100)),
+                              color: _isJacuzzi??false
+                                  ? Palette().yellow
+                                  : Colors.grey.shade300),
+                          child: Text('С джакузи'))),
+                  GestureDetector(
+                      onTap: () {
+                        _isJacuzzi=false;
+                        setState(() {});
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(
+                              top: 8, bottom: 8, left: 4, right: 4),
+                          padding: EdgeInsets.only(
+                              top: 10, bottom: 10, left: 12, right: 12),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(100)),
+                              color: _isJacuzzi??true
+                                  ?Colors.grey.shade300
+                                  :  Palette().yellow),
+                          child: Text('Без джакузи'))),
+
+                ],
+              ),
+
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+          Text("Охраняемая парковка:",
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+
+              GestureDetector(
+                  onTap: () {
+                    _isParcking=true;
+                    setState(() {});
+                  },
+                  child: Container(
+                      margin: EdgeInsets.only(
+                          top: 8, bottom: 8, left: 4, right: 4),
+                      padding: EdgeInsets.only(
+                          top: 10, bottom: 10, left: 12, right: 12),
+                      decoration: BoxDecoration(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(100)),
+                          color: _isParcking??false
+                              ? Palette().yellow
+                              : Colors.grey.shade300),
+                      child: Text('Да'))),
+              GestureDetector(
+                  onTap: () {
+                    _isParcking=false;
+                    setState(() {});
+                  },
+                  child: Container(
+                      margin: EdgeInsets.only(
+                          top: 8, bottom: 8, left: 4, right: 4),
+                      padding: EdgeInsets.only(
+                          top: 10, bottom: 10, left: 12, right: 12),
+                      decoration: BoxDecoration(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(100)),
+                          color: _isParcking??true
+                              ?Colors.grey.shade300
+                              :  Palette().yellow),
+                      child: Text('Нет'))),
+
             ],
           ),
+        ],),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+          Text("Круглосуточный бар:",
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+
+              GestureDetector(
+                  onTap: () {
+                    _isBar=true;
+                    setState(() {});
+                  },
+                  child: Container(
+                      margin: EdgeInsets.only(
+                          top: 8, bottom: 8, left: 4, right: 4),
+                      padding: EdgeInsets.only(
+                          top: 10, bottom: 10, left: 12, right: 12),
+                      decoration: BoxDecoration(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(100)),
+                          color: _isBar??false
+                              ? Palette().yellow
+                              : Colors.grey.shade300),
+                      child: Text('Да'))),
+              GestureDetector(
+                  onTap: () {
+                    _isBar=false;
+                    setState(() {});
+                  },
+                  child: Container(
+                      margin: EdgeInsets.only(
+                          top: 8, bottom: 8, left: 4, right: 4),
+                      padding: EdgeInsets.only(
+                          top: 10, bottom: 10, left: 12, right: 12),
+                      decoration: BoxDecoration(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(100)),
+                          color:_isBar??true
+                              ?Colors.grey.shade300
+                              :  Palette().yellow),
+                      child: Text('Нет'))),
+
+            ],
+          ),
+        ],),
+      ],),
+              Padding(
+                  padding: EdgeInsets.only(top:24, bottom: 24),
+                  child:Row(
+
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [RedButton(Palette().red, "     Применить     ", Colors.white, 16, FontWeight.bold),
+               GestureDetector(
+                 onTap:(){
+                   _isBar=null;
+                   _isJacuzzi=null;
+                   _isParcking=null;
+                   _typeRoom = [false,false,false];
+                   _cost = [false,false,false];
+                   _metro = [false, false, false, false];
+                   _typeBed = [
+                     false,
+                     false,
+                     false,
+                   ];
+                   setState(() {
+
+                   });
+                 },
+                 child: RedButton(Palette().red, "     Сбросить     ", Colors.white, 16, FontWeight.bold))],)),
+
+
+
+
+
+
+
+            ],
+          )),
           Text(
             'Отель на Профсоюзной',
             style: TextStyle(
@@ -564,14 +915,23 @@ class _MyHomePageState extends State<MyHomePage> {
                         color: Palette().red,
                         fontWeight: FontWeight.bold),
                   ),
-                  Text(
+                GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => const ReviewsPage(),
+                        ),
+                      );
+                    },
+                    child:  Text(
                     'Смотреть все отзывы',
                     style: TextStyle(
                         fontWeight: FontWeight.w300,
                         decoration: TextDecoration.underline,
                         decorationThickness: 2,
                         fontSize: 18),
-                  ),
+                  )),
                 ],
               )),
           Container(
