@@ -1,4 +1,6 @@
 import 'package:de_art/custom_widget/buttonModel.dart';
+import 'package:de_art/page/booking_page.dart';
+import 'package:de_art/page/menu_page.dart';
 import 'package:de_art/page/reviews_page.dart';
 
 import 'package:de_art/page/select_hotel.dart';
@@ -43,6 +45,7 @@ class MyApp extends StatelessWidget {
       title: 'De Art 13',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: "CeraPro",
         colorScheme:
             ColorScheme.fromSeed(seedColor: Color.fromRGBO(114, 40, 57, 1)),
         useMaterial3: true,
@@ -69,12 +72,21 @@ class _MyHomePageState extends State<MyHomePage> {
           preferredSize: Size.fromHeight(78.0),
           child: AppBar(
             backgroundColor: Colors.white,
-            leading: Container(
+            leading:GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => const MenuPage(),
+                    ),
+                  );
+                },
+                child: Container(
                 margin: EdgeInsets.only(left: 12, top: 12),
                 height: 62,
                 child: SvgPicture.asset(
                   'assets/menu.svg',
-                )),
+                ))),
             title: Center(
                 child: Container(
                     height: 55,
@@ -125,12 +137,19 @@ class _MyHomePageState extends State<MyHomePage> {
                           'Четыре великолепных бутик-отеля «Де-Арт 13» рассчитаны на небольшое количество постояльцев, которым предлагаются номера с уникальными, продуманными до мелочей интерьерами.',
                           style: TextStyle(fontSize: 15, color: Colors.white),
                         ),
-                        RedButton(
+                     GestureDetector(
+                         onTap: (){
+                         /*  Navigator.of(context).push(PageRouteBuilder(
+                               opaque: false,
+                               pageBuilder: (BuildContext context, _, __) =>
+                                   BookingPage()));*/
+                         },
+                         child:   RedButton(
                             Color.fromRGBO(255, 255, 255, 1),
                             "Бронировать",
                             Color.fromRGBO(114, 40, 57, 1),
                             15,
-                            FontWeight.bold),
+                            FontWeight.bold)),
                         Text(
                           'Это прекрасная альтернатива крупным столичным гостиницам с типовыми номерами.',
                           style: TextStyle(fontSize: 15, color: Colors.white),

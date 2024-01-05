@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_svg: ^2.0.9
   flutter_swiper_view: ^1.1.8
+  url_launcher:
 
 dev_dependencies:
   flutter_test:
@@ -62,6 +63,17 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/Minus.svg
+    - assets/Plus.svg
+    - assets/redVk.svg
+    - assets/redTg.svg
+    - assets/redViber.svg
+    - assets/redWa.svg
+    - assets/agree.svg
+    - assets/disagree.svg
+    - assets/callWhite.svg
+    - assets/logoWhite.svg
+    - assets/whiteMenu.svg
     - assets/taganskaya.png
     - assets/Rectangle4.png
     - assets/Rectangle3.png
@@ -166,10 +178,11 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: CeraPro
+      fonts:
+       - asset: assets/fonts/CeraPro-Light.ttf
+         weight: 400
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

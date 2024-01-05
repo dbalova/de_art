@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../custom_widget/buttonModel.dart';
 import '../custom_widget/footer.dart';
+import '../main.dart';
 import '../palette.dart';
+import 'menu_page.dart';
 
 class Contacts extends StatefulWidget {
   const Contacts({super.key});
@@ -20,18 +22,34 @@ class _ContactsState extends State<Contacts> {
           preferredSize: const Size.fromHeight(78.0),
           child: AppBar(
             backgroundColor: Colors.white,
-            leading: Container(
+            leading: GestureDetector(
+                onTap: (){  Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const MenuPage(),
+                  ),
+                );},
+                child:Container(
                 margin: const EdgeInsets.only(left: 12, top: 12),
                 height: 62,
                 child: SvgPicture.asset(
                   'assets/menu.svg',
-                )),
+                ))),
             title: Center(
                 child: Container(
                     height: 55,
-                    child: SvgPicture.asset(
-                      'assets/logo.svg',
-                    ))),
+                    child: GestureDetector
+                      (
+                        onTap: (){Navigator.pushAndRemoveUntil<dynamic>(
+                          context,
+                          MaterialPageRoute<dynamic>(
+                            builder: (BuildContext context) => MyHomePage(title: 'De Art 13'),
+                          ),
+                              (route) => false,//if you want to disable back feature set to false
+                        );},
+                        child: SvgPicture.asset(
+                          'assets/logo.svg',
+                        )))),
             actions: [
               Container(
                   height: 62,

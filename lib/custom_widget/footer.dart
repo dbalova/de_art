@@ -3,6 +3,7 @@ import 'package:de_art/page/contacts.dart';
 import 'package:de_art/page/rules_of_accommodation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../page/about_us.dart';
 import '../palette.dart';
@@ -567,21 +568,29 @@ Widget Footer(context){
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Spacer(flex: 3),
-            SvgPicture.asset(
+            GestureDetector(
+                onTap:(){URL_WA();},
+                child:SvgPicture.asset(
               'assets/wa.svg',
-            ),
+            )),
             Spacer(flex: 1),
-            SvgPicture.asset(
+            GestureDetector(
+                onTap:(){URL_TG();},
+                child:SvgPicture.asset(
               'assets/tg.svg',
-            ),
+            )),
             Spacer(flex: 1),
-            SvgPicture.asset(
+           GestureDetector(
+               onTap:(){URL_VIBER();},
+               child: SvgPicture.asset(
               'assets/viber.svg',
-            ),
+            )),
             Spacer(flex: 1),
-            SvgPicture.asset(
+            GestureDetector(
+                onTap:(){URL_VK();},
+                child:SvgPicture.asset(
               'assets/vk.svg',
-            ),
+            )),
             Spacer(flex: 3),
           ],
         ),
@@ -603,4 +612,34 @@ Widget Footer(context){
       ],
     ),
   );
+
+
+}
+
+URL_WA() async {
+  final Uri url = Uri.parse('https://wa.me/79853863785');
+  if (!await launchUrl(url)) {
+    throw Exception('Could not launch $url');
+  }
+}
+
+URL_TG() async {
+  final Uri url = Uri.parse('https://t.me/deart13');
+  if (!await launchUrl(url)) {
+    throw Exception('Could not launch $url');
+  }
+}
+
+URL_VIBER() async {
+  final Uri url = Uri.parse('viber://chat?number=%2B79853863785');
+  if (!await launchUrl(url)) {
+    throw Exception('Could not launch $url');
+  }
+}
+
+URL_VK() async {
+  final Uri url = Uri.parse('https://vk.com/hoteldeart13');
+  if (!await launchUrl(url)) {
+    throw Exception('Could not launch $url');
+  }
 }
