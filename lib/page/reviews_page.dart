@@ -1,3 +1,4 @@
+import 'package:de_art/page/create_reviews_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -82,12 +83,20 @@ class _ReviewsPageState extends State<ReviewsPage> {
                     child: Padding(
                      padding: EdgeInsets.only(top:24, bottom: 40),
 
-                     child:RedButton(
+                     child:GestureDetector(
+                         onTap: (){
+                           Navigator.of(context).push(PageRouteBuilder(
+                               opaque: false,
+                               pageBuilder: (BuildContext context, _, __) =>
+                                   CreateReviewsPage()));
+
+                         },
+                         child:RedButton(
                       Palette().red,
                       "Оставить отзыв",
                       Palette().white,
                       15,
-                      FontWeight.bold))),
+                      FontWeight.bold)))),
 
                   Container(
                     margin: EdgeInsets.only( bottom: 12),

@@ -23,7 +23,9 @@ class _BookingPageState extends State<BookingPage> {
               alignment: Alignment.centerRight,
               child:Padding(
                   padding: EdgeInsets.only(right: 30,top:48),
-                  child:Icon(Icons.cancel_outlined,size: 48,color: Colors.white,))),
+                  child:GestureDetector(
+                      onTap: (){Navigator.pop(context);},
+                      child:Icon(Icons.cancel_outlined,size: 48,color: Colors.white,)))),
           Container(
             padding: EdgeInsets.only(top:24,bottom: 24,right: 24,left:24 ),
             margin: EdgeInsets.only(top:12,bottom: 12,right: 24,left:24 ),

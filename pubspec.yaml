@@ -90,6 +90,8 @@ flutter:
     - assets/logo.svg
     - assets/menu.svg
     - assets/call.svg
+    - assets/greyStar.svg
+    - assets/goldStar.svg
     - assets/hotel.png
     - assets/filtr.svg
     - assets/sea.png

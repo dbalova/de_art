@@ -47,8 +47,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: "CeraPro",
-        colorScheme:
-            ColorScheme.fromSeed(seedColor: Color.fromRGBO(114, 40, 57, 1)),
+      /*  colorScheme:
+            ColorScheme.fromSeed(seedColor: Color.fromRGBO(114, 40, 57, 1)),*/
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'De Art 13'),
@@ -140,10 +140,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                      GestureDetector(
                          onTap: (){
-                         /*  Navigator.of(context).push(PageRouteBuilder(
+                           Navigator.of(context).push(PageRouteBuilder(
                                opaque: false,
                                pageBuilder: (BuildContext context, _, __) =>
-                                   BookingPage()));*/
+                                   BookingPage()));
                          },
                          child:   RedButton(
                             Color.fromRGBO(255, 255, 255, 1),
@@ -750,8 +750,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: EdgeInsets.only(top:24, bottom: 24),
                   child:Row(
 
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [RedButton(Palette().red, "     Применить     ", Colors.white, 16, FontWeight.bold),
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [RedButton(Palette().red, "Применить", Colors.white, 16, FontWeight.bold),
                GestureDetector(
                  onTap:(){
                    _isBar=null;
@@ -769,7 +769,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                    });
                  },
-                 child: RedButton(Palette().red, "     Сбросить     ", Colors.white, 16, FontWeight.bold))],)),
+                 child: RedButton(Palette().red, "Сбросить", Colors.white, 16, FontWeight.bold))],)),
 
 
 

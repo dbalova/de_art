@@ -1,3 +1,5 @@
+import 'package:de_art/page/reviews_page.dart';
+import 'package:de_art/page/room_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
@@ -14,6 +16,13 @@ class SelectHotelPage extends StatefulWidget {
   @override
   State<SelectHotelPage> createState() => _SelectHotelPageState();
 }
+
+
+bool _isJacuzzi = false;
+bool _isParking = false;
+bool _price550 = false;
+bool _price750 = false;
+bool _price1100 = false;
 
 List<Image> fotoRoom = [
   Image.asset("assets/sea.png"),
@@ -115,7 +124,81 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                     ),
                     Row(
                       children: [
-                        Container(
+                     GestureDetector(
+                         onTap: (){
+                           showDialog(context: context, builder: (BuildContext context){
+                              return  Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.cancel_outlined,color: Colors.white,size: 48,)),
+                                  AlertDialog(
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(0))
+                                    ),
+                                      title: Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          "Как добраться:",
+                                          style: TextStyle(
+                                              fontSize: 30,
+                                              color: Palette().red,
+                                              fontWeight: FontWeight.w900),
+                                        ),
+                                      ),
+                                      content: Container(
+
+                                        height: MediaQuery.of(context)
+                                            .size
+                                            .height/2,
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Image.asset('assets/taganskaya.png'),
+                                            Container(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                padding: EdgeInsets.only(
+                                                    top: 24, bottom: 24),
+                                                child: RichText(
+                                                    text: TextSpan(children: [
+                                                  //Доехать до отеля De art Art 13 можно с помощью метро Таганская и далее пешком 4 минуты (340 метров).
+                                                  TextSpan(
+                                                    text:
+                                                        'Доехать до отеля De art Art 13 можно с помощью ',
+                                                    style: TextStyle(
+                                                      fontFamily: "CeraPro",
+                                                        fontSize: 14,
+                                                        color: Colors.black),
+                                                  ),
+                                                  TextSpan(
+                                                    text:
+                                                        'метро Таганская и далее пешком 4 минуты ',
+                                                    style: TextStyle(
+                                                        fontFamily: "CeraPro",
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: Colors.black),
+                                                  ),
+                                                  TextSpan(
+                                                    text: '(340 метров)',
+                                                    style: TextStyle(
+                                                        fontFamily: "CeraPro",
+                                                        fontSize: 14,
+                                                        color: Colors.black),
+                                                  )
+                                                ]))),
+                                            Text("От метро нужно сначала повернуть налево и пройти вдоль дома №7, далее перейти по пешеходному переходу на другую сторону, повернуть налево и пройти прямо вдоль дома №8."),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              );
+                              });
+                            },
+                         child:   Container(
                           margin: EdgeInsets.only(right: 24, bottom: 24),
                           child: Text(
                             "Как добраться",
@@ -126,8 +209,130 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                   BorderSide(width: 1.0, color: Colors.black),
                             ),
                           ),
-                        ),
-                        Container(
+                        )),
+                        GestureDetector(
+                            onTap: (){
+                              showDialog(context: context, builder: (BuildContext context){
+                                return  Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.cancel_outlined,color: Colors.white,size: 48,)),
+                                    AlertDialog(
+                                      backgroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(0))
+                                      ),
+                                      title: Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          "К вашим услугам",
+                                          style: TextStyle(
+                                              fontSize: 30,
+                                              color: Palette().red,
+                                              fontWeight: FontWeight.w900),
+                                        ),
+                                      ),
+                                      content: Container(
+margin:EdgeInsets.only(top:24),
+                                        height: MediaQuery.of(context)
+                                            .size
+                                            .height/2,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                                width: MediaQuery.of(context).size.width / 3,
+                                                height: MediaQuery.of(context).size.height / 2,
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/tv.svg',
+                                                    ),
+                                                    Text('Спутниковое\nтелевидение',
+                                                        style: TextStyle(
+                                                            fontSize: 14, fontWeight: FontWeight.bold)),
+                                                    Spacer(
+                                                      flex: 1,
+                                                    ),
+                                                    SvgPicture.asset(
+                                                      'assets/bathrobe.svg',
+                                                    ),
+                                                    Text('Халаты,\nтапочки',
+                                                        style: TextStyle(
+                                                            fontSize: 14, fontWeight: FontWeight.bold)),
+                                                    Spacer(
+                                                      flex: 1,
+                                                    ),
+                                                    SvgPicture.asset(
+                                                      'assets/cleaning.svg',
+                                                    ),
+                                                    Text('Ежедневная\nуборка',
+                                                        style: TextStyle(
+                                                            fontSize: 14, fontWeight: FontWeight.bold)),
+                                                    Spacer(
+                                                      flex: 1,
+                                                    ),
+                                                    SvgPicture.asset(
+                                                      'assets/parking.svg',
+                                                    ),
+                                                    Text('Охраняемая\nпарковка',
+                                                        style: TextStyle(
+                                                            fontSize: 14, fontWeight: FontWeight.bold)),
+                                                  ],
+                                                )),
+                                            Container(
+                                                width: MediaQuery.of(context).size.width / 3,
+                                                height: MediaQuery.of(context).size.height / 2,
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/food.svg',
+                                                    ),
+                                                    Text('Доставка\nеды в номер',
+                                                        style: TextStyle(
+                                                            fontSize: 14, fontWeight: FontWeight.bold)),
+                                                    Spacer(
+                                                      flex: 1,
+                                                    ),
+                                                    SvgPicture.asset(
+                                                      'assets/bar.svg',
+                                                    ),
+                                                    Text('Круглосуточный\nбар',
+                                                        style: TextStyle(
+                                                            fontSize: 14, fontWeight: FontWeight.bold)),
+                                                    Spacer(
+                                                      flex: 1,
+                                                    ),
+                                                    SvgPicture.asset(
+                                                      'assets/payment.svg',
+                                                    ),
+                                                    Text('Оплата картой\nVisa/Mastercard',
+                                                        style: TextStyle(
+                                                            fontSize: 14, fontWeight: FontWeight.bold)),
+                                                    Spacer(
+                                                      flex: 1,
+                                                    ),
+                                                    SvgPicture.asset(
+                                                      'assets/wi-fi.svg',
+                                                    ),
+                                                    Text('Бесплатный\nWi-Fi',
+                                                        style: TextStyle(
+                                                            fontSize: 14, fontWeight: FontWeight.bold)),
+                                                  ],
+                                                )),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              });
+                            },
+                            child:Container(
                           margin: EdgeInsets.only( bottom: 24),
                           child: Text(
                             "Услуги",
@@ -138,88 +343,136 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                   BorderSide(width: 1.0, color: Colors.black),
                             ),
                           ),
-                        ),
+                        )),
                       ],
                     ),
 
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Container(
+                       GestureDetector(
+                           onTap: (){
+                             _isJacuzzi=!_isJacuzzi;
+                             setState(() {
+
+                             });
+                           },
+                           child: Container(
                           margin: EdgeInsets.only(
                             right: 8,
                           ),
                           padding: EdgeInsets.only(
                               top: 8, bottom: 8, left: 12, right: 12),
                           decoration: BoxDecoration(
+                            color: _isJacuzzi?Palette().red:Colors.white,
+
                             borderRadius:
                                 BorderRadius.all(Radius.circular(100)),
                             border: Border.all(
                               width: 1,
+                              color: _isJacuzzi? Colors.transparent:Colors.black,
                             ),
                           ),
-                          child: Text("С джакузи"),
-                        ),
-                        Container(
+                          child: Text("С джакузи",style: TextStyle(color: _isJacuzzi? Colors.white:Colors.black,),),
+                        )),
+                       GestureDetector(
+                           onTap: (){
+                             _isParking=!_isParking;
+                             setState(() {
+
+                             });
+                           },
+
+                           child: Container(
                           margin: EdgeInsets.only(
                             right: 8,
                           ),
                           padding: EdgeInsets.only(
                               top: 8, bottom: 8, left: 12, right: 12),
                           decoration: BoxDecoration(
+                            color: _isParking?Palette().red:Colors.white,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(100)),
                             border: Border.all(
                               width: 1,
+                              color: _isParking? Colors.transparent:Colors.black,
                             ),
                           ),
-                          child: Text("С парковкой"),
-                        ),
-                        Container(
+                          child: Text("С парковкой",style: TextStyle(color: _isParking? Colors.white:Colors.black,),),
+                        )),
+                       GestureDetector(
+                           onTap: (){
+                             _price550=!_price550;
+                             setState(() {
+
+                             });
+                           },
+                           child: Container(
                           padding: EdgeInsets.only(
                               top: 8, bottom: 8, left: 12, right: 12),
                           decoration: BoxDecoration(
+                            color: _price550?Palette().red:Colors.white,
+
                             borderRadius:
                                 BorderRadius.all(Radius.circular(100)),
                             border: Border.all(
                               width: 1,
+                              color: _price550? Colors.transparent:Colors.black,
                             ),
                           ),
-                          child: Text("До 550 в час"),
-                        ),
+                          child: Text("До 550 в час",style: TextStyle(color: _price550? Colors.white:Colors.black,),),
+                        )),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Container(
+                        GestureDetector(
+                            onTap: (){
+                              _price750=!_price750;
+                              setState(() {
+
+                              });
+
+                            },
+                            child:Container(
                           margin: EdgeInsets.only(right: 8, top: 12),
                           padding: EdgeInsets.only(
                               top: 8, bottom: 8, left: 12, right: 12),
                           decoration: BoxDecoration(
+                            color: _price750?Palette().red:Colors.white,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(100)),
                             border: Border.all(
                               width: 1,
+                              color: _price750? Colors.transparent:Colors.black,
                             ),
                           ),
-                          child: Text("До 750 в час"),
-                        ),
-                        Container(
+                          child: Text("До 750 в час",style: TextStyle(color: _price750? Colors.white:Colors.black,),),
+                        )),
+                        GestureDetector(
+                            onTap: (){
+                              _price1100=!_price1100;
+                              setState(() {
+
+                              });
+                            },
+                            child:Container(
                           margin: EdgeInsets.only(
                             top: 12,
                           ),
                           padding: EdgeInsets.only(
                               top: 8, bottom: 8, left: 12, right: 12),
                           decoration: BoxDecoration(
+                            color: _price1100?Palette().red:Colors.white,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(100)),
                             border: Border.all(
-                              width: 1,
+                              width: 1,color: _price1100? Colors.transparent:Colors.black,
                             ),
                           ),
-                          child: Text("До 1 100 в час"),
-                        ),
+                          child: Text("До 1 100 в час",style: TextStyle(color: _price1100? Colors.white:Colors.black,),),
+                        )),
                       ],
                     ),
                     Container(
@@ -369,14 +622,23 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                           Spacer(
                                             flex: 2,
                                           ),
-                                          Text(
+                                         GestureDetector(
+                                             onTap: (){
+                                               Navigator.push(
+                                                 context,
+                                                 MaterialPageRoute(
+                                                   builder: (BuildContext context) => const RoomPage(),
+                                                 ),
+                                               );
+                                             },
+                                             child: Text(
                                             'Подробнее',
                                             style: TextStyle(
                                                 decoration:
                                                     TextDecoration.underline,
                                                 decorationThickness: 2,
                                                 fontSize: 18),
-                                          ),
+                                          )),
                                         ],
                                       )),
                                   Padding(
@@ -415,14 +677,25 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                   color: Palette().red,
                                   fontWeight: FontWeight.bold),
                             ),
-                            Text(
+                          GestureDetector(
+
+                            onTap: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) => const ReviewsPage(),
+                                ),
+                              );
+                            },
+
+                              child:  Text(
                               'Смотреть все отзывы',
                               style: TextStyle(
                                   fontWeight: FontWeight.w300,
                                   decoration: TextDecoration.underline,
                                   decorationThickness: 2,
                                   fontSize: 18),
-                            ),
+                            )),
                           ],
                         )),
                     Container(
