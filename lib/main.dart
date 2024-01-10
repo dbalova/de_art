@@ -16,6 +16,7 @@ import 'custom_widget/footer.dart';
 void main() {
   runApp(const MyApp());
 }
+bool _isFilter=false;
 bool? _isJacuzzi;
 bool? _isParcking;
 bool? _isBar;
@@ -158,8 +159,17 @@ class _MyHomePageState extends State<MyHomePage> {
                     ))
               ],
             ),
-          ),
-          Container(
+          ), GestureDetector(
+
+              onTap: (){
+
+                _isFilter=true;
+                setState(() {
+
+                });
+
+              },
+              child: Container(
             padding: EdgeInsets.only(top: 26, bottom: 26, left: 26, right: 26),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -171,8 +181,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     style: TextStyle(fontWeight: FontWeight.bold))
               ],
             ),
-          ),
-         Container(
+          )),
+        _isFilter? Container(
              padding: EdgeInsets.only(left: 8,right: 8),
 
              child: Column(
@@ -189,10 +199,20 @@ class _MyHomePageState extends State<MyHomePage> {
                       Text("Показать фильтры",
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       Spacer(flex: 1),
-                      Icon(
+                     GestureDetector(
+
+                         onTap: (){
+
+                           _isFilter=false;
+                           setState(() {
+
+                           });
+
+                         },
+                         child: Icon(
                         Icons.cancel_outlined,
                         color: Palette().red,
-                      )
+                      ))
                     ],
                   )),
               Text("Метро:", style: TextStyle(fontWeight: FontWeight.bold)),
@@ -758,7 +778,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
             ],
-          )),
+          )) : Container(),
           Text(
             'Отель на Профсоюзной',
             style: TextStyle(

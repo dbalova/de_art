@@ -116,7 +116,7 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                     Row(
                       children: [
                         Container(
-                          margin: EdgeInsets.only(right: 24),
+                          margin: EdgeInsets.only(right: 24, bottom: 24),
                           child: Text(
                             "Как добраться",
                           ),
@@ -128,6 +128,7 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                           ),
                         ),
                         Container(
+                          margin: EdgeInsets.only( bottom: 24),
                           child: Text(
                             "Услуги",
                           ),
@@ -140,20 +141,7 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                         ),
                       ],
                     ),
-                    Container(
-                      padding: EdgeInsets.only(
-                          top: 26, bottom: 26, left: 26, right: 26),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SvgPicture.asset(
-                            'assets/filtr.svg',
-                          ),
-                          Text("Показать фильтры",
-                              style: TextStyle(fontWeight: FontWeight.bold))
-                        ],
-                      ),
-                    ),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
