@@ -38,7 +38,7 @@ class _CreateReviewsPageState extends State<CreateReviewsPage> {
             child: Column(
               //crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                DropdownButton<String>(
+                /*DropdownButton<String>(
                   // Step 3.
                   value: selectedValue,
                   // Step 4.
@@ -58,7 +58,7 @@ class _CreateReviewsPageState extends State<CreateReviewsPage> {
                       selectedValue = newValue!;
                     });
                   },
-                ),
+                ),*/
 
 
 

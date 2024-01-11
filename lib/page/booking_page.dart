@@ -1,3 +1,4 @@
+import 'package:date_picker_plus/date_picker_plus.dart';
 import 'package:de_art/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,6 +9,11 @@ class BookingPage extends StatefulWidget {
   @override
   State<BookingPage> createState() => _BookingPageState();
 }
+
+
+DateTime? _selectDate;
+
+
 int counter=1;
 int duration=1;
 int people=1;
@@ -142,6 +148,61 @@ class _BookingPageState extends State<BookingPage> {
                     ),
                   ),
                 ),
+
+          Container(
+              color: Palette().red,
+              child:  Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  DatePicker(
+                    selectedDate: _selectDate ,
+
+                  enabledCellsDecoration: BoxDecoration(color: Palette().red),
+                  disbaledCellsDecoration: BoxDecoration(color: Palette().red),
+                  currentDateDecoration: BoxDecoration(color: Palette().red),
+                  selectedCellDecoration: BoxDecoration(color: Palette().white),
+                  daysOfTheWeekTextStyle: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+                               enabledCellsTextStyle:  TextStyle(color: Colors.white),
+                               currentDateTextStyle:  TextStyle(color: Colors.white),
+                               selectedCellTextStyle:  TextStyle(color: Palette().red),
+                               leadingDateTextStyle:  TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+                               padding: EdgeInsets.only(top:16,left: 16,right: 16,bottom: 0),
+                  slidersColor: Palette().white,
+                  splashColor: Palette().red,
+                  minDate: DateTime(2024, 1, 1),
+                  maxDate: DateTime(2050, 12, 31),
+                  onDateSelected: (value) {
+                    _selectDate=value;
+                    setState(() {
+
+                    });
+                  },
+                              ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                    GestureDetector(
+                        onTap: (){
+                          _selectDate=null;
+                          setState(() {
+
+                          });
+
+                        },
+                        child:Text("Удалить", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold))),
+                    GestureDetector(
+                        onTap: (){
+                          _selectDate=DateTime.now();
+                          setState(() {
+
+                          });
+
+                        },
+                        child:Text("Сегодня", style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold))),
+
+                  ],),SizedBox(height: 16,)
+                ],
+              )),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text("Время заезда",style: TextStyle(fontWeight: FontWeight.bold)),),

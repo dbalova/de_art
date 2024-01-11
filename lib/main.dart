@@ -10,6 +10,7 @@ import 'package:de_art/page/room_page.dart';
 import 'package:de_art/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'custom_widget/footer.dart';
 
@@ -36,13 +37,26 @@ List<bool> _typeBed = [
   false,
 ];
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      supportedLocales:  [
+
+        Locale('ru', ''),
+
+      ],
+
       title: 'De Art 13',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -55,6 +69,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
