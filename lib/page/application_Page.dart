@@ -1,6 +1,9 @@
+import 'package:de_art/page/tyPage.dart';
 import 'package:de_art/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+
+import '../custom_widget/footer.dart';
 
 class ApplicationPage extends StatefulWidget {
   const ApplicationPage({Key? key}) : super(key: key);
@@ -15,6 +18,7 @@ class _ApplicationPageState extends State<ApplicationPage> {
     return Scaffold(
       backgroundColor: Colors.grey.withOpacity(0.65),
       body: SingleChildScrollView(child: Column(
+
         children: [
           Align(
               alignment: Alignment.centerRight,
@@ -33,16 +37,17 @@ class _ApplicationPageState extends State<ApplicationPage> {
             ),
             width: MediaQuery.of(context).size.width-60,
             child: Column(
-              //crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text("Ваше имя",style: TextStyle(fontWeight: FontWeight.bold)),),
                 Container(
+                  padding: EdgeInsets.only(left:12),
                   margin: EdgeInsets.only(bottom: 12),
                   width: MediaQuery.of(context).size.width/1.5,
                   child: TextField(   decoration: const InputDecoration(
-                    hintText: "  Иван Иванович",
+                    hintText: "Иван Иванович",
                     isDense: true,
                     border: InputBorder.none, ),),
                   decoration: BoxDecoration(
@@ -62,9 +67,10 @@ class _ApplicationPageState extends State<ApplicationPage> {
                   alignment: Alignment.centerLeft,
                   child: Text("Номер телефона",style: TextStyle(fontWeight: FontWeight.bold)),),
                 Container(
+                  padding: EdgeInsets.only(left:12),
                   width: MediaQuery.of(context).size.width/1.5,
                   child: TextField(   decoration: const InputDecoration(
-                    hintText: "  +7 (999) 999 99 99",
+                    hintText: "+7 (999) 999 99 99",
                     isDense: true,
                     border: InputBorder.none, ),),
                   decoration: BoxDecoration(
@@ -81,10 +87,12 @@ class _ApplicationPageState extends State<ApplicationPage> {
                   ),
                 ),
                 Container(
+                  padding: EdgeInsets.only(left:12),
                   margin: EdgeInsets.only(top:24),
                   width: MediaQuery.of(context).size.width/1.5,
                   height:MediaQuery.of(context).size.height/5,
                   child: TextField(   decoration: const InputDecoration(
+                    hintText: "Комментарий",
                     isDense: true,
                     border: InputBorder.none, ),),
                   decoration: BoxDecoration(
@@ -100,7 +108,15 @@ class _ApplicationPageState extends State<ApplicationPage> {
                     ),
                   ),
                 ),
-                Container(
+             GestureDetector(
+                 onTap: (){
+                   Navigator.pop(context);
+                   Navigator.of(context).push(PageRouteBuilder(
+                       opaque: false,
+                       pageBuilder: (BuildContext context, _, __) =>
+                           TyPage()));
+                 },
+                 child:   Container(
                   width: MediaQuery.of(context).size.width/1.5,
                   margin: EdgeInsets.only(top: 15, bottom: 15,),
                   padding: EdgeInsets.only(top: 15, bottom: 15,left: 24,right: 24),
@@ -110,7 +126,7 @@ class _ApplicationPageState extends State<ApplicationPage> {
                   ),
                   child: Text("Оставить заявку", style: TextStyle(color: Colors.white,fontSize: 16 , fontWeight:FontWeight.bold, ),textAlign: TextAlign.center,),
 
-                ),
+                )),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -175,24 +191,37 @@ class _ApplicationPageState extends State<ApplicationPage> {
                     ],
                   ),
                 ),
+
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [SvgPicture.asset(
-                    'assets/redTg.svg',
-                  ),
-                    SvgPicture.asset(
-                      'assets/redVk.svg',
-                    ),
-                    SvgPicture.asset(
-                      'assets/redViber.svg',
-                    ),
-                    SvgPicture.asset(
-                      'assets/redWa.svg',
-                    ),
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
 
+                    GestureDetector(
+                        onTap:(){URL_WA();},
+                        child:SvgPicture.asset(
+                          'assets/redWa.svg',
+                        )),
+                    Spacer(flex: 1),
+                    GestureDetector(
+                        onTap:(){URL_TG();},
+                        child:SvgPicture.asset(
+                          'assets/redTg.svg',
+                        )),
+                    Spacer(flex: 1),
+                    GestureDetector(
+                        onTap:(){URL_VIBER();},
+                        child: SvgPicture.asset(
+                          'assets/redViber.svg',
+                        )),
+                    Spacer(flex: 1),
+                    GestureDetector(
+                        onTap:(){URL_VK();},
+                        child:SvgPicture.asset(
+                          'assets/redVk.svg',
+                        )),
 
-
-                  ],)
+                  ],
+                ),
 
 
 

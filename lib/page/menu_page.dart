@@ -1,4 +1,5 @@
 import 'package:de_art/page/about_us.dart';
+import 'package:de_art/page/application_Page.dart';
 import 'package:de_art/page/contacts.dart';
 import 'package:de_art/page/select_hotel.dart';
 import 'package:de_art/palette.dart';
@@ -45,12 +46,18 @@ class _MenuPageState extends State<MenuPage> {
                           'assets/logoWhite.svg',
                         )))),
             actions: [
-              Container(
-                  height: 62,
-                  margin: EdgeInsets.only(right: 12, top: 12),
-                  child: SvgPicture.asset(
-                    'assets/callWhite.svg',
-                  ))
+              GestureDetector(
+
+                  onTap: (){   Navigator.of(context).push(PageRouteBuilder(
+                      opaque: false,
+                      pageBuilder: (BuildContext context, _, __) =>
+                          ApplicationPage()));},
+                  child:Container(
+                      height: 62,
+                      margin: EdgeInsets.only(right: 12, top: 12),
+                      child: SvgPicture.asset(
+                        'assets/callWhite.svg',
+                      )))
             ],
           )),
       body: Column(children: [

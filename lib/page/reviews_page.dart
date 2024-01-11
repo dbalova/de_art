@@ -6,6 +6,7 @@ import '../custom_widget/buttonModel.dart';
 import '../custom_widget/footer.dart';
 import '../main.dart';
 import '../palette.dart';
+import 'application_Page.dart';
 import 'menu_page.dart';
 
 class ReviewsPage extends StatefulWidget {
@@ -53,12 +54,18 @@ class _ReviewsPageState extends State<ReviewsPage> {
                           'assets/logo.svg',
                         )))),
             actions: [
-              Container(
-                  height: 62,
-                  margin: EdgeInsets.only(right: 12, top: 12),
-                  child: SvgPicture.asset(
-                    'assets/call.svg',
-                  ))
+              GestureDetector(
+
+                  onTap: (){   Navigator.of(context).push(PageRouteBuilder(
+                      opaque: false,
+                      pageBuilder: (BuildContext context, _, __) =>
+                          ApplicationPage()));},
+                  child:Container(
+                      height: 62,
+                      margin: EdgeInsets.only(right: 12, top: 12),
+                      child: SvgPicture.asset(
+                        'assets/call.svg',
+                      )))
             ],
           )),
       body: SingleChildScrollView(

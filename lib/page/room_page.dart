@@ -1,3 +1,4 @@
+import 'package:de_art/page/booking_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../custom_widget/conveniences.dart';
@@ -5,6 +6,7 @@ import '../custom_widget/footer.dart';
 import '../custom_widget/icon_text_container.dart';
 import '../main.dart';
 import '../palette.dart';
+import 'application_Page.dart';
 import 'menu_page.dart';
 
 class RoomPage extends StatefulWidget {
@@ -53,12 +55,18 @@ class _RoomPageState extends State<RoomPage> {
                           'assets/logo.svg',
                         )))),
             actions: [
-              Container(
-                  height: 62,
-                  margin: const EdgeInsets.only(right: 12, top: 12),
-                  child: SvgPicture.asset(
-                    'assets/call.svg',
-                  ))
+              GestureDetector(
+
+                  onTap: (){   Navigator.of(context).push(PageRouteBuilder(
+                      opaque: false,
+                      pageBuilder: (BuildContext context, _, __) =>
+                          ApplicationPage()));},
+                  child:Container(
+                      height: 62,
+                      margin: EdgeInsets.only(right: 12, top: 12),
+                      child: SvgPicture.asset(
+                        'assets/call.svg',
+                      )))
             ],
           )),
       body: SingleChildScrollView(
@@ -284,7 +292,14 @@ class _RoomPageState extends State<RoomPage> {
                                 ],
                               )),
                           Center(
-                            child: Container(
+                            child: GestureDetector(
+                                onTap: (){
+                                  Navigator.of(context).push(PageRouteBuilder(
+                                      opaque: false,
+                                      pageBuilder: (BuildContext context, _, __) =>
+                                          BookingPage()));
+                                },
+                                child:Container(
                               width: MediaQuery
                                   .of(context)
                                   .size
@@ -304,7 +319,7 @@ class _RoomPageState extends State<RoomPage> {
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold),
                                   )),
-                            ),
+                            )),
                           ),
                           Padding(
                             padding:
@@ -314,30 +329,34 @@ class _RoomPageState extends State<RoomPage> {
                                   .of(context)
                                   .size
                                   .width / 2,
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                              child:    Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
-                                 GestureDetector(child: SvgPicture.asset(
-                                    'assets/IconWhatsApp.svg',
-                                  ),
-                                   onTap:(){URL_WA();},
-                                 ),
+
+                                  GestureDetector(
+                                      onTap:(){URL_WA();},
+                                      child:SvgPicture.asset(
+                                        'assets/IconWhatsApp.svg',
+                                      )),
+                                  Spacer(flex: 1),
                                   GestureDetector(
                                       onTap:(){URL_TG();},
                                       child:SvgPicture.asset(
-                                    'assets/IconTelegram.svg',
-                                  )),
-                                 GestureDetector(
-                                     onTap:(){URL_VIBER();},
-                                     child: SvgPicture.asset(
-                                    'assets/IconViber.svg',
-                                  )),
+                                        'assets/IconTelegram.svg',
+                                      )),
+                                  Spacer(flex: 1),
+                                  GestureDetector(
+                                      onTap:(){URL_VIBER();},
+                                      child: SvgPicture.asset(
+                                        'assets/IconViber.svg',
+                                      )),
+                                  Spacer(flex: 1),
                                   GestureDetector(
                                       onTap:(){URL_VK();},
                                       child:SvgPicture.asset(
-                                    'assets/IconVK.svg',
-                                  )),
+                                        'assets/IconVK.svg',
+                                      )),
+
                                 ],
                               ),
                             ),

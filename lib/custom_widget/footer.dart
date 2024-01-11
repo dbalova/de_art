@@ -1,6 +1,8 @@
 import 'package:de_art/custom_widget/testTabBar.dart';
 import 'package:de_art/page/contacts.dart';
+import 'package:de_art/page/reviews_page.dart';
 import 'package:de_art/page/rules_of_accommodation.dart';
+import 'package:de_art/page/select_hotel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -187,7 +189,10 @@ Widget Footer(context){
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) =>
+                                SelectHotelPage()));},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -198,7 +203,10 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) =>
+                                SelectHotelPage()));},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -209,7 +217,10 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) =>
+                                SelectHotelPage()));},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -220,7 +231,10 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) =>
+                                SelectHotelPage()));},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -231,7 +245,10 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) =>
+                                SelectHotelPage()));},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -242,7 +259,10 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) =>
+                                SelectHotelPage()));},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -253,7 +273,10 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () async{ final Uri url = Uri.parse('https://deart-13.ru/rabota/');
+                        if (!await launchUrl(url)) {
+                        throw Exception('Could not launch $url');
+                        }},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -273,7 +296,10 @@ Widget Footer(context){
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) =>
+                                SelectHotelPage()));},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -284,7 +310,10 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) =>
+                                SelectHotelPage()));},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -295,7 +324,10 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) =>
+                                SelectHotelPage()));},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -306,7 +338,10 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) =>
+                                SelectHotelPage()));},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -317,7 +352,10 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) =>
+                                SelectHotelPage()));},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -328,7 +366,10 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) =>
+                                SelectHotelPage()));},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -339,7 +380,10 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) =>
+                                SelectHotelPage()));},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -367,7 +411,10 @@ Widget Footer(context){
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) =>
+                                ReviewsPage()));},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -378,7 +425,10 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) =>
+                                SelectHotelPage()));},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -389,7 +439,10 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) =>
+                                SelectHotelPage()));},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -400,7 +453,10 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) =>
+                                SelectHotelPage()));},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -411,7 +467,10 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) =>
+                                SelectHotelPage()));},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -422,7 +481,10 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) =>
+                                SelectHotelPage()));},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -433,7 +495,10 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: ()async { final Uri url = Uri.parse('https://deart-13.ru/sitemap/');
+                        if (!await launchUrl(url)) {
+                        throw Exception('Could not launch $url');
+                        }},
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -489,7 +554,13 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () async{
+                          final Uri url = Uri.parse('https://deart-13.ru/upload/obshhie-polozheniya-otelya.pdf');
+                          if (!await launchUrl(url)) {
+                          throw Exception('Could not launch $url');
+                          }
+
+                        },
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -518,7 +589,13 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: ()async {
+                          final Uri url = Uri.parse('https://deart-13.ru/upload/dop_services.pdf');
+                          if (!await launchUrl(url)) {
+                          throw Exception('Could not launch $url');
+                          }
+
+                        },
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -529,7 +606,13 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () async{
+
+                          final Uri url = Uri.parse('https://deart-13.ru/upload/price.pdf');
+                          if (!await launchUrl(url)) {
+                          throw Exception('Could not launch $url');
+                          }
+                        },
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
                           padding: EdgeInsets.zero,
@@ -540,13 +623,11 @@ Widget Footer(context){
                             style: TextStyle(
                                 fontSize: 11, color: Palette().white))),
                     TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) => const TabBarExample(),
-                            ),
-                          );
+                        onPressed: () async{
+                          final Uri url = Uri.parse('https://deart-13.ru/obrabotka-personalnyh-dannyh/');
+                          if (!await launchUrl(url)) {
+                          throw Exception('Could not launch $url');
+                          }
                         },
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,

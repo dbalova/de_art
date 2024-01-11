@@ -11,6 +11,9 @@ class CreateReviewsPage extends StatefulWidget {
 }
 String selectedValue ="Профсоюзная" ;
 //String? selectedValue ;
+bool _showHotel=false;
+
+Color dropColor = Colors.black;
 List<String>_hotel=["Профсоюзная","Таганская","Новокосино","Текстильщики"];
 int stars=0;
 bool _agree = false;
@@ -36,35 +39,130 @@ class _CreateReviewsPageState extends State<CreateReviewsPage> {
             ),
             width: MediaQuery.of(context).size.width-60,
             child: Column(
-              //crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                /*DropdownButton<String>(
-                  // Step 3.
-                  value: selectedValue,
-                  // Step 4.
-                  items: <String>["Профсоюзная","Таганская","Новокосино","Текстильщики"]
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                        style: TextStyle(fontSize: 30),
-                      ),
-                    );
-                  }).toList(),
-                  // Step 5.
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      selectedValue = newValue!;
-                    });
-                  },
-                ),*/
+         Container(
+             padding: EdgeInsets.only(left:12,right: 12,bottom: 12,top:12),
+             margin: EdgeInsets.only(bottom: 12,top: 32),
+             width: MediaQuery.of(context).size.width/1.5,
+             decoration: BoxDecoration(
+               border: Border(
+                 bottom: BorderSide(
+                     width: 1.0, color: Colors.black),
+                 top: BorderSide(
+                     width: 1.0, color: Colors.black),
+                 left: BorderSide(
+                     width: 1.0, color: Colors.black),
+                 right: BorderSide(
+                     width: 1.0, color: Colors.black),
+               ),
+             ),
+             child:      Row(
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               children: [
+                 Text(
+                   selectedValue,
+                   style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,),
+                 ),
+                 Container(
+                     width: 20,
+                     child:
+                   GestureDetector(child:Icon(Icons.keyboard_arrow_down),onTap: (){
+                     _showHotel=!_showHotel;
+                     setState(() {
+
+                     });
+                   },)
+
+                   /*DropdownButton<String>(
+                   padding: EdgeInsets.zero,
+                   style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.white),
+                   dropdownColor: Palette().red,
+                      focusColor: Colors.green,
+                      // Step 3.
+                      value: selectedValue,
+                      // Step 4.
+                      items: <String>["Профсоюзная","Таганская","Новокосино","Текстильщики"]
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,),
+                          ),
+                        );
+                      }).toList(),
+                      // Step 5.
+                      onChanged: (String? newValue) {
+                        setState(() {
+
+                          selectedValue = newValue!;
+                        });
+                      },
+                    )*/),
+               ],
+             )),
+
+                _showHotel?   Container(
+                  margin: EdgeInsets.only(bottom: 12),
+                 width: MediaQuery.of(context).size.width/1.5,
+                  decoration: BoxDecoration(
+                    color: Palette().red,
+
+                  ),
+                  child: Column(
+                    children: [
+                      TextButton(onPressed: (){
+                        selectedValue="Профсоюзная";
+                        setState(() {
+
+                        });
+
+                      }, child:Text(
+                        "Профсоюзная",
+                        style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.white),
+                      ),),
+                      TextButton(onPressed: (){
+                        selectedValue="Таганская";
+                        setState(() {
+
+                        });
+
+                      }, child:Text(
+                        "Таганская",
+                        style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.white),
+                      ),),
+                      TextButton(onPressed: (){
+                        selectedValue="Новокосино";
+                        setState(() {
+
+                        });
+
+                      }, child:Text(
+                        "Новокосино",
+                        style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.white),
+                      ),),
+                      TextButton(onPressed: (){
+                        selectedValue="Текстильщики";
+                        setState(() {
+
+                        });
+
+                      }, child:Text(
+                        "Текстильщики",
+                        style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold,color: Colors.white),
+                      ),),
+                    ],
+                  ),
+
+                ):Container(),
 
 
 
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text("Ваше имя",style: TextStyle(fontWeight: FontWeight.bold)),),
+                  child: Text("  Ваше имя",style: TextStyle(fontWeight: FontWeight.bold)),),
+                SizedBox(height: 6,),
                 Container(
                   padding: EdgeInsets.only(left:12),
                   margin: EdgeInsets.only(bottom: 12),
@@ -243,7 +341,11 @@ class _CreateReviewsPageState extends State<CreateReviewsPage> {
                     ),
                   ),
                 ),
-                Container(
+               GestureDetector(
+                   onTap: (){
+                     Navigator.pop(context);
+                   },
+                   child: Container(
                   width: MediaQuery.of(context).size.width/1.5,
                   margin: EdgeInsets.only(top: 15, bottom: 15,),
                   padding: EdgeInsets.only(top: 15, bottom: 15,left: 24,right: 24),
@@ -253,8 +355,10 @@ class _CreateReviewsPageState extends State<CreateReviewsPage> {
                   ),
                   child: Text("Оставить отзыв", style: TextStyle(color: Colors.white,fontSize: 16 , fontWeight:FontWeight.bold, ),textAlign: TextAlign.center,),
 
-                ),
-                Row(
+                )),
+               Padding(
+                   padding: EdgeInsets.only(bottom: 32,),
+                   child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
@@ -287,7 +391,7 @@ class _CreateReviewsPageState extends State<CreateReviewsPage> {
                             ]))),
 
 
-                  ],),
+                  ],)),
 
 
 

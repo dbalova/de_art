@@ -1,10 +1,12 @@
 import 'package:de_art/custom_widget/how_to_get.dart';
+import 'package:de_art/page/select_hotel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../custom_widget/buttonModel.dart';
 import '../custom_widget/footer.dart';
 import '../main.dart';
 import '../palette.dart';
+import 'application_Page.dart';
 import 'menu_page.dart';
 
 class Contacts extends StatefulWidget {
@@ -51,12 +53,18 @@ class _ContactsState extends State<Contacts> {
                           'assets/logo.svg',
                         )))),
             actions: [
-              Container(
-                  height: 62,
-                  margin: const EdgeInsets.only(right: 12, top: 12),
-                  child: SvgPicture.asset(
-                    'assets/call.svg',
-                  ))
+              GestureDetector(
+
+                  onTap: (){   Navigator.of(context).push(PageRouteBuilder(
+                      opaque: false,
+                      pageBuilder: (BuildContext context, _, __) =>
+                          ApplicationPage()));},
+                  child:Container(
+                      height: 62,
+                      margin: EdgeInsets.only(right: 12, top: 12),
+                      child: SvgPicture.asset(
+                        'assets/call.svg',
+                      )))
             ],
           )),
       body: SingleChildScrollView(
@@ -203,10 +211,25 @@ class _ContactsState extends State<Contacts> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      RedButton(Palette().red, "Подобрать номера",
-                          Palette().white, 15, FontWeight.bold),
-                      RedButton(Palette().red, "Написать нам",
-                          Palette().white, 15, FontWeight.bold),
+                      GestureDetector(
+                          onTap: (){
+                            Navigator.of(context).push(PageRouteBuilder(
+                                opaque: false,
+                                pageBuilder: (BuildContext context, _, __) =>
+                                    SelectHotelPage()));
+                          },
+                          child:RedButton(Palette().red, "Подобрать номера",
+                          Palette().white, 15, FontWeight.bold)),
+                      GestureDetector(
+                          onTap: (){
+                            Navigator.of(context).push(PageRouteBuilder(
+                                opaque: false,
+                                pageBuilder: (BuildContext context, _, __) =>
+                                    ApplicationPage()));
+                          },
+
+                          child:RedButton(Palette().red, "Написать нам",
+                          Palette().white, 15, FontWeight.bold)),
                     ],
                   ),
                   Padding(

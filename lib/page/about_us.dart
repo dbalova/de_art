@@ -1,3 +1,4 @@
+import 'package:de_art/page/select_hotel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -6,6 +7,7 @@ import '../custom_widget/footer.dart';
 import '../custom_widget/icon_text_container.dart';
 import '../main.dart';
 import '../palette.dart';
+import 'application_Page.dart';
 import 'menu_page.dart';
 
 class AboutUs extends StatefulWidget {
@@ -52,12 +54,18 @@ class _AboutUsState extends State<AboutUs> {
                       'assets/logo.svg',
                     )))),
             actions: [
-              Container(
-                  height: 62,
-                  margin: const EdgeInsets.only(right: 12, top: 12),
-                  child: SvgPicture.asset(
-                    'assets/call.svg',
-                  ))
+              GestureDetector(
+
+                  onTap: (){   Navigator.of(context).push(PageRouteBuilder(
+                      opaque: false,
+                      pageBuilder: (BuildContext context, _, __) =>
+                          ApplicationPage()));},
+                  child:Container(
+                      height: 62,
+                      margin: EdgeInsets.only(right: 12, top: 12),
+                      child: SvgPicture.asset(
+                        'assets/call.svg',
+                      )))
             ],
           )),
       body: SingleChildScrollView(
@@ -137,8 +145,13 @@ class _AboutUsState extends State<AboutUs> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 56),
-                    child: RedButton(Palette().red, "Подобрать номера",
-                        Palette().white, 15, FontWeight.bold),
+                    child: GestureDetector(
+                        onTap: (){  Navigator.of(context).push(PageRouteBuilder(
+                            opaque: false,
+                            pageBuilder: (BuildContext context, _, __) =>
+                                SelectHotelPage()));},
+                        child:RedButton(Palette().red, "Подобрать номера",
+                        Palette().white, 15, FontWeight.bold)),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 24),
