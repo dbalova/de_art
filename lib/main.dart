@@ -218,7 +218,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Spacer(flex: 1),
-                      Text("Показать фильтры",
+                      Text("Скрыть фильтры",
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       Spacer(flex: 1),
                      GestureDetector(
@@ -813,7 +813,13 @@ class _MyHomePageState extends State<MyHomePage> {
             decoration: BoxDecoration(color: Color.fromRGBO(245, 245, 245, 1)),
             child: Column(
               children: [
-                Container(height: 265, child: Image.asset("assets/sea.png")),
+               GestureDetector(
+
+                   onTap:(){  Navigator.of(context).push(PageRouteBuilder(
+                       opaque: false,
+                       pageBuilder: (BuildContext context, _, __) =>
+                           RoomPage()));},
+                   child: Container(height: 265, child: Image.asset("assets/sea.png"))),
                 Container(
                     padding: EdgeInsets.only(
                         left: 12, top: 12, right: 12, bottom: 12),
@@ -971,7 +977,13 @@ class _MyHomePageState extends State<MyHomePage> {
             decoration: BoxDecoration(color: Color.fromRGBO(245, 245, 245, 1)),
             child: Column(
               children: [
-                Container(height: 265, child: Image.asset("assets/sea.png")),
+                GestureDetector(
+
+                    onTap:(){  Navigator.of(context).push(PageRouteBuilder(
+                        opaque: false,
+                        pageBuilder: (BuildContext context, _, __) =>
+                            RoomPage()));},
+                    child: Container(height: 265, child: Image.asset("assets/sea.png"))),
                 Container(
                     padding: EdgeInsets.only(
                         left: 12, top: 12, right: 12, bottom: 12),
@@ -1129,7 +1141,13 @@ class _MyHomePageState extends State<MyHomePage> {
             decoration: BoxDecoration(color: Color.fromRGBO(245, 245, 245, 1)),
             child: Column(
               children: [
-                Container(height: 265, child: Image.asset("assets/sea.png")),
+                GestureDetector(
+
+                    onTap:(){  Navigator.of(context).push(PageRouteBuilder(
+                        opaque: false,
+                        pageBuilder: (BuildContext context, _, __) =>
+                            RoomPage()));},
+                    child: Container(height: 265, child: Image.asset("assets/sea.png"))),
                 Container(
                     padding: EdgeInsets.only(
                         left: 12, top: 12, right: 12, bottom: 12),

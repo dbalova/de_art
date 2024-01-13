@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../main.dart';
 import '../page/about_us.dart';
 import '../palette.dart';
 
@@ -168,15 +169,23 @@ Widget Footer(context){
           ],
         ),
         Padding(
-            padding: EdgeInsets.only(top: 24, bottom: 24),
+            padding: EdgeInsets.only(top: 24, bottom: 12),
             child: Divider(
               color: Colors.white,
             )),
-        SvgPicture.asset(
+       GestureDetector(
+           onTap: (){Navigator.pushAndRemoveUntil<dynamic>(
+             context,
+             MaterialPageRoute<dynamic>(
+               builder: (BuildContext context) => MyHomePage(title: 'De Art 13'),
+             ),
+                 (route) => false,//if you want to disable back feature set to false
+           );},
+           child: SvgPicture.asset(
           'assets/logo2.svg',
-        ),
+        )),
         SizedBox(
-          height: 8,
+          height: 12,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

@@ -173,6 +173,11 @@ flutter:
     - assets/2.png
     - assets/3.png
     - assets/4.png
+    - assets/Vk-BLACK.svg
+    - assets/WA-BLACK.svg
+    - assets/VI-BLACK.svg
+    - assets/VI-BLACK.png
+    - assets/TE-BLACK.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -188,7 +193,7 @@ flutter:
   fonts:
     - family: CeraPro
       fonts:
-       - asset: assets/fonts/CeraPro-Light.ttf
+       - asset: assets/fonts/CeraPro-Regular.ttf
          weight: 400
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

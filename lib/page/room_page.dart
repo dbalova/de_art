@@ -335,27 +335,38 @@ class _RoomPageState extends State<RoomPage> {
 
                                   GestureDetector(
                                       onTap:(){URL_WA();},
-                                      child:SvgPicture.asset(
-                                        'assets/IconWhatsApp.svg',
-                                      )),
+                                      child:Container(
+                                          width: 32,
+                                          child:SvgPicture.asset(
+                                        'assets/WA-BLACK.svg',
+                                      ))),
                                   Spacer(flex: 1),
                                   GestureDetector(
                                       onTap:(){URL_TG();},
-                                      child:SvgPicture.asset(
-                                        'assets/IconTelegram.svg',
-                                      )),
+                                      child:Container(
+                                          width: 32,
+                                          child:SvgPicture.asset(
+                                        'assets/TE-BLACK.svg',
+                                      ))),
                                   Spacer(flex: 1),
                                   GestureDetector(
                                       onTap:(){URL_VIBER();},
-                                      child: SvgPicture.asset(
-                                        'assets/IconViber.svg',
-                                      )),
+                                      child:
+                                      Container(
+                                          width: 32,
+                                          child:Image.asset( 'assets/VI-BLACK.png',))
+                                    /*SvgPicture.asset(
+                                        'assets/VI-BLACK.svg',
+                                      )*/),
                                   Spacer(flex: 1),
                                   GestureDetector(
                                       onTap:(){URL_VK();},
-                                      child:SvgPicture.asset(
-                                        'assets/IconVK.svg',
-                                      )),
+                                      child:Container(
+                                          width: 32,
+                                          child:SvgPicture.asset(
+                                        'assets/Vk-BLACK.svg',
+                                      ))),
+
 
                                 ],
                               ),

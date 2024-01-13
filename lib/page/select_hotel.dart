@@ -488,7 +488,12 @@ margin:EdgeInsets.only(top:24),
                           color: Color.fromRGBO(245, 245, 245, 1)),
                       child: Column(
                         children: [
-                          Container(
+                       GestureDetector(
+                           onTap:(){  Navigator.of(context).push(PageRouteBuilder(
+                               opaque: false,
+                               pageBuilder: (BuildContext context, _, __) =>
+                                   RoomPage()));},
+                           child:   Container(
                               height: 265,
                               child: Swiper(
                                 itemBuilder: (context, index) {
@@ -501,7 +506,7 @@ margin:EdgeInsets.only(top:24),
                                     iconNext: Icons.arrow_circle_right_outlined,
                                     iconPrevious:
                                     Icons.arrow_circle_left_outlined),
-                              )),
+                              ))),
                           Container(
                               padding: EdgeInsets.only(top: 12, bottom: 12),
                               child: Column(
@@ -677,20 +682,25 @@ margin:EdgeInsets.only(top:24),
                           color: Color.fromRGBO(245, 245, 245, 1)),
                       child: Column(
                         children: [
-                          Container(
-                              height: 265,
-                              child: Swiper(
-                                itemBuilder: (context, index) {
-                                  return fotoRoom[index];
-                                },
-                                itemCount: fotoRoom.length,
-                                //pagination: const SwiperPagination(),
-                                control: const SwiperControl(
-                                    color: Colors.white,
-                                    iconNext: Icons.arrow_circle_right_outlined,
-                                    iconPrevious:
-                                    Icons.arrow_circle_left_outlined),
-                              )),
+                          GestureDetector(
+                              onTap:(){  Navigator.of(context).push(PageRouteBuilder(
+                                  opaque: false,
+                                  pageBuilder: (BuildContext context, _, __) =>
+                                      RoomPage()));},
+                              child:   Container(
+                                  height: 265,
+                                  child: Swiper(
+                                    itemBuilder: (context, index) {
+                                      return fotoRoom[index];
+                                    },
+                                    itemCount: fotoRoom.length,
+                                    //pagination: const SwiperPagination(),
+                                    control: const SwiperControl(
+                                        color: Colors.white,
+                                        iconNext: Icons.arrow_circle_right_outlined,
+                                        iconPrevious:
+                                        Icons.arrow_circle_left_outlined),
+                                  ))),
                           Container(
                               padding: EdgeInsets.only(top: 12, bottom: 12),
                               child: Column(
@@ -866,20 +876,25 @@ margin:EdgeInsets.only(top:24),
                           color: Color.fromRGBO(245, 245, 245, 1)),
                       child: Column(
                         children: [
-                          Container(
-                              height: 265,
-                              child: Swiper(
-                                itemBuilder: (context, index) {
-                                  return fotoRoom[index];
-                                },
-                                itemCount: fotoRoom.length,
-                                //pagination: const SwiperPagination(),
-                                control: const SwiperControl(
-                                    color: Colors.white,
-                                    iconNext: Icons.arrow_circle_right_outlined,
-                                    iconPrevious:
-                                    Icons.arrow_circle_left_outlined),
-                              )),
+                          GestureDetector(
+                              onTap:(){  Navigator.of(context).push(PageRouteBuilder(
+                                  opaque: false,
+                                  pageBuilder: (BuildContext context, _, __) =>
+                                      RoomPage()));},
+                              child:   Container(
+                                  height: 265,
+                                  child: Swiper(
+                                    itemBuilder: (context, index) {
+                                      return fotoRoom[index];
+                                    },
+                                    itemCount: fotoRoom.length,
+                                    //pagination: const SwiperPagination(),
+                                    control: const SwiperControl(
+                                        color: Colors.white,
+                                        iconNext: Icons.arrow_circle_right_outlined,
+                                        iconPrevious:
+                                        Icons.arrow_circle_left_outlined),
+                                  ))),
                           Container(
                               padding: EdgeInsets.only(top: 12, bottom: 12),
                               child: Column(
