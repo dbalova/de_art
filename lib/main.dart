@@ -1,4 +1,5 @@
 import 'package:de_art/custom_widget/buttonModel.dart';
+import 'package:de_art/page/Map.dart';
 import 'package:de_art/page/application_Page.dart';
 import 'package:de_art/page/booking_page.dart';
 import 'package:de_art/page/menu_page.dart';
@@ -94,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => const MenuPage(),
+                      builder: (BuildContext context) => const MapScreen(),
                     ),
                   );
                 },
