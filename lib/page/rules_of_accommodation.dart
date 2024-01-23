@@ -138,7 +138,7 @@ class _RulesOfAccommodationState extends State<RulesOfAccommodation> {
               padding: const EdgeInsets.only(top: 24),
               child: Image.asset('assets/Map.png'),
             ),
-            Footer(context)
+           /* Footer(context)*/
           ],
         ),
       ),

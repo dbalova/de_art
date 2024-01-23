@@ -134,9 +134,19 @@ class _AboutUsState extends State<AboutUs> {
                     ),
                   ),
                   const Padding(
-                    padding: EdgeInsets.only(bottom: 24),
+                    padding: EdgeInsets.only(bottom: 8),
                     child: Text(
                       'Гостиница в Текстильщиках',
+                      style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          decorationThickness: 2,
+                          fontSize: 18),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 24),
+                    child: Text(
+                      'Гостиница на Кропоткинской',
                       style: TextStyle(
                           decoration: TextDecoration.underline,
                           decorationThickness: 2,
@@ -337,7 +347,7 @@ class _AboutUsState extends State<AboutUs> {
               padding: const EdgeInsets.only(top: 24),
               child: Image.asset('assets/Map.png'),
             ),
-            Footer(context)
+           /* Footer(context)*/
           ],
         ),
       ),

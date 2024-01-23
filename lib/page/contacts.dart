@@ -85,7 +85,7 @@ class _ContactsState extends State<Contacts> {
                     ),
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Column(
                         children: [
@@ -102,6 +102,7 @@ class _ContactsState extends State<Contacts> {
                           ),
                         ],
                       ),
+                      SizedBox(width: 24,),
                       Column(
                         children: [
                           Container(
@@ -116,7 +117,7 @@ class _ContactsState extends State<Contacts> {
                             ),
                           ),
                         ],
-                      ),
+                      ),SizedBox(width: 24,),
                       Column(
                         children: [
                           Container(
@@ -132,23 +133,41 @@ class _ContactsState extends State<Contacts> {
                           ),
                         ],
                       ),
-                      Column(
-                        children: [
-                          Container(
-                            child: Text(
-                              "Текстильщики",
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom:
-                                    BorderSide(width: 1.0, color: Colors.black),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+
                     ],
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [ Column(
+                    children: [
+                      Container(
+                        child: Text(
+                          "Текстильщики",
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom:
+                            BorderSide(width: 1.0, color: Colors.black),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),SizedBox(width: 24,),
+                    Column(
+                      children: [
+                        Container(
+                          child: Text(
+                            "Кропоткинская",
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom:
+                              BorderSide(width: 1.0, color: Colors.black),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),],),
                   const Padding(
                     padding: EdgeInsets.only(top: 28.0),
                     child: Row(
@@ -243,7 +262,7 @@ class _ContactsState extends State<Contacts> {
               padding: const EdgeInsets.only(top: 24),
               child: Image.asset('assets/Map.png'),
             ),
-            Footer(context)
+            /*Footer(context)*/
           ],
         ),
       ),

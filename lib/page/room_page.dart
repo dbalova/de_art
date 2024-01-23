@@ -483,7 +483,7 @@ class _RoomPageState extends State<RoomPage> {
               padding: const EdgeInsets.only(top: 24),
               child: Image.asset('assets/Map.png'),
             ),
-            Footer(context)
+           /* Footer(context)*/
           ],
         ),
       ),

@@ -87,6 +87,12 @@ class _MenuPageState extends State<MenuPage> {
             builder: (BuildContext context) => const SelectHotelPage(),
           ),
         );}, child:Text("Текстильщики",style: TextStyle(color: Colors.white,fontSize: 18),)),
+        TextButton(onPressed: (){ Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => const SelectHotelPage(),
+          ),
+        );}, child:Text("Кропоткинская",style: TextStyle(color: Colors.white,fontSize: 18),)),
 SizedBox(height: 50,),
         TextButton(onPressed: (){Navigator.push(
           context,
