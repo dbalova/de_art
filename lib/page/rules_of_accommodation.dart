@@ -5,6 +5,7 @@ import '../custom_widget/duty.dart';
 import '../custom_widget/footer.dart';
 import '../main.dart';
 import '../palette.dart';
+import 'Map.dart';
 import 'application_Page.dart';
 import 'menu_page.dart';
 
@@ -134,10 +135,7 @@ class _RulesOfAccommodationState extends State<RulesOfAccommodation> {
                 ],
               ),
             ),
-            Container(
-              padding: const EdgeInsets.only(top: 24),
-              child: Image.asset('assets/Map.png'),
-            ),
+            miniMap(context)
            /* Footer(context)*/
           ],
         ),

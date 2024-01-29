@@ -43,6 +43,8 @@ dependencies:
   flutter_masked_text2: ^0.9.1
   yandex_mapkit: ^3.2.0
   geolocator: ^9.0.2
+  equatable: ^2.0.5
+  permission_handler: ^11.0.0
 
 dev_dependencies:
   flutter_test:
@@ -181,6 +183,9 @@ flutter:
     - assets/VI-BLACK.png
     - assets/TE-BLACK.svg
     - assets/Map_Profsoyznaya.png
+    - assets/Map_Tekstilshiki.png
+    - assets/Map_Novokosino.png
+    - assets/Map_Taganskaya.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

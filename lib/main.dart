@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 import 'custom_widget/footer.dart';
 
@@ -39,6 +40,7 @@ List<bool> _typeBed = [
   false,
   false,
 ];
+late final YandexMapController mapController;
 final _scrollController = ScrollController();
 void _scrollToIndex(index) {
   _scrollController.animateTo(600.0 * index,
@@ -91,6 +93,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(78.0),
           child: AppBar(
@@ -100,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => const MapScreen(),
+                      builder: (BuildContext context) => const MenuPage(),
                     ),
                   );
                 },
@@ -131,1620 +135,1008 @@ class _MyHomePageState extends State<MyHomePage> {
                   )))
             ],
           )),
-      body: SingleChildScrollView(
-          controller: _scrollController,
-          child: Container(
-              child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            child: Stack(
-              children: [
-                Image.asset("assets/hotel.png"),
-                Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 560,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [Colors.black, Colors.transparent]))),
-                Container(
-                    padding: EdgeInsets.only(
-                        top: 15, bottom: 15, left: 20, right: 20),
-                    height: 560,
-                    width: MediaQuery.of(context).size.width / 1.5,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Отели на час в Москве',
-                          style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
-                        Text(
-                          'Четыре великолепных бутик-отеля «Де-Арт 13» рассчитаны на небольшое количество постояльцев, которым предлагаются номера с уникальными, продуманными до мелочей интерьерами.',
-                          style: TextStyle(fontSize: 15, color: Colors.white),
-                        ),
-                     GestureDetector(
-                         onTap: (){
-                           /*Navigator.of(context).push(PageRouteBuilder(
-                               opaque: false,
-                               pageBuilder: (BuildContext context, _, __) =>
-                                   BookingPage()));*/
-
-                           _scrollToIndex(1);
-                         },
-                         child:   RedButton(
-                            Color.fromRGBO(255, 255, 255, 1),
-                            "Бронировать",
-                            Color.fromRGBO(114, 40, 57, 1),
-                            15,
-                            FontWeight.bold)),
-                        Text(
-                          'Это прекрасная альтернатива крупным столичным гостиницам с типовыми номерами.',
-                          style: TextStyle(fontSize: 15, color: Colors.white),
-                        ),
-                      ],
-                    ))
-              ],
-            ),
-          ), GestureDetector(
-
-              onTap: (){
-
-                _isFilter=true;
-                setState(() {
-
-                });
-
-              },
+      body:
+          SingleChildScrollView(
+              controller: _scrollController,
               child: Container(
-            padding: EdgeInsets.only(top: 26, bottom: 26, left: 26, right: 26),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                SvgPicture.asset(
-                  'assets/filtr.svg',
-                ),
-                Text("Показать фильтры",
-                    style: TextStyle(fontWeight: FontWeight.bold))
-              ],
-            ),
-          )),
-        _isFilter? Container(
-             padding: EdgeInsets.only(left: 8,right: 8),
+                  child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                child: Stack(
+                  children: [
+                    Image.asset("assets/hotel.png"),
+                    Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 560,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [Colors.black, Colors.transparent]))),
+                    Container(
+                        padding: EdgeInsets.only(
+                            top: 15, bottom: 15, left: 20, right: 20),
+                        height: 560,
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Отели на час в Москве',
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                            Text(
+                              'Четыре великолепных бутик-отеля «Де-Арт 13» рассчитаны на небольшое количество постояльцев, которым предлагаются номера с уникальными, продуманными до мелочей интерьерами.',
+                              style: TextStyle(fontSize: 15, color: Colors.white),
+                            ),
+                         GestureDetector(
+                             onTap: (){
+                               /*Navigator.of(context).push(PageRouteBuilder(
+                                   opaque: false,
+                                   pageBuilder: (BuildContext context, _, __) =>
+                                       BookingPage()));*/
 
-             child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+                               _scrollToIndex(1);
+                             },
+                             child:   RedButton(
+                                Color.fromRGBO(255, 255, 255, 1),
+                                "Бронировать",
+                                Color.fromRGBO(114, 40, 57, 1),
+                                15,
+                                FontWeight.bold)),
+                            Text(
+                              'Это прекрасная альтернатива крупным столичным гостиницам с типовыми номерами.',
+                              style: TextStyle(fontSize: 15, color: Colors.white),
+                            ),
+                          ],
+                        ))
+                  ],
+                ),
+              ), GestureDetector(
+
+                  onTap: (){
+
+                    _isFilter=true;
+                    setState(() {
+
+                    });
+
+                  },
+                  child: Container(
+                padding: EdgeInsets.only(top: 26, bottom: 26, left: 26, right: 26),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/filtr.svg',
+                    ),
+                    Text("Показать фильтры",
+                        style: TextStyle(fontWeight: FontWeight.bold))
+                  ],
+                ),
+              )),
+            _isFilter? Container(
+                 padding: EdgeInsets.only(left: 8,right: 8),
+
+                 child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.asset("assets/Map.png"),
+                  Padding(
+                      padding:
+                          EdgeInsets.only(top: 24, bottom: 24, left: 12, right: 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Spacer(flex: 1),
+                          Text("Скрыть фильтры",
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          Spacer(flex: 1),
+                         GestureDetector(
+
+                             onTap: (){
+
+                               _isFilter=false;
+                               setState(() {
+
+                               });
+
+                             },
+                             child: Icon(
+                            Icons.cancel_outlined,
+                            color: Palette().red,
+                          ))
+                        ],
+                      )),
+                  Text("Метро:", style: TextStyle(fontWeight: FontWeight.bold)),
+                  Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            _metro[0] = !_metro[0];
+                            setState(() {});
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(
+                                  top: 8, bottom: 8, left: 4, right: 4),
+                              padding: EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 12, right: 12),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(100)),
+                                  color: _metro[0]
+                                      ? Palette().yellow
+                                      : Colors.grey.shade300),
+                              child: Text('Профсоюзная'))),
+                      GestureDetector(
+                          onTap: () {
+                            _metro[1] = !_metro[1];
+                            setState(() {});
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(
+                                  top: 8, bottom: 8, left: 4, right: 4),
+                              padding: EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 12, right: 12),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(100)),
+                                  color: _metro[1]
+                                      ?Palette().yellow
+                                      : Colors.grey.shade300),
+                              child: Text('Таганская'))),
+                      GestureDetector(
+                          onTap: () {
+                            _metro[2] = !_metro[2];
+                            setState(() {});
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(
+                                  top: 8, bottom: 8, left: 4, right: 4),
+                              padding: EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 12, right: 12),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(100)),
+                                  color: _metro[2]
+                                      ? Palette().yellow
+                                      : Colors.grey.shade300),
+                              child: Text('Новокосино'))),
+
+                    ],
+                  ),
+                 Align(
+                     alignment: Alignment.centerLeft,
+                     child: GestureDetector(
+                      onTap: () {
+                        _metro[3] = !_metro[3];
+                        setState(() {});
+                      },
+                      child: Container(
+
+                          margin: EdgeInsets.only(
+                              top: 8, bottom: 8, left: 4, right: 4),
+                          padding: EdgeInsets.only(
+                              top: 10, bottom: 10, left: 12, right: 12),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(100)),
+                              color: _metro[3]
+                                  ? Palette().yellow
+                                  : Colors.grey.shade300),
+                          child: Text('Текстильщики')))),
+                  Text("Время:", style: TextStyle(fontWeight: FontWeight.bold)),
+                  Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            _time[0] = !_time[0];
+                            setState(() {});
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(
+                                  top: 8, bottom: 8, left: 4, right: 4),
+                              padding: EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 12, right: 12),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(100)),
+                                  color: _time[0]
+                                      ? Palette().yellow
+                                      : Colors.grey.shade300),
+                              child: Text('От 1 часа'))),
+                      GestureDetector(
+                          onTap: () {
+                            _time[1] = !_time[1];
+                            setState(() {});
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(
+                                  top: 8, bottom: 8, left: 4, right: 4),
+                              padding: EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 12, right: 12),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(100)),
+                                  color: _time[1]
+                                      ? Palette().yellow
+                                      : Colors.grey.shade300),
+                              child: Text('От 2 часов'))),
+                      GestureDetector(
+                          onTap: () {
+                            _time[2] = !_time[2];
+                            setState(() {});
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(
+                                  top: 8, bottom: 8, left: 4, right: 4),
+                              padding: EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 12, right: 12),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(100)),
+                                  color: _time[2]
+                                      ? Palette().yellow
+                                      : Colors.grey.shade300),
+                              child: Text('От 3 часов'))),
+
+                    ],
+                  ),Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            _time[3] = !_time[3];
+                            setState(() {});
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(
+                                  top: 8, bottom: 8, left: 4, right: 4),
+                              padding: EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 12, right: 12),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(100)),
+                                  color: _time[3]
+                                      ? Palette().yellow
+                                      : Colors.grey.shade300),
+                              child: Text('На ночь'))),
+                      GestureDetector(
+                          onTap: () {
+                            _time[4] = !_time[4];
+                            setState(() {});
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(
+                                  top: 8, bottom: 8, left: 4, right: 4),
+                              padding: EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 12, right: 12),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(100)),
+                                  color: _time[4]
+                                      ? Palette().yellow
+                                      : Colors.grey.shade300),
+                              child: Text('На сутки'))),
+                    ],
+                  ),
+                  Text("Тип кровати:",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            _typeBed[0] = !_typeBed[0];
+                            setState(() {});
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(
+                                  top: 8, bottom: 8, left: 4, right: 4),
+                              padding: EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 12, right: 12),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(100)),
+                                  color: _typeBed[0]
+                                      ? Palette().yellow
+                                      : Colors.grey.shade300),
+                              child: Text('Круглая'))),
+                      GestureDetector(
+                          onTap: () {
+                            _typeBed[1] = !_typeBed[1];
+                            setState(() {});
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(
+                                  top: 8, bottom: 8, left: 4, right: 4),
+                              padding: EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 12, right: 12),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(100)),
+                                  color: _typeBed[1]
+                                      ? Palette().yellow
+                                      : Colors.grey.shade300),
+                              child: Text('Обычная двуспальная'))),
+
+                    ],
+                  ),
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child:  GestureDetector(
+                      onTap: () {
+                        _typeBed[2] = !_typeBed[2];
+                        setState(() {});
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(
+                              top: 8, bottom: 8, left: 4, right: 4),
+                          padding: EdgeInsets.only(
+                              top: 10, bottom: 10, left: 12, right: 12),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(100)),
+                              color: _typeBed[2]
+                                  ? Palette().yellow
+                                  : Colors.grey.shade300),
+                          child: Text('Большая двуспальная')))),
+                  Text("Стоимость:",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  Row(
+                    children: [
+                      Text("От"),
+                      Container(
+                        width: MediaQuery.of(context).size.width/5,
+                          margin: EdgeInsets.only(
+                              top: 8, bottom: 8, left: 4, right: 4),
+                          padding: EdgeInsets.only(
+                              left: 12, right: 12),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(100)),
+                              color:  Colors.grey.shade300),
+                          child: TextField(
+
+                            decoration: const InputDecoration(
+                              isDense: true,
+                                border: InputBorder.none, ),
+
+                          )),
+                  Text("До"),
+                      Container(
+                          width: MediaQuery.of(context).size.width/5,
+                          margin: EdgeInsets.only(
+                              top: 8, bottom: 8, left: 4, right: 4),
+                          padding: EdgeInsets.only(
+                              left: 12, right: 12),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(100)),
+                              color:  Colors.grey.shade300),
+                          child: TextField(
+
+                            decoration: const InputDecoration(
+                              isDense: true,
+                              border: InputBorder.none, ),
+
+                          )),
+
+                    ],
+                  ),
+
+                  Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            _cost[0] = !_cost[0];
+                            setState(() {});
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(
+                                  top: 8, bottom: 8, left: 4, right: 4),
+                              padding: EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 12, right: 12),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(100)),
+                                  color: _cost[0]
+                                      ? Palette().yellow
+                                      : Colors.grey.shade300),
+                              child: Text('До 550 в час'))),
+                      GestureDetector(
+                          onTap: () {
+                            _cost[1] = !_cost[1];
+                            setState(() {});
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(
+                                  top: 8, bottom: 8, left: 4, right: 4),
+                              padding: EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 12, right: 12),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(100)),
+                                  color: _cost[1]
+                                      ? Palette().yellow
+                                      : Colors.grey.shade300),
+                              child: Text('До 750 в час'))),
+                      GestureDetector(
+                          onTap: () {
+                            _cost[2] = !_cost[2];
+                            setState(() {});
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(
+                                  top: 8, bottom: 8, left: 4, right: 4),
+                              padding: EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 12, right: 12),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(100)),
+                                  color: _cost[2]
+                                      ? Palette().yellow
+                                      : Colors.grey.shade300),
+                              child: Text('До 1100 в час'))),
+
+                    ],
+                  ),
+                  Text("Тип номера:",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            _typeRoom[0] = !_typeRoom[0];
+                            setState(() {});
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(
+                                  top: 8, bottom: 8, left: 4, right: 4),
+                              padding: EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 12, right: 12),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(100)),
+                                  color: _typeRoom[0]
+                                      ? Palette().yellow
+                                      : Colors.grey.shade300),
+                              child: Text('Эконом'))),
+                      GestureDetector(
+                          onTap: () {
+                            _typeRoom[1] = !_typeRoom[1];
+                            setState(() {});
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(
+                                  top: 8, bottom: 8, left: 4, right: 4),
+                              padding: EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 12, right: 12),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(100)),
+                                  color: _typeRoom[1]
+                                      ? Palette().yellow
+                                      : Colors.grey.shade300),
+                              child: Text('Люкс'))),
+                      GestureDetector(
+                          onTap: () {
+                            _typeRoom[2] = !_typeRoom[2];
+                            setState(() {});
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(
+                                  top: 8, bottom: 8, left: 4, right: 4),
+                              padding: EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 12, right: 12),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(100)),
+                                  color: _typeRoom[2]
+                                      ? Palette().yellow
+                                      : Colors.grey.shade300),
+                              child: Text('Делюкс'))),
+
+                    ],
+                  ),
+
+                  Text("Джакузи:",
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  Row(
+                    children: [
+
+                      GestureDetector(
+                          onTap: () {
+                            _isJacuzzi=true;
+                            setState(() {});
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(
+                                  top: 8, bottom: 8, left: 4, right: 4),
+                              padding: EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 12, right: 12),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(100)),
+                                  color: _isJacuzzi??false
+                                      ? Palette().yellow
+                                      : Colors.grey.shade300),
+                              child: Text('С джакузи'))),
+                      GestureDetector(
+                          onTap: () {
+                            _isJacuzzi=false;
+                            setState(() {});
+                          },
+                          child: Container(
+                              margin: EdgeInsets.only(
+                                  top: 8, bottom: 8, left: 4, right: 4),
+                              padding: EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 12, right: 12),
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(100)),
+                                  color: _isJacuzzi??true
+                                      ?Colors.grey.shade300
+                                      :  Palette().yellow),
+                              child: Text('Без джакузи'))),
+
+                    ],
+                  ),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image.asset("assets/Map.png"),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+              Text("Охраняемая парковка:",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+
+                  GestureDetector(
+                      onTap: () {
+                        _isParcking=true;
+                        setState(() {});
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(
+                              top: 8, bottom: 8, left: 4, right: 4),
+                          padding: EdgeInsets.only(
+                              top: 10, bottom: 10, left: 12, right: 12),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(100)),
+                              color: _isParcking??false
+                                  ? Palette().yellow
+                                  : Colors.grey.shade300),
+                          child: Text('Да'))),
+                  GestureDetector(
+                      onTap: () {
+                        _isParcking=false;
+                        setState(() {});
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(
+                              top: 8, bottom: 8, left: 4, right: 4),
+                          padding: EdgeInsets.only(
+                              top: 10, bottom: 10, left: 12, right: 12),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(100)),
+                              color: _isParcking??true
+                                  ?Colors.grey.shade300
+                                  :  Palette().yellow),
+                          child: Text('Нет'))),
+
+                ],
+              ),
+            ],),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+              Text("Круглосуточный бар:",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+
+                  GestureDetector(
+                      onTap: () {
+                        _isBar=true;
+                        setState(() {});
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(
+                              top: 8, bottom: 8, left: 4, right: 4),
+                          padding: EdgeInsets.only(
+                              top: 10, bottom: 10, left: 12, right: 12),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(100)),
+                              color: _isBar??false
+                                  ? Palette().yellow
+                                  : Colors.grey.shade300),
+                          child: Text('Да'))),
+                  GestureDetector(
+                      onTap: () {
+                        _isBar=false;
+                        setState(() {});
+                      },
+                      child: Container(
+                          margin: EdgeInsets.only(
+                              top: 8, bottom: 8, left: 4, right: 4),
+                          padding: EdgeInsets.only(
+                              top: 10, bottom: 10, left: 12, right: 12),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(100)),
+                              color:_isBar??true
+                                  ?Colors.grey.shade300
+                                  :  Palette().yellow),
+                          child: Text('Нет'))),
+
+                ],
+              ),
+            ],),
+          ],),
+                  Padding(
+                      padding: EdgeInsets.only(top:24, bottom: 24),
+                      child:Row(
+
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [RedButton(Palette().red, "Применить", Colors.white, 16, FontWeight.bold),
+                   GestureDetector(
+                     onTap:(){
+                       _isBar=null;
+                       _isJacuzzi=null;
+                       _isParcking=null;
+                       _typeRoom = [false,false,false];
+                       _cost = [false,false,false];
+                       _metro = [false, false, false, false];
+                       _typeBed = [
+                         false,
+                         false,
+                         false,
+                       ];
+                       setState(() {
+
+                       });
+                     },
+                     child: RedButton(Palette().red, "Сбросить", Colors.white, 16, FontWeight.bold))],)),
+
+
+
+
+
+
+
+                ],
+              )) : Container(),
+              Text(
+                'Отель на Профсоюзной',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Palette().red),
+              ),
+
+             ListView.builder(
+                     shrinkWrap: true,
+                  controller: _scrollController,
+                  itemCount: 3,
+                  itemBuilder: (context,index){
+                return  Container(
+                  margin: EdgeInsets.only(left: 12, top: 12, right: 12, bottom: 12),
+                  decoration: BoxDecoration(color: Color.fromRGBO(245, 245, 245, 1)),
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                          onTap:(){  Navigator.of(context).push(PageRouteBuilder(
+                              opaque: false,
+                              pageBuilder: (BuildContext context, _, __) =>
+                                  RoomPage()));},
+                          child:   Container(
+                              height: 265,
+                              child: Swiper(
+                                itemBuilder: (context, index) {
+                                  return fotoRoom[index];
+                                },
+                                itemCount: fotoRoom.length,
+                                //pagination: const SwiperPagination(),
+                                control: const SwiperControl(
+                                    color: Colors.white,
+                                    iconNext: Icons.arrow_circle_right_outlined,
+                                    iconPrevious:
+                                    Icons.arrow_circle_left_outlined),
+                              ))),
+                      Container(
+                          padding: EdgeInsets.only(
+                              left: 12, top: 12, right: 12, bottom: 12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                  padding: EdgeInsets.only(left: 12, right: 12),
+                                  child: Text(
+                                    '209 Cтандарт Морской с джакузи',
+                                    style: TextStyle(
+                                        fontSize: 16, fontWeight: FontWeight.bold),
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: 12, top: 12, left: 12, right: 12),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                'assets/time1.svg',
+                                              ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'Час',
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 15),
+                                                  ),
+                                                  Text(
+                                                    '750 ₽',
+                                                    style: TextStyle(fontSize: 15),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          )),
+                                      Container(
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                'assets/time12.svg',
+                                              ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'Ночь',
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 15),
+                                                  ),
+                                                  Text(
+                                                    '3 500 ₽',
+                                                    style: TextStyle(fontSize: 15),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          )),
+                                      Container(
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                'assets/time24.svg',
+                                              ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'Сутки',
+                                                    style: TextStyle(
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 15),
+                                                  ),
+                                                  Text(
+                                                    '4 500 ₽',
+                                                    style: TextStyle(fontSize: 15),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ))
+                                    ],
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: 12, top: 12, left: 12, right: 12),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/mark.svg',
+                                      ),
+                                      SizedBox(
+                                        width: 12,
+                                      ),
+                                      Text(
+                                        'Профсоюзная',
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      Spacer(
+                                        flex: 2,
+                                      ),
+                                      GestureDetector(
+                                          onTap: (){
+                                            Navigator.of(context).push(PageRouteBuilder(
+                                                opaque: false,
+                                                pageBuilder: (BuildContext context, _, __) =>
+                                                    RoomPage()));
+                                          },
+                                          child: Text(
+                                            'Подробнее',
+                                            style: TextStyle(
+                                                decoration: TextDecoration.underline,
+                                                decorationThickness: 2,
+                                                fontSize: 18),
+                                          )),
+                                    ],
+                                  )),
+                              Padding(
+                                  padding: EdgeInsets.only(left: 12, right: 12),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/stars.svg',
+                                      ),
+                                      GestureDetector(
+                                          onTap: (){
+                                            Navigator.of(context).push(PageRouteBuilder(
+                                                opaque: false,
+                                                pageBuilder: (BuildContext context, _, __) =>
+                                                    BookingPage()));
+                                          },
+                                          child:  RedButton(Palette().red, "Бронировать",
+                                              Palette().white, 15, FontWeight.normal)),
+                                    ],
+                                  )),
+                            ],
+                          ))
+                    ],
+                  ),
+                );
+
+              }),
+
+
+          GestureDetector(
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const SelectHotelPage(),
+                  ),
+                );
+              },
+              child:    RedButton(Palette().red, "Все номера", Palette().white, 15,
+                  FontWeight.bold)),
               Padding(
                   padding:
-                      EdgeInsets.only(top: 24, bottom: 24, left: 12, right: 12),
+                      EdgeInsets.only(bottom: 12, top: 12, left: 12, right: 12),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Spacer(flex: 1),
-                      Text("Скрыть фильтры",
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      Spacer(flex: 1),
-                     GestureDetector(
-
-                         onTap: (){
-
-                           _isFilter=false;
-                           setState(() {
-
-                           });
-
-                         },
-                         child: Icon(
-                        Icons.cancel_outlined,
-                        color: Palette().red,
-                      ))
-                    ],
-                  )),
-              Text("Метро:", style: TextStyle(fontWeight: FontWeight.bold)),
-              Row(
-                children: [
-                  GestureDetector(
-                      onTap: () {
-                        _metro[0] = !_metro[0];
-                        setState(() {});
-                      },
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 8, bottom: 8, left: 4, right: 4),
-                          padding: EdgeInsets.only(
-                              top: 10, bottom: 10, left: 12, right: 12),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(100)),
-                              color: _metro[0]
-                                  ? Palette().yellow
-                                  : Colors.grey.shade300),
-                          child: Text('Профсоюзная'))),
-                  GestureDetector(
-                      onTap: () {
-                        _metro[1] = !_metro[1];
-                        setState(() {});
-                      },
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 8, bottom: 8, left: 4, right: 4),
-                          padding: EdgeInsets.only(
-                              top: 10, bottom: 10, left: 12, right: 12),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(100)),
-                              color: _metro[1]
-                                  ?Palette().yellow
-                                  : Colors.grey.shade300),
-                          child: Text('Таганская'))),
-                  GestureDetector(
-                      onTap: () {
-                        _metro[2] = !_metro[2];
-                        setState(() {});
-                      },
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 8, bottom: 8, left: 4, right: 4),
-                          padding: EdgeInsets.only(
-                              top: 10, bottom: 10, left: 12, right: 12),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(100)),
-                              color: _metro[2]
-                                  ? Palette().yellow
-                                  : Colors.grey.shade300),
-                          child: Text('Новокосино'))),
-
-                ],
-              ),
-             Align(
-                 alignment: Alignment.centerLeft,
-                 child: GestureDetector(
-                  onTap: () {
-                    _metro[3] = !_metro[3];
-                    setState(() {});
-                  },
-                  child: Container(
-
-                      margin: EdgeInsets.only(
-                          top: 8, bottom: 8, left: 4, right: 4),
-                      padding: EdgeInsets.only(
-                          top: 10, bottom: 10, left: 12, right: 12),
-                      decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(100)),
-                          color: _metro[3]
-                              ? Palette().yellow
-                              : Colors.grey.shade300),
-                      child: Text('Текстильщики')))),
-              Text("Время:", style: TextStyle(fontWeight: FontWeight.bold)),
-              Row(
-                children: [
-                  GestureDetector(
-                      onTap: () {
-                        _time[0] = !_time[0];
-                        setState(() {});
-                      },
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 8, bottom: 8, left: 4, right: 4),
-                          padding: EdgeInsets.only(
-                              top: 10, bottom: 10, left: 12, right: 12),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(100)),
-                              color: _time[0]
-                                  ? Palette().yellow
-                                  : Colors.grey.shade300),
-                          child: Text('От 1 часа'))),
-                  GestureDetector(
-                      onTap: () {
-                        _time[1] = !_time[1];
-                        setState(() {});
-                      },
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 8, bottom: 8, left: 4, right: 4),
-                          padding: EdgeInsets.only(
-                              top: 10, bottom: 10, left: 12, right: 12),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(100)),
-                              color: _time[1]
-                                  ? Palette().yellow
-                                  : Colors.grey.shade300),
-                          child: Text('От 2 часов'))),
-                  GestureDetector(
-                      onTap: () {
-                        _time[2] = !_time[2];
-                        setState(() {});
-                      },
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 8, bottom: 8, left: 4, right: 4),
-                          padding: EdgeInsets.only(
-                              top: 10, bottom: 10, left: 12, right: 12),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(100)),
-                              color: _time[2]
-                                  ? Palette().yellow
-                                  : Colors.grey.shade300),
-                          child: Text('От 3 часов'))),
-
-                ],
-              ),Row(
-                children: [
-                  GestureDetector(
-                      onTap: () {
-                        _time[3] = !_time[3];
-                        setState(() {});
-                      },
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 8, bottom: 8, left: 4, right: 4),
-                          padding: EdgeInsets.only(
-                              top: 10, bottom: 10, left: 12, right: 12),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(100)),
-                              color: _time[3]
-                                  ? Palette().yellow
-                                  : Colors.grey.shade300),
-                          child: Text('На ночь'))),
-                  GestureDetector(
-                      onTap: () {
-                        _time[4] = !_time[4];
-                        setState(() {});
-                      },
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 8, bottom: 8, left: 4, right: 4),
-                          padding: EdgeInsets.only(
-                              top: 10, bottom: 10, left: 12, right: 12),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(100)),
-                              color: _time[4]
-                                  ? Palette().yellow
-                                  : Colors.grey.shade300),
-                          child: Text('На сутки'))),
-                ],
-              ),
-              Text("Тип кровати:",
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              Row(
-                children: [
-                  GestureDetector(
-                      onTap: () {
-                        _typeBed[0] = !_typeBed[0];
-                        setState(() {});
-                      },
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 8, bottom: 8, left: 4, right: 4),
-                          padding: EdgeInsets.only(
-                              top: 10, bottom: 10, left: 12, right: 12),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(100)),
-                              color: _typeBed[0]
-                                  ? Palette().yellow
-                                  : Colors.grey.shade300),
-                          child: Text('Круглая'))),
-                  GestureDetector(
-                      onTap: () {
-                        _typeBed[1] = !_typeBed[1];
-                        setState(() {});
-                      },
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 8, bottom: 8, left: 4, right: 4),
-                          padding: EdgeInsets.only(
-                              top: 10, bottom: 10, left: 12, right: 12),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(100)),
-                              color: _typeBed[1]
-                                  ? Palette().yellow
-                                  : Colors.grey.shade300),
-                          child: Text('Обычная двуспальная'))),
-
-                ],
-              ),
-            Align(
-                alignment: Alignment.centerLeft,
-                child:  GestureDetector(
-                  onTap: () {
-                    _typeBed[2] = !_typeBed[2];
-                    setState(() {});
-                  },
-                  child: Container(
-                      margin: EdgeInsets.only(
-                          top: 8, bottom: 8, left: 4, right: 4),
-                      padding: EdgeInsets.only(
-                          top: 10, bottom: 10, left: 12, right: 12),
-                      decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(100)),
-                          color: _typeBed[2]
-                              ? Palette().yellow
-                              : Colors.grey.shade300),
-                      child: Text('Большая двуспальная')))),
-              Text("Стоимость:",
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              Row(
-                children: [
-                  Text("От"),
-                  Container(
-                    width: MediaQuery.of(context).size.width/5,
-                      margin: EdgeInsets.only(
-                          top: 8, bottom: 8, left: 4, right: 4),
-                      padding: EdgeInsets.only(
-                          left: 12, right: 12),
-                      decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(100)),
-                          color:  Colors.grey.shade300),
-                      child: TextField(
-
-                        decoration: const InputDecoration(
-                          isDense: true,
-                            border: InputBorder.none, ),
-
-                      )),
-              Text("До"),
-                  Container(
-                      width: MediaQuery.of(context).size.width/5,
-                      margin: EdgeInsets.only(
-                          top: 8, bottom: 8, left: 4, right: 4),
-                      padding: EdgeInsets.only(
-                          left: 12, right: 12),
-                      decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(100)),
-                          color:  Colors.grey.shade300),
-                      child: TextField(
-
-                        decoration: const InputDecoration(
-                          isDense: true,
-                          border: InputBorder.none, ),
-
-                      )),
-
-                ],
-              ),
-
-              Row(
-                children: [
-                  GestureDetector(
-                      onTap: () {
-                        _cost[0] = !_cost[0];
-                        setState(() {});
-                      },
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 8, bottom: 8, left: 4, right: 4),
-                          padding: EdgeInsets.only(
-                              top: 10, bottom: 10, left: 12, right: 12),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(100)),
-                              color: _cost[0]
-                                  ? Palette().yellow
-                                  : Colors.grey.shade300),
-                          child: Text('До 550 в час'))),
-                  GestureDetector(
-                      onTap: () {
-                        _cost[1] = !_cost[1];
-                        setState(() {});
-                      },
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 8, bottom: 8, left: 4, right: 4),
-                          padding: EdgeInsets.only(
-                              top: 10, bottom: 10, left: 12, right: 12),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(100)),
-                              color: _cost[1]
-                                  ? Palette().yellow
-                                  : Colors.grey.shade300),
-                          child: Text('До 750 в час'))),
-                  GestureDetector(
-                      onTap: () {
-                        _cost[2] = !_cost[2];
-                        setState(() {});
-                      },
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 8, bottom: 8, left: 4, right: 4),
-                          padding: EdgeInsets.only(
-                              top: 10, bottom: 10, left: 12, right: 12),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(100)),
-                              color: _cost[2]
-                                  ? Palette().yellow
-                                  : Colors.grey.shade300),
-                          child: Text('До 1100 в час'))),
-
-                ],
-              ),
-              Text("Тип номера:",
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              Row(
-                children: [
-                  GestureDetector(
-                      onTap: () {
-                        _typeRoom[0] = !_typeRoom[0];
-                        setState(() {});
-                      },
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 8, bottom: 8, left: 4, right: 4),
-                          padding: EdgeInsets.only(
-                              top: 10, bottom: 10, left: 12, right: 12),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(100)),
-                              color: _typeRoom[0]
-                                  ? Palette().yellow
-                                  : Colors.grey.shade300),
-                          child: Text('Эконом'))),
-                  GestureDetector(
-                      onTap: () {
-                        _typeRoom[1] = !_typeRoom[1];
-                        setState(() {});
-                      },
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 8, bottom: 8, left: 4, right: 4),
-                          padding: EdgeInsets.only(
-                              top: 10, bottom: 10, left: 12, right: 12),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(100)),
-                              color: _typeRoom[1]
-                                  ? Palette().yellow
-                                  : Colors.grey.shade300),
-                          child: Text('Люкс'))),
-                  GestureDetector(
-                      onTap: () {
-                        _typeRoom[2] = !_typeRoom[2];
-                        setState(() {});
-                      },
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 8, bottom: 8, left: 4, right: 4),
-                          padding: EdgeInsets.only(
-                              top: 10, bottom: 10, left: 12, right: 12),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(100)),
-                              color: _typeRoom[2]
-                                  ? Palette().yellow
-                                  : Colors.grey.shade300),
-                          child: Text('Делюкс'))),
-
-                ],
-              ),
-
-              Text("Джакузи:",
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              Row(
-                children: [
-
-                  GestureDetector(
-                      onTap: () {
-                        _isJacuzzi=true;
-                        setState(() {});
-                      },
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 8, bottom: 8, left: 4, right: 4),
-                          padding: EdgeInsets.only(
-                              top: 10, bottom: 10, left: 12, right: 12),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(100)),
-                              color: _isJacuzzi??false
-                                  ? Palette().yellow
-                                  : Colors.grey.shade300),
-                          child: Text('С джакузи'))),
-                  GestureDetector(
-                      onTap: () {
-                        _isJacuzzi=false;
-                        setState(() {});
-                      },
-                      child: Container(
-                          margin: EdgeInsets.only(
-                              top: 8, bottom: 8, left: 4, right: 4),
-                          padding: EdgeInsets.only(
-                              top: 10, bottom: 10, left: 12, right: 12),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(100)),
-                              color: _isJacuzzi??true
-                                  ?Colors.grey.shade300
-                                  :  Palette().yellow),
-                          child: Text('Без джакузи'))),
-
-                ],
-              ),
-
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-          Text("Охраняемая парковка:",
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-
-              GestureDetector(
-                  onTap: () {
-                    _isParcking=true;
-                    setState(() {});
-                  },
-                  child: Container(
-                      margin: EdgeInsets.only(
-                          top: 8, bottom: 8, left: 4, right: 4),
-                      padding: EdgeInsets.only(
-                          top: 10, bottom: 10, left: 12, right: 12),
-                      decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(100)),
-                          color: _isParcking??false
-                              ? Palette().yellow
-                              : Colors.grey.shade300),
-                      child: Text('Да'))),
-              GestureDetector(
-                  onTap: () {
-                    _isParcking=false;
-                    setState(() {});
-                  },
-                  child: Container(
-                      margin: EdgeInsets.only(
-                          top: 8, bottom: 8, left: 4, right: 4),
-                      padding: EdgeInsets.only(
-                          top: 10, bottom: 10, left: 12, right: 12),
-                      decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(100)),
-                          color: _isParcking??true
-                              ?Colors.grey.shade300
-                              :  Palette().yellow),
-                      child: Text('Нет'))),
-
-            ],
-          ),
-        ],),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-          Text("Круглосуточный бар:",
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-
-              GestureDetector(
-                  onTap: () {
-                    _isBar=true;
-                    setState(() {});
-                  },
-                  child: Container(
-                      margin: EdgeInsets.only(
-                          top: 8, bottom: 8, left: 4, right: 4),
-                      padding: EdgeInsets.only(
-                          top: 10, bottom: 10, left: 12, right: 12),
-                      decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(100)),
-                          color: _isBar??false
-                              ? Palette().yellow
-                              : Colors.grey.shade300),
-                      child: Text('Да'))),
-              GestureDetector(
-                  onTap: () {
-                    _isBar=false;
-                    setState(() {});
-                  },
-                  child: Container(
-                      margin: EdgeInsets.only(
-                          top: 8, bottom: 8, left: 4, right: 4),
-                      padding: EdgeInsets.only(
-                          top: 10, bottom: 10, left: 12, right: 12),
-                      decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(100)),
-                          color:_isBar??true
-                              ?Colors.grey.shade300
-                              :  Palette().yellow),
-                      child: Text('Нет'))),
-
-            ],
-          ),
-        ],),
-      ],),
-              Padding(
-                  padding: EdgeInsets.only(top:24, bottom: 24),
-                  child:Row(
-
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [RedButton(Palette().red, "Применить", Colors.white, 16, FontWeight.bold),
-               GestureDetector(
-                 onTap:(){
-                   _isBar=null;
-                   _isJacuzzi=null;
-                   _isParcking=null;
-                   _typeRoom = [false,false,false];
-                   _cost = [false,false,false];
-                   _metro = [false, false, false, false];
-                   _typeBed = [
-                     false,
-                     false,
-                     false,
-                   ];
-                   setState(() {
-
-                   });
-                 },
-                 child: RedButton(Palette().red, "Сбросить", Colors.white, 16, FontWeight.bold))],)),
-
-
-
-
-
-
-
-            ],
-          )) : Container(),
-          Text(
-            'Отель на Профсоюзной',
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: Palette().red),
-          ),
-
-         ListView.builder(
-                 shrinkWrap: true,
-              controller: _scrollController,
-              itemCount: 3,
-              itemBuilder: (context,index){
-            return  Container(
-              margin: EdgeInsets.only(left: 12, top: 12, right: 12, bottom: 12),
-              decoration: BoxDecoration(color: Color.fromRGBO(245, 245, 245, 1)),
-              child: Column(
-                children: [
-                  GestureDetector(
-                      onTap:(){  Navigator.of(context).push(PageRouteBuilder(
-                          opaque: false,
-                          pageBuilder: (BuildContext context, _, __) =>
-                              RoomPage()));},
-                      child:   Container(
-                          height: 265,
-                          child: Swiper(
-                            itemBuilder: (context, index) {
-                              return fotoRoom[index];
-                            },
-                            itemCount: fotoRoom.length,
-                            //pagination: const SwiperPagination(),
-                            control: const SwiperControl(
-                                color: Colors.white,
-                                iconNext: Icons.arrow_circle_right_outlined,
-                                iconPrevious:
-                                Icons.arrow_circle_left_outlined),
-                          ))),
-                  Container(
-                      padding: EdgeInsets.only(
-                          left: 12, top: 12, right: 12, bottom: 12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                              padding: EdgeInsets.only(left: 12, right: 12),
-                              child: Text(
-                                '209 Cтандарт Морской с джакузи',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                              )),
-                          Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: 12, top: 12, left: 12, right: 12),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            'assets/time1.svg',
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Час',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 15),
-                                              ),
-                                              Text(
-                                                '750 ₽',
-                                                style: TextStyle(fontSize: 15),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      )),
-                                  Container(
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            'assets/time12.svg',
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Ночь',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 15),
-                                              ),
-                                              Text(
-                                                '3 500 ₽',
-                                                style: TextStyle(fontSize: 15),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      )),
-                                  Container(
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            'assets/time24.svg',
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Сутки',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 15),
-                                              ),
-                                              Text(
-                                                '4 500 ₽',
-                                                style: TextStyle(fontSize: 15),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ))
-                                ],
-                              )),
-                          Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: 12, top: 12, left: 12, right: 12),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/mark.svg',
-                                  ),
-                                  SizedBox(
-                                    width: 12,
-                                  ),
-                                  Text(
-                                    'Профсоюзная',
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                  Spacer(
-                                    flex: 2,
-                                  ),
-                                  GestureDetector(
-                                      onTap: (){
-                                        Navigator.of(context).push(PageRouteBuilder(
-                                            opaque: false,
-                                            pageBuilder: (BuildContext context, _, __) =>
-                                                RoomPage()));
-                                      },
-                                      child: Text(
-                                        'Подробнее',
-                                        style: TextStyle(
-                                            decoration: TextDecoration.underline,
-                                            decorationThickness: 2,
-                                            fontSize: 18),
-                                      )),
-                                ],
-                              )),
-                          Padding(
-                              padding: EdgeInsets.only(left: 12, right: 12),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/stars.svg',
-                                  ),
-                                  GestureDetector(
-                                      onTap: (){
-                                        Navigator.of(context).push(PageRouteBuilder(
-                                            opaque: false,
-                                            pageBuilder: (BuildContext context, _, __) =>
-                                                BookingPage()));
-                                      },
-                                      child:  RedButton(Palette().red, "Бронировать",
-                                          Palette().white, 15, FontWeight.normal)),
-                                ],
-                              )),
-                        ],
-                      ))
-                ],
-              ),
-            );
-
-          }),
-
-
-      GestureDetector(
-          onTap: (){
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => const SelectHotelPage(),
-              ),
-            );
-          },
-          child:    RedButton(Palette().red, "Все номера", Palette().white, 15,
-              FontWeight.bold)),
-          Padding(
-              padding:
-                  EdgeInsets.only(bottom: 12, top: 12, left: 12, right: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Отзывы',
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Palette().red,
-                        fontWeight: FontWeight.bold),
-                  ),
-                GestureDetector(
-                    onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => const ReviewsPage(),
-                        ),
-                      );
-                    },
-                    child:  Text(
-                    'Смотреть все отзывы',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w300,
-                        decoration: TextDecoration.underline,
-                        decorationThickness: 2,
-                        fontSize: 18),
-                  )),
-                ],
-              )),
-          Container(
-            margin: EdgeInsets.only(left: 12, right: 12, bottom: 12),
-            padding: EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Palette().red,
-                width: 1,
-              ),
-            ),
-            child: Column(
-              children: [
-                Text(
-                  "Антон",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-                SvgPicture.asset(
-                  'assets/stars.svg',
-                ),
-                Text(
-                  "Хорошая гостиница в красивом районе. На Таганской выбор отелей на час не так велик, так что Де Арт прямо спасение. Мы брали Английский номер, остались всем довольны. Советую бронировать заранее",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 13),
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-                Text(
-                  "18 ноября 2022 г.",
-                  style: TextStyle(
-                      fontSize: 13, color: Color.fromRGBO(74, 74, 74, 1)),
-                ),
-              ],
-            ),
-          ),
-          Row(
-            children: [
-              Spacer(flex: 3),
-              SvgPicture.asset(
-                'assets/left.svg',
-              ),
-              Spacer(flex: 1),
-              SvgPicture.asset(
-                'assets/right.svg',
-              ),
-              Spacer(flex: 3),
-            ],
-          ),
-          Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                  padding: EdgeInsets.only(top: 24, bottom: 12, left: 12),
-                  child: Text(
-                    'Сеть дизайнерских отелей De Art 13',
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Palette().red,
-                        fontWeight: FontWeight.bold),
-                  ))),
-          ExpansionTile(
-            shape: Border(),
-            trailing: Icon(Icons.expand_more, size: 40, color: Palette().red),
-            title: Text(
-              'Отель на Профсоюзной',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                        top: 24, bottom: 24, left: 12, right: 12),
-                    child: Image.asset("assets/1.png"),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/loc.svg',
+                      Text(
+                        'Отзывы',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Palette().red,
+                            fontWeight: FontWeight.bold),
                       ),
-                      Container(
-                          width: MediaQuery.of(context).size.width / 1.4,
-                          padding: EdgeInsets.only(right: 12),
-                          child: RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                              text: 'Расположение:',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            TextSpan(
-                              text:
-                                  ' гостиница находится на юго-западе Москвы в тихом районе с хорошей транспортной развязкой. В пешей доступности — станции метро Новые Черемушки, Калужская, Профсоюзная.',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
-                            )
-                          ]))),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/infr.svg',
-                      ),
-                      Container(
-                          width: MediaQuery.of(context).size.width / 1.4,
-                          padding: EdgeInsets.only(right: 12),
-                          child: RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                              text: 'Инфраструктура:',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            TextSpan(
-                              text:
-                                  ' на территории — уютный ресторан, бар. Частная охраняемая парковка. Бесплатный Wi-Fi.',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
-                            )
-                          ]))
-
-                          /*Text(
-                          'Инфраструктура: на территории — уютный ресторан, бар. Частная охраняемая парковка. Бесплатный Wi-Fi.', style: TextStyle(
-                          fontSize: 14,
-                        ),
-                        )*/
-                          ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/number.svg',
-                      ),
-                      Container(
-                          width: MediaQuery.of(context).size.width / 1.4,
-                          padding: EdgeInsets.only(right: 12),
-                          child: RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                              text: 'Номера:',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            TextSpan(
-                              text:
-                                  ' 13 номеров: несколько стандартах, улучшенные, Delux, лофт. Все оформленных в индивидуальном стиле. Каждый номер укомплектован необходимой мебелью и сантехникой.',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
-                            )
-                          ]))
-
-                          /*Text(
-                          'Номера: 13 номеров: несколько стандартах, улучшенные, Delux, лофт. Все оформленных в индивидуальном стиле. Каждый номер укомплектован необходимой мебелью и сантехникой.', style: TextStyle(
-                          fontSize: 14,
-                        ),
-                        )*/
-                          ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/iconFood.svg',
-                      ),
-                      Container(
-                          width: MediaQuery.of(context).size.width / 1.4,
-                          padding: EdgeInsets.only(right: 12),
-                          child: RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                              text: 'Предложены',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
-                            ),
-                            TextSpan(
-                              text: ' дополнительные услуги:',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            TextSpan(
-                              text: ' индивидуальный трансфер, завтрак.',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
-                            )
-                          ]))
-
-                          /*Text(
-                          'Предложены дополнительные услуги: индивидуальный трансфер, завтрак.', style: TextStyle(
-                          fontSize: 14,
-                        ),
-                        )*/
-                          ),
-                    ],
-                  ),
-                  Padding(
-                      padding: EdgeInsets.only(
-                          top: 24, bottom: 12, left: 12, right: 12),
-                      child: GestureDetector(
+                    GestureDetector(
                         onTap: (){
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (BuildContext context) => const SelectHotelPage(),
+                              builder: (BuildContext context) => const ReviewsPage(),
                             ),
                           );
                         },
-                        child: RedButton(Palette().red, "Посмотреть номера",
-                            Colors.white, 13, FontWeight.bold),
+                        child:  Text(
+                        'Смотреть все отзывы',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300,
+                            decoration: TextDecoration.underline,
+                            decorationThickness: 2,
+                            fontSize: 18),
                       )),
-                ],
-              )
-            ],
-          ),
-          Padding(
-              padding: EdgeInsets.only(left: 12, right: 12, bottom: 4),
-              child: Divider(
-                color: Palette().red,
-                thickness: 3,
-              )),
-          ExpansionTile(
-            shape: Border(),
-            trailing: Icon(Icons.expand_more, size: 40, color: Palette().red),
-            title: Text(
-              'Отель на Таганской',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                    ],
+                  )),
+              Container(
+                margin: EdgeInsets.only(left: 12, right: 12, bottom: 12),
+                padding: EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Palette().red,
+                    width: 1,
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      "Антон",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                    SvgPicture.asset(
+                      'assets/stars.svg',
+                    ),
+                    Text(
+                      "Хорошая гостиница в красивом районе. На Таганской выбор отелей на час не так велик, так что Де Арт прямо спасение. Мы брали Английский номер, остались всем довольны. Советую бронировать заранее",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 13),
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Text(
+                      "18 ноября 2022 г.",
+                      style: TextStyle(
+                          fontSize: 13, color: Color.fromRGBO(74, 74, 74, 1)),
+                    ),
+                  ],
+                ),
+              ),
+              Row(
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                        top: 24, bottom: 24, left: 12, right: 12),
-                    child: Image.asset("assets/2.png"),
+                  Spacer(flex: 3),
+                  SvgPicture.asset(
+                    'assets/left.svg',
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/loc.svg',
-                      ),
-                      Container(
-                          width: MediaQuery.of(context).size.width / 1.4,
-                          padding: EdgeInsets.only(right: 12),
-                          child: RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                              text: 'Расположение:',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            TextSpan(
-                              text:
-                                  ' почасовой мини-отель De Art 13 находится рядом с метро Таганская всего в нескольких минутах ходьбы.',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
-                            )
-                          ]))),
-                    ],
+                  Spacer(flex: 1),
+                  SvgPicture.asset(
+                    'assets/right.svg',
                   ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/infr.svg',
-                      ),
-                      Container(
-                          width: MediaQuery.of(context).size.width / 1.4,
-                          padding: EdgeInsets.only(right: 12),
-                          child: RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                              text: 'Инфраструктура:',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            TextSpan(
-                              text:
-                                  ' на территории отеля – охраняемая парковка. Бесплатный Wi-Fi в каждом номере. Рядом с отелем находятся исторические достопримечательности.',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
-                            )
-                          ]))
-
-                          /*Text(
-                          'Инфраструктура: на территории — уютный ресторан, бар. Частная охраняемая парковка. Бесплатный Wi-Fi.', style: TextStyle(
-                          fontSize: 14,
-                        ),
-                        )*/
-                          ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/number.svg',
-                      ),
-                      Container(
-                          width: MediaQuery.of(context).size.width / 1.4,
-                          padding: EdgeInsets.only(right: 12),
-                          child: RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                              text: 'Номера:',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            TextSpan(
-                              text:
-                                  ' 7 номеров уровня Стандарт, Люкс и Делюкс, а также номер с джакузи. вы можете снять номер почасово, на сутки или ночь.',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
-                            )
-                          ]))
-
-                          /*Text(
-                          'Номера: 13 номеров: несколько стандартах, улучшенные, Delux, лофт. Все оформленных в индивидуальном стиле. Каждый номер укомплектован необходимой мебелью и сантехникой.', style: TextStyle(
-                          fontSize: 14,
-                        ),
-                        )*/
-                          ),
-                    ],
-                  ),
-                  Padding(
-                      padding: EdgeInsets.only(
-                          top: 24, bottom: 12, left: 12, right: 12),
-                      child: GestureDetector(
-
-                          onTap: (){
-                            Navigator.of(context).push(PageRouteBuilder(
-                                opaque: false,
-                                pageBuilder: (BuildContext context, _, __) =>
-                                    SelectHotelPage()));
-
-                          },
-                          child:RedButton(Palette().red, "Посмотреть номера",
-                          Colors.white, 13, FontWeight.bold))),
+                  Spacer(flex: 3),
                 ],
-              )
-            ],
-          ),
-          Padding(
-              padding: EdgeInsets.only(left: 12, right: 12, bottom: 4),
-              child: Divider(
-                color: Palette().red,
-                thickness: 3,
-              )),
-          ExpansionTile(
-            shape: Border(),
-            trailing: Icon(Icons.expand_more, size: 40, color: Palette().red),
-            title: Text(
-              'Отель на Новокосино',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                        top: 24, bottom: 24, left: 12, right: 12),
-                    child: Image.asset("assets/3.png"),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                      padding: EdgeInsets.only(top: 24, bottom: 12, left: 12),
+                      child: Text(
+                        'Сеть дизайнерских отелей De Art 13',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Palette().red,
+                            fontWeight: FontWeight.bold),
+                      ))),
+              ExpansionTile(
+                shape: Border(),
+                trailing: Icon(Icons.expand_more, size: 40, color: Palette().red),
+                title: Text(
+                  'Отель на Профсоюзной',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SvgPicture.asset(
-                        'assets/loc.svg',
-                      ),
                       Container(
-                          width: MediaQuery.of(context).size.width / 1.4,
-                          padding: EdgeInsets.only(right: 12),
-                          child: RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                              text: 'Расположение:',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            TextSpan(
-                              text:
-                                  ' гостиница расположена в Восточном административном округе недалеко от станции метро Новокосино. Неподалеку находятся городские зоны отдыха и развлекательные центры.',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
-                            )
-                          ]))),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/infr.svg',
+                        margin: EdgeInsets.only(
+                            top: 24, bottom: 24, left: 12, right: 12),
+                        child: Image.asset("assets/1.png"),
                       ),
-                      Container(
-                          width: MediaQuery.of(context).size.width / 1.4,
-                          padding: EdgeInsets.only(right: 12),
-                          child: RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                              text: 'Инфраструктура:',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            TextSpan(
-                              text:
-                                  ' на территории отеля — охраняемая парковка. В каждом номере – бесплатный Wi-Fi. Поблизости — магазины, рестораны, торговые комплексы.',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
-                            )
-                          ]))
-
-                          /*Text(
-                          'Инфраструктура: на территории — уютный ресторан, бар. Частная охраняемая парковка. Бесплатный Wi-Fi.', style: TextStyle(
-                          fontSize: 14,
-                        ),
-                        )*/
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/loc.svg',
                           ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/number.svg',
-                      ),
-                      Container(
-                          width: MediaQuery.of(context).size.width / 1.4,
-                          padding: EdgeInsets.only(right: 12),
-                          child: RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                              text: 'Номера:',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            TextSpan(
-                              text:
-                                  ' 9 номеров: стандартные, улучшенные, бизнес Delux и свадебный Delux. Сантехника и мебель новые. Забронировать номер можно на час, сутки или ночь.',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
-                            )
-                          ]))
-
-                          /*Text(
-                          'Номера: 13 номеров: несколько стандартах, улучшенные, Delux, лофт. Все оформленных в индивидуальном стиле. Каждый номер укомплектован необходимой мебелью и сантехникой.', style: TextStyle(
-                          fontSize: 14,
-                        ),
-                        )*/
-                          ),
-                    ],
-                  ),
-                  Padding(
-                      padding: EdgeInsets.only(
-                          top: 24, bottom: 12, left: 12, right: 12),
-                      child:GestureDetector(
-
-                          onTap: (){  Navigator.of(context).push(PageRouteBuilder(
-                              opaque: false,
-                              pageBuilder: (BuildContext context, _, __) =>
-                                  SelectHotelPage()));},
-                          child: RedButton(Palette().red, "Посмотреть номера",
-                          Colors.white, 13, FontWeight.bold))),
-                ],
-              )
-            ],
-          ),
-          Padding(
-              padding: EdgeInsets.only(left: 12, right: 12, bottom: 4),
-              child: Divider(
-                color: Palette().red,
-                thickness: 3,
-              )),
-          ExpansionTile(
-            shape: Border(),
-            trailing: Icon(Icons.expand_more, size: 40, color: Palette().red),
-            title: Text(
-              'Отель на Текстильщиках',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                        top: 24, bottom: 24, left: 12, right: 12),
-                    child: Image.asset("assets/4.png"),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/loc.svg',
-                      ),
-                      Container(
-                          width: MediaQuery.of(context).size.width / 1.4,
-                          padding: EdgeInsets.only(right: 12),
-                          child: RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                              text: 'Расположение:',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            TextSpan(
-                              text:
-                                  ' стильный дизайнерский отель на час Текстильщики De Art 13. Расположен рядом со станцией метро на улице Юных Ленинцев в Юго-восточном округе столицы',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
-                            )
-                          ]))),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/infr.svg',
-                      ),
-                      Container(
-                          width: MediaQuery.of(context).size.width / 1.4,
-                          padding: EdgeInsets.only(right: 12),
-                          child: RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                              text: 'Инфраструктура:',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            TextSpan(
-                              text:
-                                  ' нашим постояльцам предлагаем охраняемую парковку и бесплатный WI-FI. Недалеко находятся городские зоны отдыха и развлекательные центры.',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
-                            )
-                          ]))
-
-                          /*Text(
-                          'Инфраструктура: на территории — уютный ресторан, бар. Частная охраняемая парковка. Бесплатный Wi-Fi.', style: TextStyle(
-                          fontSize: 14,
-                        ),
-                        )*/
-                          ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/number.svg',
-                      ),
-                      Container(
-                          width: MediaQuery.of(context).size.width / 1.4,
-                          padding: EdgeInsets.only(right: 12),
-                          child: RichText(
-                              text: TextSpan(children: [
-                            TextSpan(
-                              text: 'Номера:',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-                            TextSpan(
-                              text:
-                                  ' 10 номеров категорий Улучшенный, Люкс и VIP. Забронировать номер можно на час, сутки или ночь.',
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
-                            )
-                          ]))
-
-                          /*Text(
-                          'Номера: 13 номеров: несколько стандартах, улучшенные, Delux, лофт. Все оформленных в индивидуальном стиле. Каждый номер укомплектован необходимой мебелью и сантехникой.', style: TextStyle(
-                          fontSize: 14,
-                        ),
-                        )*/
-                          ),
-                    ],
-                  ),
-                  Padding(
-                      padding: EdgeInsets.only(
-                          top: 24, bottom: 12, left: 12, right: 12),
-                      child: GestureDetector(
-
-                          onTap: (){  Navigator.of(context).push(PageRouteBuilder(
-                              opaque: false,
-                              pageBuilder: (BuildContext context, _, __) =>
-                                  SelectHotelPage()));},
-                          child:RedButton(Palette().red, "Посмотреть номера",
-                          Colors.white, 13, FontWeight.bold))),
-                ],
-              )
-            ],
-          ),
-          Padding(
-              padding: EdgeInsets.only(left: 12, right: 12, bottom: 4),
-              child: Divider(
-                color: Palette().red,
-                thickness: 3,
-              )),
-          ExpansionTile(
-            shape: Border(),
-            trailing: Icon(Icons.expand_more, size: 40, color: Palette().red),
-            title: Text(
-              'Отель на Кропоткинской',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                        top: 24, bottom: 24, left: 12, right: 12),
-                    child: Image.asset("assets/3.png"),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/loc.svg',
-                      ),
-                      Container(
-                          width: MediaQuery.of(context).size.width / 1.4,
-                          padding: EdgeInsets.only(right: 12),
-                          child: RichText(
-                              text: TextSpan(children: [
+                          Container(
+                              width: MediaQuery.of(context).size.width / 1.4,
+                              padding: EdgeInsets.only(right: 12),
+                              child: RichText(
+                                  text: TextSpan(children: [
                                 TextSpan(
                                   text: 'Расположение:',
                                   style: TextStyle(
@@ -1754,28 +1146,28 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                                 TextSpan(
                                   text:
-                                  ' гостиница расположена в Восточном административном округе недалеко от станции метро Новокосино. Неподалеку находятся городские зоны отдыха и развлекательные центры.',
+                                      ' гостиница находится на юго-западе Москвы в тихом районе с хорошей транспортной развязкой. В пешей доступности — станции метро Новые Черемушки, Калужская, Профсоюзная.',
                                   style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
+                                      TextStyle(fontSize: 16, color: Colors.black),
                                 )
                               ]))),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/infr.svg',
+                        ],
                       ),
-                      Container(
-                          width: MediaQuery.of(context).size.width / 1.4,
-                          padding: EdgeInsets.only(right: 12),
-                          child: RichText(
-                              text: TextSpan(children: [
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/infr.svg',
+                          ),
+                          Container(
+                              width: MediaQuery.of(context).size.width / 1.4,
+                              padding: EdgeInsets.only(right: 12),
+                              child: RichText(
+                                  text: TextSpan(children: [
                                 TextSpan(
                                   text: 'Инфраструктура:',
                                   style: TextStyle(
@@ -1785,35 +1177,35 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                                 TextSpan(
                                   text:
-                                  ' на территории отеля — охраняемая парковка. В каждом номере – бесплатный Wi-Fi. Поблизости — магазины, рестораны, торговые комплексы.',
+                                      ' на территории — уютный ресторан, бар. Частная охраняемая парковка. Бесплатный Wi-Fi.',
                                   style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
+                                      TextStyle(fontSize: 16, color: Colors.black),
                                 )
                               ]))
 
-                        /*Text(
-                          'Инфраструктура: на территории — уютный ресторан, бар. Частная охраняемая парковка. Бесплатный Wi-Fi.', style: TextStyle(
-                          fontSize: 14,
-                        ),
-                        )*/
+                              /*Text(
+                              'Инфраструктура: на территории — уютный ресторан, бар. Частная охраняемая парковка. Бесплатный Wi-Fi.', style: TextStyle(
+                              fontSize: 14,
+                            ),
+                            )*/
+                              ),
+                        ],
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/number.svg',
+                      SizedBox(
+                        height: 12,
                       ),
-                      Container(
-                          width: MediaQuery.of(context).size.width / 1.4,
-                          padding: EdgeInsets.only(right: 12),
-                          child: RichText(
-                              text: TextSpan(children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/number.svg',
+                          ),
+                          Container(
+                              width: MediaQuery.of(context).size.width / 1.4,
+                              padding: EdgeInsets.only(right: 12),
+                              child: RichText(
+                                  text: TextSpan(children: [
                                 TextSpan(
                                   text: 'Номера:',
                                   style: TextStyle(
@@ -1823,275 +1215,1013 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                                 TextSpan(
                                   text:
-                                  ' 9 номеров: стандартные, улучшенные, бизнес Delux и свадебный Delux. Сантехника и мебель новые. Забронировать номер можно на час, сутки или ночь.',
+                                      ' 13 номеров: несколько стандартах, улучшенные, Delux, лофт. Все оформленных в индивидуальном стиле. Каждый номер укомплектован необходимой мебелью и сантехникой.',
                                   style:
-                                  TextStyle(fontSize: 16, color: Colors.black),
+                                      TextStyle(fontSize: 16, color: Colors.black),
                                 )
                               ]))
 
-                        /*Text(
-                          'Номера: 13 номеров: несколько стандартах, улучшенные, Delux, лофт. Все оформленных в индивидуальном стиле. Каждый номер укомплектован необходимой мебелью и сантехникой.', style: TextStyle(
+                              /*Text(
+                              'Номера: 13 номеров: несколько стандартах, улучшенные, Delux, лофт. Все оформленных в индивидуальном стиле. Каждый номер укомплектован необходимой мебелью и сантехникой.', style: TextStyle(
+                              fontSize: 14,
+                            ),
+                            )*/
+                              ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/iconFood.svg',
+                          ),
+                          Container(
+                              width: MediaQuery.of(context).size.width / 1.4,
+                              padding: EdgeInsets.only(right: 12),
+                              child: RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                  text: 'Предложены',
+                                  style:
+                                      TextStyle(fontSize: 16, color: Colors.black),
+                                ),
+                                TextSpan(
+                                  text: ' дополнительные услуги:',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                                TextSpan(
+                                  text: ' индивидуальный трансфер, завтрак.',
+                                  style:
+                                      TextStyle(fontSize: 16, color: Colors.black),
+                                )
+                              ]))
+
+                              /*Text(
+                              'Предложены дополнительные услуги: индивидуальный трансфер, завтрак.', style: TextStyle(
+                              fontSize: 14,
+                            ),
+                            )*/
+                              ),
+                        ],
+                      ),
+                      Padding(
+                          padding: EdgeInsets.only(
+                              top: 24, bottom: 12, left: 12, right: 12),
+                          child: GestureDetector(
+                            onTap: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) => const SelectHotelPage(),
+                                ),
+                              );
+                            },
+                            child: RedButton(Palette().red, "Посмотреть номера",
+                                Colors.white, 13, FontWeight.bold),
+                          )),
+                    ],
+                  )
+                ],
+              ),
+              Padding(
+                  padding: EdgeInsets.only(left: 12, right: 12, bottom: 4),
+                  child: Divider(
+                    color: Palette().red,
+                    thickness: 3,
+                  )),
+              ExpansionTile(
+                shape: Border(),
+                trailing: Icon(Icons.expand_more, size: 40, color: Palette().red),
+                title: Text(
+                  'Отель на Таганской',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(
+                            top: 24, bottom: 24, left: 12, right: 12),
+                        child: Image.asset("assets/2.png"),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/loc.svg',
+                          ),
+                          Container(
+                              width: MediaQuery.of(context).size.width / 1.4,
+                              padding: EdgeInsets.only(right: 12),
+                              child: RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                  text: 'Расположение:',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                                TextSpan(
+                                  text:
+                                      ' почасовой мини-отель De Art 13 находится рядом с метро Таганская всего в нескольких минутах ходьбы.',
+                                  style:
+                                      TextStyle(fontSize: 16, color: Colors.black),
+                                )
+                              ]))),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/infr.svg',
+                          ),
+                          Container(
+                              width: MediaQuery.of(context).size.width / 1.4,
+                              padding: EdgeInsets.only(right: 12),
+                              child: RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                  text: 'Инфраструктура:',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                                TextSpan(
+                                  text:
+                                      ' на территории отеля – охраняемая парковка. Бесплатный Wi-Fi в каждом номере. Рядом с отелем находятся исторические достопримечательности.',
+                                  style:
+                                      TextStyle(fontSize: 16, color: Colors.black),
+                                )
+                              ]))
+
+                              /*Text(
+                              'Инфраструктура: на территории — уютный ресторан, бар. Частная охраняемая парковка. Бесплатный Wi-Fi.', style: TextStyle(
+                              fontSize: 14,
+                            ),
+                            )*/
+                              ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/number.svg',
+                          ),
+                          Container(
+                              width: MediaQuery.of(context).size.width / 1.4,
+                              padding: EdgeInsets.only(right: 12),
+                              child: RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                  text: 'Номера:',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                                TextSpan(
+                                  text:
+                                      ' 7 номеров уровня Стандарт, Люкс и Делюкс, а также номер с джакузи. вы можете снять номер почасово, на сутки или ночь.',
+                                  style:
+                                      TextStyle(fontSize: 16, color: Colors.black),
+                                )
+                              ]))
+
+                              /*Text(
+                              'Номера: 13 номеров: несколько стандартах, улучшенные, Delux, лофт. Все оформленных в индивидуальном стиле. Каждый номер укомплектован необходимой мебелью и сантехникой.', style: TextStyle(
+                              fontSize: 14,
+                            ),
+                            )*/
+                              ),
+                        ],
+                      ),
+                      Padding(
+                          padding: EdgeInsets.only(
+                              top: 24, bottom: 12, left: 12, right: 12),
+                          child: GestureDetector(
+
+                              onTap: (){
+                                Navigator.of(context).push(PageRouteBuilder(
+                                    opaque: false,
+                                    pageBuilder: (BuildContext context, _, __) =>
+                                        SelectHotelPage()));
+
+                              },
+                              child:RedButton(Palette().red, "Посмотреть номера",
+                              Colors.white, 13, FontWeight.bold))),
+                    ],
+                  )
+                ],
+              ),
+              Padding(
+                  padding: EdgeInsets.only(left: 12, right: 12, bottom: 4),
+                  child: Divider(
+                    color: Palette().red,
+                    thickness: 3,
+                  )),
+              ExpansionTile(
+                shape: Border(),
+                trailing: Icon(Icons.expand_more, size: 40, color: Palette().red),
+                title: Text(
+                  'Отель на Новокосино',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(
+                            top: 24, bottom: 24, left: 12, right: 12),
+                        child: Image.asset("assets/3.png"),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/loc.svg',
+                          ),
+                          Container(
+                              width: MediaQuery.of(context).size.width / 1.4,
+                              padding: EdgeInsets.only(right: 12),
+                              child: RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                  text: 'Расположение:',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                                TextSpan(
+                                  text:
+                                      ' гостиница расположена в Восточном административном округе недалеко от станции метро Новокосино. Неподалеку находятся городские зоны отдыха и развлекательные центры.',
+                                  style:
+                                      TextStyle(fontSize: 16, color: Colors.black),
+                                )
+                              ]))),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/infr.svg',
+                          ),
+                          Container(
+                              width: MediaQuery.of(context).size.width / 1.4,
+                              padding: EdgeInsets.only(right: 12),
+                              child: RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                  text: 'Инфраструктура:',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                                TextSpan(
+                                  text:
+                                      ' на территории отеля — охраняемая парковка. В каждом номере – бесплатный Wi-Fi. Поблизости — магазины, рестораны, торговые комплексы.',
+                                  style:
+                                      TextStyle(fontSize: 16, color: Colors.black),
+                                )
+                              ]))
+
+                              /*Text(
+                              'Инфраструктура: на территории — уютный ресторан, бар. Частная охраняемая парковка. Бесплатный Wi-Fi.', style: TextStyle(
+                              fontSize: 14,
+                            ),
+                            )*/
+                              ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/number.svg',
+                          ),
+                          Container(
+                              width: MediaQuery.of(context).size.width / 1.4,
+                              padding: EdgeInsets.only(right: 12),
+                              child: RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                  text: 'Номера:',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                                TextSpan(
+                                  text:
+                                      ' 9 номеров: стандартные, улучшенные, бизнес Delux и свадебный Delux. Сантехника и мебель новые. Забронировать номер можно на час, сутки или ночь.',
+                                  style:
+                                      TextStyle(fontSize: 16, color: Colors.black),
+                                )
+                              ]))
+
+                              /*Text(
+                              'Номера: 13 номеров: несколько стандартах, улучшенные, Delux, лофт. Все оформленных в индивидуальном стиле. Каждый номер укомплектован необходимой мебелью и сантехникой.', style: TextStyle(
+                              fontSize: 14,
+                            ),
+                            )*/
+                              ),
+                        ],
+                      ),
+                      Padding(
+                          padding: EdgeInsets.only(
+                              top: 24, bottom: 12, left: 12, right: 12),
+                          child:GestureDetector(
+
+                              onTap: (){  Navigator.of(context).push(PageRouteBuilder(
+                                  opaque: false,
+                                  pageBuilder: (BuildContext context, _, __) =>
+                                      SelectHotelPage()));},
+                              child: RedButton(Palette().red, "Посмотреть номера",
+                              Colors.white, 13, FontWeight.bold))),
+                    ],
+                  )
+                ],
+              ),
+              Padding(
+                  padding: EdgeInsets.only(left: 12, right: 12, bottom: 4),
+                  child: Divider(
+                    color: Palette().red,
+                    thickness: 3,
+                  )),
+              ExpansionTile(
+                shape: Border(),
+                trailing: Icon(Icons.expand_more, size: 40, color: Palette().red),
+                title: Text(
+                  'Отель на Текстильщиках',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(
+                            top: 24, bottom: 24, left: 12, right: 12),
+                        child: Image.asset("assets/4.png"),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/loc.svg',
+                          ),
+                          Container(
+                              width: MediaQuery.of(context).size.width / 1.4,
+                              padding: EdgeInsets.only(right: 12),
+                              child: RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                  text: 'Расположение:',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                                TextSpan(
+                                  text:
+                                      ' стильный дизайнерский отель на час Текстильщики De Art 13. Расположен рядом со станцией метро на улице Юных Ленинцев в Юго-восточном округе столицы',
+                                  style:
+                                      TextStyle(fontSize: 16, color: Colors.black),
+                                )
+                              ]))),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/infr.svg',
+                          ),
+                          Container(
+                              width: MediaQuery.of(context).size.width / 1.4,
+                              padding: EdgeInsets.only(right: 12),
+                              child: RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                  text: 'Инфраструктура:',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                                TextSpan(
+                                  text:
+                                      ' нашим постояльцам предлагаем охраняемую парковку и бесплатный WI-FI. Недалеко находятся городские зоны отдыха и развлекательные центры.',
+                                  style:
+                                      TextStyle(fontSize: 16, color: Colors.black),
+                                )
+                              ]))
+
+                              /*Text(
+                              'Инфраструктура: на территории — уютный ресторан, бар. Частная охраняемая парковка. Бесплатный Wi-Fi.', style: TextStyle(
+                              fontSize: 14,
+                            ),
+                            )*/
+                              ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/number.svg',
+                          ),
+                          Container(
+                              width: MediaQuery.of(context).size.width / 1.4,
+                              padding: EdgeInsets.only(right: 12),
+                              child: RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                  text: 'Номера:',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                                TextSpan(
+                                  text:
+                                      ' 10 номеров категорий Улучшенный, Люкс и VIP. Забронировать номер можно на час, сутки или ночь.',
+                                  style:
+                                      TextStyle(fontSize: 16, color: Colors.black),
+                                )
+                              ]))
+
+                              /*Text(
+                              'Номера: 13 номеров: несколько стандартах, улучшенные, Delux, лофт. Все оформленных в индивидуальном стиле. Каждый номер укомплектован необходимой мебелью и сантехникой.', style: TextStyle(
+                              fontSize: 14,
+                            ),
+                            )*/
+                              ),
+                        ],
+                      ),
+                      Padding(
+                          padding: EdgeInsets.only(
+                              top: 24, bottom: 12, left: 12, right: 12),
+                          child: GestureDetector(
+
+                              onTap: (){  Navigator.of(context).push(PageRouteBuilder(
+                                  opaque: false,
+                                  pageBuilder: (BuildContext context, _, __) =>
+                                      SelectHotelPage()));},
+                              child:RedButton(Palette().red, "Посмотреть номера",
+                              Colors.white, 13, FontWeight.bold))),
+                    ],
+                  )
+                ],
+              ),
+              Padding(
+                  padding: EdgeInsets.only(left: 12, right: 12, bottom: 4),
+                  child: Divider(
+                    color: Palette().red,
+                    thickness: 3,
+                  )),
+              ExpansionTile(
+                shape: Border(),
+                trailing: Icon(Icons.expand_more, size: 40, color: Palette().red),
+                title: Text(
+                  'Отель на Кропоткинской',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(
+                            top: 24, bottom: 24, left: 12, right: 12),
+                        child: Image.asset("assets/3.png"),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/loc.svg',
+                          ),
+                          Container(
+                              width: MediaQuery.of(context).size.width / 1.4,
+                              padding: EdgeInsets.only(right: 12),
+                              child: RichText(
+                                  text: TextSpan(children: [
+                                    TextSpan(
+                                      text: 'Расположение:',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
+                                    ),
+                                    TextSpan(
+                                      text:
+                                      ' гостиница расположена в Восточном административном округе недалеко от станции метро Новокосино. Неподалеку находятся городские зоны отдыха и развлекательные центры.',
+                                      style:
+                                      TextStyle(fontSize: 16, color: Colors.black),
+                                    )
+                                  ]))),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/infr.svg',
+                          ),
+                          Container(
+                              width: MediaQuery.of(context).size.width / 1.4,
+                              padding: EdgeInsets.only(right: 12),
+                              child: RichText(
+                                  text: TextSpan(children: [
+                                    TextSpan(
+                                      text: 'Инфраструктура:',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
+                                    ),
+                                    TextSpan(
+                                      text:
+                                      ' на территории отеля — охраняемая парковка. В каждом номере – бесплатный Wi-Fi. Поблизости — магазины, рестораны, торговые комплексы.',
+                                      style:
+                                      TextStyle(fontSize: 16, color: Colors.black),
+                                    )
+                                  ]))
+
+                            /*Text(
+                              'Инфраструктура: на территории — уютный ресторан, бар. Частная охраняемая парковка. Бесплатный Wi-Fi.', style: TextStyle(
+                              fontSize: 14,
+                            ),
+                            )*/
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 12,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/number.svg',
+                          ),
+                          Container(
+                              width: MediaQuery.of(context).size.width / 1.4,
+                              padding: EdgeInsets.only(right: 12),
+                              child: RichText(
+                                  text: TextSpan(children: [
+                                    TextSpan(
+                                      text: 'Номера:',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
+                                    ),
+                                    TextSpan(
+                                      text:
+                                      ' 9 номеров: стандартные, улучшенные, бизнес Delux и свадебный Delux. Сантехника и мебель новые. Забронировать номер можно на час, сутки или ночь.',
+                                      style:
+                                      TextStyle(fontSize: 16, color: Colors.black),
+                                    )
+                                  ]))
+
+                            /*Text(
+                              'Номера: 13 номеров: несколько стандартах, улучшенные, Delux, лофт. Все оформленных в индивидуальном стиле. Каждый номер укомплектован необходимой мебелью и сантехникой.', style: TextStyle(
+                              fontSize: 14,
+                            ),
+                            )*/
+                          ),
+                        ],
+                      ),
+                      Padding(
+                          padding: EdgeInsets.only(
+                              top: 24, bottom: 12, left: 12, right: 12),
+                          child:GestureDetector(
+
+                              onTap: (){  Navigator.of(context).push(PageRouteBuilder(
+                                  opaque: false,
+                                  pageBuilder: (BuildContext context, _, __) =>
+                                      SelectHotelPage()));},
+                              child: RedButton(Palette().red, "Посмотреть номера",
+                                  Colors.white, 13, FontWeight.bold))),
+                    ],
+                  )
+                ],
+              ),
+              Padding(
+                  padding: EdgeInsets.only(left: 12, right: 12, bottom: 4),
+                  child: Divider(
+                    color: Palette().red,
+                    thickness: 3,
+                  )),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                      padding: EdgeInsets.only(top: 24, bottom: 12, left: 12),
+                      child: Text(
+                        'К вашим услугам',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Palette().red,
+                            fontWeight: FontWeight.bold),
+                      ))),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                      width: MediaQuery.of(context).size.width / 3,
+                      height: MediaQuery.of(context).size.height / 2,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/tv.svg',
+                          ),
+                          Text('Спутниковое\nтелевидение',
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold)),
+                          Spacer(
+                            flex: 1,
+                          ),
+                          SvgPicture.asset(
+                            'assets/bathrobe.svg',
+                          ),
+                          Text('Халаты,\nтапочки',
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold)),
+                          Spacer(
+                            flex: 1,
+                          ),
+                          SvgPicture.asset(
+                            'assets/cleaning.svg',
+                          ),
+                          Text('Ежедневная\nуборка',
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold)),
+                          Spacer(
+                            flex: 1,
+                          ),
+                          SvgPicture.asset(
+                            'assets/parking.svg',
+                          ),
+                          Text('Охраняемая\nпарковка',
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold)),
+                        ],
+                      )),
+                  Container(
+                      width: MediaQuery.of(context).size.width / 3,
+                      height: MediaQuery.of(context).size.height / 2,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/food.svg',
+                          ),
+                          Text('Доставка\nеды в номер',
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold)),
+                          Spacer(
+                            flex: 1,
+                          ),
+                          SvgPicture.asset(
+                            'assets/bar.svg',
+                          ),
+                          Text('Круглосуточный\nбар',
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold)),
+                          Spacer(
+                            flex: 1,
+                          ),
+                          SvgPicture.asset(
+                            'assets/payment.svg',
+                          ),
+                          Text('Оплата картой\nVisa/Mastercard',
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold)),
+                          Spacer(
+                            flex: 1,
+                          ),
+                          SvgPicture.asset(
+                            'assets/wi-fi.svg',
+                          ),
+                          Text('Бесплатный\nWi-Fi',
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.bold)),
+                        ],
+                      )),
+                ],
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 24),
+                child: Image.asset("assets/hotel2.png"),
+              ),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                      padding: EdgeInsets.only(
+                        left: 12,
+                        top: 24,
+                        bottom: 12,
+                      ),
+                      child: Text(
+                        'Бутик-отель',
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ))),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                      margin: EdgeInsets.only(left: 12),
+                      width: MediaQuery.of(context).size.width / 4,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/Icon_hotels.svg',
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 12),
+                            child: Text('Сеть\nотелей',
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold)),
+                          )
+                        ],
+                      )),
+                  Container(
+                      width: MediaQuery.of(context).size.width / 1.5,
+                      padding: EdgeInsets.only(right: 12),
+                      child: Text(
+                        'Четыре великолепных бутик-отеля «Де-Арт 13» рассчитаны на небольшое количество постояльцев, которым предлагаются номера с уникальными, продуманными до мелочей интерьерами. Это прекрасная альтернатива крупным столичным гостиницам с типовыми номерами. Здесь можно отдохнуть от суеты большого города, встретиться с друзьями или провести незабываемое романтическое свидание.',
+                        style: TextStyle(
                           fontSize: 14,
                         ),
-                        )*/
-                      ),
-                    ],
-                  ),
-                  Padding(
-                      padding: EdgeInsets.only(
-                          top: 24, bottom: 12, left: 12, right: 12),
-                      child:GestureDetector(
-
-                          onTap: (){  Navigator.of(context).push(PageRouteBuilder(
-                              opaque: false,
-                              pageBuilder: (BuildContext context, _, __) =>
-                                  SelectHotelPage()));},
-                          child: RedButton(Palette().red, "Посмотреть номера",
-                              Colors.white, 13, FontWeight.bold))),
+                      )),
                 ],
-              )
-            ],
-          ),
-          Padding(
-              padding: EdgeInsets.only(left: 12, right: 12, bottom: 4),
-              child: Divider(
-                color: Palette().red,
-                thickness: 3,
-              )),
-          Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                  padding: EdgeInsets.only(top: 24, bottom: 12, left: 12),
-                  child: Text(
-                    'К вашим услугам',
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Palette().red,
-                        fontWeight: FontWeight.bold),
-                  ))),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
+              ),
+              Padding(
+                  padding:
+                      EdgeInsets.only(left: 12, right: 12, top: 24, bottom: 24),
+                  child: Divider(
+                    color: Palette().red,
+                  )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                      margin: EdgeInsets.only(left: 12),
+                      width: MediaQuery.of(context).size.width / 4,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/Icon_rooms.svg',
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 12),
+                            child: Text('Номер от\nдизайнеров',
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold)),
+                          )
+                        ],
+                      )),
+                  Container(
+                      width: MediaQuery.of(context).size.width / 1.5,
+                      padding: EdgeInsets.only(right: 12),
+                      child: Text(
+                        "Номерной фонд отелей включает номера экономкласса, классические стандарты и люксы, свадебный делюкс. В интерьерах используется роскошная мебель с кожаной обивкой и дизайнерские аксессуары, эксклюзивные отделочные материалы. Гостям выдаются уютные халаты, комплекты полотенец и одноразовые тапочки. В каждом номере есть собственная ванна. Номер в бутик-отеле можно снять на час, сутки или несколько дней.",
+                        style: TextStyle(
+                          fontSize: 14,
+                        ),
+                      )),
+                ],
+              ),
+              Padding(
+                  padding:
+                      EdgeInsets.only(left: 12, right: 12, top: 24, bottom: 24),
+                  child: Divider(
+                    color: Palette().red,
+                  )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                      margin: EdgeInsets.only(left: 12),
+                      width: MediaQuery.of(context).size.width / 4,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/Icon_interiors.svg',
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 12),
+                            child: Text('Эксклюзивные\nинтерьеры',
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold)),
+                          )
+                        ],
+                      )),
+                  Container(
+                      width: MediaQuery.of(context).size.width / 1.5,
+                      padding: EdgeInsets.only(right: 12),
+                      child: Text(
+                        'Современная Москва способна удивить даже самого бывалого путешественника. И хотя в мегаполисе снять хороший номер со всеми удобствами просто, отыскать что-то действительно эксклюзивное – задача не из легких. Вместе с тем, даже среди таких немногочисленных вариантов есть особенные, те, которые непременно запомнятся. Именно такими являются отели Де-Арт 13, объединяющие четыре великолепные гостиницы с удобным расположением.',
+                        style: TextStyle(
+                          fontSize: 14,
+                        ),
+                      )),
+                ],
+              ),
+
               Container(
-                  width: MediaQuery.of(context).size.width / 3,
-                  height: MediaQuery.of(context).size.height / 2,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/tv.svg',
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height/2,
+                  child:YandexMap(
+                    onMapCreated: (controller) async {
+                      mapController = controller;
+                      mapController.moveCamera(
+                        animation: const MapAnimation(type: MapAnimationType.linear, duration: 1),
+                        CameraUpdate.newCameraPosition(
+                          CameraPosition(
+                            target: Point(
+                              latitude: 55.7522200,
+                              longitude:37.6155600,
+
+                            ),
+                            zoom: 10,
+                          ),
+                        ),
+                      );
+
+                    },
+
+
+                    mapObjects: [
+                      /*_getClusterizedCollection(
+            placemarks: _getPlacemarkObjects(context),
+          ),*/
+                      PlacemarkMapObject(
+                        mapId: MapObjectId('MapObject 1'),
+                        point: Point(latitude: 55.665477, longitude: 37.547674 ),
+                        opacity: 1,
+                        icon: PlacemarkIcon.single(
+                          PlacemarkIconStyle(
+                            image: BitmapDescriptor.fromAssetImage(
+                              'assets/Map_Profsoyznaya.png',
+                            ),
+                            scale: 2,
+                          ),
+                        ),
+                        onTap: (_, __) =>    Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => const SelectHotelPage(),
+                          ),
+                        ),
                       ),
-                      Text('Спутниковое\nтелевидение',
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold)),
-                      Spacer(
-                        flex: 1,
+                      PlacemarkMapObject(
+                        mapId: MapObjectId('MapObject 2'),
+                        point: Point(latitude: 55.737689, longitude: 37.650145),
+                        opacity: 1,
+                        icon: PlacemarkIcon.single(
+                          PlacemarkIconStyle(
+                            image: BitmapDescriptor.fromAssetImage(
+                              'assets/Map_Taganskaya.png',
+                            ),
+                            scale: 2,
+                          ),
+                        ),
+                        onTap: (_, __) =>    Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => const SelectHotelPage(),
+                          ),
+                        ),
                       ),
-                      SvgPicture.asset(
-                        'assets/bathrobe.svg',
+                      PlacemarkMapObject(
+                        mapId: MapObjectId('MapObject 3'),
+                        point: Point(latitude: 55.712360, longitude: 37.882566),
+                        opacity: 1,
+                        icon: PlacemarkIcon.single(
+                          PlacemarkIconStyle(
+                            image: BitmapDescriptor.fromAssetImage(
+                              'assets/Map_Novokosino.png',
+                            ),
+                            scale: 2,
+                          ),
+                        ),
+                        onTap: (_, __) =>    Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => const SelectHotelPage(),
+                          ),
+                        ),
                       ),
-                      Text('Халаты,\nтапочки',
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold)),
-                      Spacer(
-                        flex: 1,
+                      PlacemarkMapObject(
+                        mapId: MapObjectId('MapObject 4'),
+                        point: Point(latitude:  55.698995,longitude: 37.737704),
+                        opacity: 1,
+                        icon: PlacemarkIcon.single(
+                          PlacemarkIconStyle(
+                            image: BitmapDescriptor.fromAssetImage(
+                              'assets/Map_Tekstilshiki.png',
+                            ),
+                            scale: 2,
+                          ),
+                        ),
+                        onTap: (_, __) =>    Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => const SelectHotelPage(),
+                          ),
+                        ),
                       ),
-                      SvgPicture.asset(
-                        'assets/cleaning.svg',
-                      ),
-                      Text('Ежедневная\nуборка',
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold)),
-                      Spacer(
-                        flex: 1,
-                      ),
-                      SvgPicture.asset(
-                        'assets/parking.svg',
-                      ),
-                      Text('Охраняемая\nпарковка',
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold)),
+                      /*   PlacemarkMapObject(
+            mapId: MapObjectId('MapObject 5'),
+            point: Point(latitude: 55.747247, longitude: 37.609083),
+            opacity: 1,
+            icon: PlacemarkIcon.single(
+              PlacemarkIconStyle(
+                image: BitmapDescriptor.fromAssetImage(
+                  'assets/Map_Profsoyznaya.png',
+                ),
+                scale: 2,
+              ),
+            ),
+            onTap: (_, __) =>    Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) => const SelectHotelPage(),
+              ),
+            ),
+          ),*/
+
                     ],
-                  )),
-              Container(
-                  width: MediaQuery.of(context).size.width / 3,
-                  height: MediaQuery.of(context).size.height / 2,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/food.svg',
-                      ),
-                      Text('Доставка\nеды в номер',
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold)),
-                      Spacer(
-                        flex: 1,
-                      ),
-                      SvgPicture.asset(
-                        'assets/bar.svg',
-                      ),
-                      Text('Круглосуточный\nбар',
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold)),
-                      Spacer(
-                        flex: 1,
-                      ),
-                      SvgPicture.asset(
-                        'assets/payment.svg',
-                      ),
-                      Text('Оплата картой\nVisa/Mastercard',
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold)),
-                      Spacer(
-                        flex: 1,
-                      ),
-                      SvgPicture.asset(
-                        'assets/wi-fi.svg',
-                      ),
-                      Text('Бесплатный\nWi-Fi',
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold)),
-                    ],
-                  )),
+
+                  ))
+              /*Footer(context)*/
             ],
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 24),
-            child: Image.asset("assets/hotel2.png"),
-          ),
-          Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 12,
-                    top: 24,
-                    bottom: 12,
-                  ),
-                  child: Text(
-                    'Бутик-отель',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ))),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                  margin: EdgeInsets.only(left: 12),
-                  width: MediaQuery.of(context).size.width / 4,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/Icon_hotels.svg',
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 12),
-                        child: Text('Сеть\nотелей',
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold)),
-                      )
-                    ],
-                  )),
-              Container(
-                  width: MediaQuery.of(context).size.width / 1.5,
-                  padding: EdgeInsets.only(right: 12),
-                  child: Text(
-                    'Четыре великолепных бутик-отеля «Де-Арт 13» рассчитаны на небольшое количество постояльцев, которым предлагаются номера с уникальными, продуманными до мелочей интерьерами. Это прекрасная альтернатива крупным столичным гостиницам с типовыми номерами. Здесь можно отдохнуть от суеты большого города, встретиться с друзьями или провести незабываемое романтическое свидание.',
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
-                  )),
-            ],
-          ),
-          Padding(
-              padding:
-                  EdgeInsets.only(left: 12, right: 12, top: 24, bottom: 24),
-              child: Divider(
-                color: Palette().red,
-              )),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                  margin: EdgeInsets.only(left: 12),
-                  width: MediaQuery.of(context).size.width / 4,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/Icon_rooms.svg',
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 12),
-                        child: Text('Номер от\nдизайнеров',
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold)),
-                      )
-                    ],
-                  )),
-              Container(
-                  width: MediaQuery.of(context).size.width / 1.5,
-                  padding: EdgeInsets.only(right: 12),
-                  child: Text(
-                    "Номерной фонд отелей включает номера экономкласса, классические стандарты и люксы, свадебный делюкс. В интерьерах используется роскошная мебель с кожаной обивкой и дизайнерские аксессуары, эксклюзивные отделочные материалы. Гостям выдаются уютные халаты, комплекты полотенец и одноразовые тапочки. В каждом номере есть собственная ванна. Номер в бутик-отеле можно снять на час, сутки или несколько дней.",
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
-                  )),
-            ],
-          ),
-          Padding(
-              padding:
-                  EdgeInsets.only(left: 12, right: 12, top: 24, bottom: 24),
-              child: Divider(
-                color: Palette().red,
-              )),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                  margin: EdgeInsets.only(left: 12),
-                  width: MediaQuery.of(context).size.width / 4,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/Icon_interiors.svg',
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 12),
-                        child: Text('Эксклюзивные\nинтерьеры',
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.bold)),
-                      )
-                    ],
-                  )),
-              Container(
-                  width: MediaQuery.of(context).size.width / 1.5,
-                  padding: EdgeInsets.only(right: 12),
-                  child: Text(
-                    'Современная Москва способна удивить даже самого бывалого путешественника. И хотя в мегаполисе снять хороший номер со всеми удобствами просто, отыскать что-то действительно эксклюзивное – задача не из легких. Вместе с тем, даже среди таких немногочисленных вариантов есть особенные, те, которые непременно запомнятся. Именно такими являются отели Де-Арт 13, объединяющие четыре великолепные гостиницы с удобным расположением.',
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
-                  )),
-            ],
-          ),
-          Container(
-            padding: EdgeInsets.only(top: 24),
-            child: Image.asset("assets/Map.png"),
-          ),
-          /*Footer(context)*/
-        ],
-      ))),
+          ))),
+
+
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }

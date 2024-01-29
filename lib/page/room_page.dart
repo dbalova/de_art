@@ -6,6 +6,7 @@ import '../custom_widget/footer.dart';
 import '../custom_widget/icon_text_container.dart';
 import '../main.dart';
 import '../palette.dart';
+import 'Map.dart';
 import 'application_Page.dart';
 import 'menu_page.dart';
 
@@ -479,10 +480,7 @@ class _RoomPageState extends State<RoomPage> {
                 ],
               ),
             ),
-            Container(
-              padding: const EdgeInsets.only(top: 24),
-              child: Image.asset('assets/Map.png'),
-            ),
+            miniMap(context)
            /* Footer(context)*/
           ],
         ),

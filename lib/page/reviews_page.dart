@@ -6,6 +6,7 @@ import '../custom_widget/buttonModel.dart';
 import '../custom_widget/footer.dart';
 import '../main.dart';
 import '../palette.dart';
+import 'Map.dart';
 import 'application_Page.dart';
 import 'menu_page.dart';
 
@@ -222,10 +223,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
               ),
 
             ),
-            Container(
-              padding: const EdgeInsets.only(top: 24),
-              child: Image.asset('assets/Map.png'),
-            ),
+            miniMap(context)
             /*Footer(context)*/
           ],
 
