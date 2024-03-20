@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../palette.dart';
@@ -9,11 +10,14 @@ import 'menu_page.dart';
 class VisitPage extends StatefulWidget {
   const VisitPage({super.key});
 
+
   @override
   State<VisitPage> createState() => _VisitPageState();
 }
 
 class _VisitPageState extends State<VisitPage> {
+  SfRangeValues _values = SfRangeValues(2.0, 10.0);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,57 +98,42 @@ class _VisitPageState extends State<VisitPage> {
                 fontSize: 18,
                 color: Colors.black,
                 ),textAlign: TextAlign.start,),
-          SliderTheme(
-              data: SliderThemeData(
-               trackHeight: 16,
-                thumbShape: RoundSliderThumbShape(enabledThumbRadius: 20)
-                //thumbRadius: 16,
-               // tooltipBackgroundColor: model.primaryColor,
-              ),
-              child: Slider(
-                //interval: 2.0,
-                min: 0,
-                max: 10,
-              /*  thumbIcon: Container(
-
-                    alignment: Alignment.center,
+            SfRangeSliderTheme(
+                data: SfRangeSliderThemeData(
+                  thumbColor: Color.fromRGBO(217, 217, 217, 1),
+                  activeTrackColor: Color.fromRGBO(217, 217, 217, 1),
+                  inactiveTrackColor: Color.fromRGBO(140, 40, 57, 1),
+                  thumbRadius: 24,
+                  activeTrackHeight: 19,
+                  inactiveTrackHeight: 19,
+                ),
+                child:  SfRangeSlider(
+                  min: 2.0,
+                  max: 10.0,
+                  values: _values,
+                  onChanged: (SfRangeValues newValues){
+                    setState(() {
+                      _values = newValues;
+                    });
+                  },
+                  startThumbIcon: Padding(
+                    padding: const EdgeInsets.only(top: 6, left: 2),
                     child: Text(
-                      "4",
-                      style:  TextStyle(color: Colors.white, fontSize: 24),
+                      "0",
+                      style:  TextStyle(color: Colors.black, fontSize: 24),
                       textAlign: TextAlign.center,
-                    )),*/
-                //minorTicksPerInterval: 1,
-                //showTicks: true,
-                value: 4,
-                onChanged: (dynamic values) {
-                  setState(() {
-
-                  });
-                },
-              )),
-            SfSlider(
-              labelPlacement: LabelPlacement.betweenTicks,
-              max: 10.0,
-             // stepSize: 1,
-
-          activeColor: Palette().red,
-              inactiveColor: Colors.grey.shade300,
-            //  thumbShape: SfThumbShape(),
-              thumbIcon: Container(
-
-                  alignment: Alignment.center,
-                  child: Text(
-                    "4",
-                    style:  TextStyle(color: Colors.white, fontSize: 24),
-                    textAlign: TextAlign.center,
-                  )),
-              value: 4,
-              onChanged: (dynamic values) {
-                setState(() {
-
-                });
-              },
-            )
+                    ),
+                  ),
+                  endThumbIcon: Padding(
+                    padding: const EdgeInsets.only(top: 6, left: 2),
+                    child: Text(
+                      "10",
+                      style:  TextStyle(color: Colors.black, fontSize: 24),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                )
+            ),
           ],
         ))));
   }
