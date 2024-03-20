@@ -71,8 +71,8 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: "CeraPro",
-      /*  colorScheme:
-            ColorScheme.fromSeed(seedColor: Color.fromRGBO(114, 40, 57, 1)),*/
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: Color.fromRGBO(114, 40, 57, 1)),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'De Art 13'),

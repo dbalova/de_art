@@ -45,6 +45,7 @@ dependencies:
   geolocator: ^9.0.2
   equatable: ^2.0.5
   permission_handler: ^11.0.0
+  syncfusion_flutter_sliders: ^25.1.35
 
 dev_dependencies:
   flutter_test:
@@ -186,6 +187,8 @@ flutter:
     - assets/Map_Tekstilshiki.png
     - assets/Map_Novokosino.png
     - assets/Map_Taganskaya.png
+    - assets/bg.svg
+    - assets/bg2.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
