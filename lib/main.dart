@@ -10,6 +10,8 @@ import 'package:de_art/page/select_hotel.dart';
 import 'package:de_art/page/room_page.dart';
 
 import 'package:de_art/palette.dart';
+import 'package:de_art/service/api.dart';
+import 'package:de_art/service/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -89,6 +91,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  @override
+  void initState() {
+    loadInfo();
+    // TODO: implement initState
+    super.initState();
+  }
+
+  void loadInfo() async{
+    allHotels =await all_list();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
