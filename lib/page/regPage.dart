@@ -104,6 +104,7 @@ class _regPageState extends State<regPage> {
                     ),
                   ),
                   child: Center(child:TextField(
+                    keyboardType: TextInputType.phone,
                     controller: _phoneController,
                     decoration: InputDecoration.collapsed(
                       hintText: "+9 999 999 99 99",

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
+import '../custom_widget/footer.dart';
+import '../main.dart';
 import '../palette.dart';
 import 'application_Page.dart';
 import 'menu_page.dart';
@@ -14,9 +17,9 @@ class VisitPage extends StatefulWidget {
   @override
   State<VisitPage> createState() => _VisitPageState();
 }
-
+bool _isQr = false;
 class _VisitPageState extends State<VisitPage> {
-  SfRangeValues _values = SfRangeValues(2.0, 10.0);
+  SfRangeValues _values = SfRangeValues(4.0, 10.0);
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +44,19 @@ class _VisitPageState extends State<VisitPage> {
                         'assets/menu.svg',
                       ))),
               title: Center(
-                  child: Container(
+                  child: GestureDetector(
+                      onTap: (){Navigator.pushAndRemoveUntil<dynamic>(
+                        context,
+                        MaterialPageRoute<dynamic>(
+                          builder: (BuildContext context) => MyHomePage(title: 'De Art 13'),
+                        ),
+                            (route) => false,//if you want to disable back feature set to false
+                      );},
+                      child:Container(
                       height: 55,
                       child: SvgPicture.asset(
                         'assets/logo.svg',
-                      ))),
+                      )))),
               actions: [
                 GestureDetector(
                     onTap: () {
@@ -68,7 +79,44 @@ class _VisitPageState extends State<VisitPage> {
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-          Container(
+        GestureDetector(
+            onTap: (){
+              _isQr = !_isQr;
+              setState(() {
+
+              });
+            },
+
+            child: _isQr ?
+            Container(
+                margin: EdgeInsets.only(bottom:0),
+                height:300,
+                child: Stack(
+                  children: [
+                    Center(child: Container(
+                      margin: EdgeInsets.only(top:0, ),
+                      child: SvgPicture.asset(
+                        'assets/bg2.svg',
+                      ),
+                    )),
+
+                    Center(child:
+                    Container(
+                    child: QrImageView(
+                      eyeStyle: QrEyeStyle(
+                        eyeShape: QrEyeShape.square,
+                          color: Colors.white) ,
+                      dataModuleStyle: QrDataModuleStyle(color: Colors.white,dataModuleShape: QrDataModuleShape.square),
+                      //backgroundColor: Colors.white,
+                      data: '10',
+                      version: QrVersions.auto,
+                      size: 200,
+                      gapless: false,
+                    ),
+                    ))
+                  ],
+                ))
+                :Container(
             margin: EdgeInsets.only(bottom:0),
               height:300,
               child: Stack(
@@ -89,12 +137,12 @@ class _VisitPageState extends State<VisitPage> {
                                ],
                              ))
              ],
-           )),
+           ))),
             Text("Мои посещения",style: TextStyle(
                 fontSize: 30,
                 color: Palette().red,
                 fontWeight: FontWeight.w900),textAlign: TextAlign.start,),
-            Text("До бесплатного посещения: 9 визитов",style: TextStyle(
+            Text("До бесплатного посещения: 4 визита",style: TextStyle(
                 fontSize: 18,
                 color: Colors.black,
                 ),textAlign: TextAlign.start,),
@@ -108,18 +156,18 @@ class _VisitPageState extends State<VisitPage> {
                   inactiveTrackHeight: 19,
                 ),
                 child:  SfRangeSlider(
-                  min: 2.0,
+                  min: 0.0,
                   max: 10.0,
                   values: _values,
                   onChanged: (SfRangeValues newValues){
                     setState(() {
-                      _values = newValues;
+                      //_values = newValues;
                     });
                   },
                   startThumbIcon: Padding(
                     padding: const EdgeInsets.only(top: 6, left: 2),
                     child: Text(
-                      "0",
+                      "4",
                       style:  TextStyle(color: Colors.black, fontSize: 24),
                       textAlign: TextAlign.center,
                     ),
@@ -134,6 +182,56 @@ class _VisitPageState extends State<VisitPage> {
                   ),
                 )
             ),
+           SizedBox(height: 24,),
+
+            Center(child: Text("Остались вопросы? Звоните!",style: TextStyle(
+                fontSize: 20,
+                color: Palette().red,
+                fontWeight: FontWeight.w900),textAlign: TextAlign.center,)),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.local_phone, color: Colors.black,),
+                Text("+7 (000) 000 00 00",style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                ),textAlign: TextAlign.start,),
+              ],
+            ),
+            SizedBox(height: 24,),
+      Center(child:      Text("Или пишите:",style: TextStyle(
+                fontSize: 20,
+                color: Palette().red,
+                fontWeight: FontWeight.w900),textAlign: TextAlign.start,)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                    onTap:(){URL_WA();},
+                    child:Container(
+                        height: 45,
+                        width: 45,
+                        child:SvgPicture.asset(
+                          'assets/WA-BLACK.svg',
+                        ))),
+                SizedBox(width: 15,),
+
+                GestureDetector(
+                    onTap:(){URL_TG();},
+                    child:Container(
+                      height: 45,
+                        width: 45,
+                        child:SvgPicture.asset(
+                          'assets/TE-BLACK.svg',
+                        ))),
+              ],
+            ),
+            SizedBox(height: 24,),
+Center(child:            TextButton(onPressed: (){}, child: Text("Правила программы лояльности",
+              style: TextStyle(decoration: TextDecoration.underline, color: Colors.grey),)))
+
+
           ],
         ))));
   }

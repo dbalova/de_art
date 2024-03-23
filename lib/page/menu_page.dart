@@ -97,14 +97,12 @@ class _MenuPageState extends State<MenuPage> {
         );}, child:Text("Кропоткинская",style: TextStyle(color: Colors.white,fontSize: 18),)),
 SizedBox(height: 50,),
         TextButton(onPressed: ()async{
-          await all_list();
-          await all_pages();
-          await all_reviews();
-          await all_hotels_info();
-          await select_hotel_info("1");
-          await select_page_info("3");
-          await select_room_info("108");
-
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => const regPage(),
+            ),
+          );
 
           }, child:Text("test",style: TextStyle(color: Colors.white,fontSize: 18),)),
         TextButton(onPressed: (){Navigator.push(
