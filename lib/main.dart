@@ -92,15 +92,27 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+
   @override
-  void initState() {
-    loadInfo();
-    // TODO: implement initState
+  void initState () {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      loadInfo().then((){
+        setState(() {
+
+        });
+      });
+    });
+
   }
 
-  void loadInfo() async{
-    allHotels =await all_list();
+
+  loadInfo() async{
+    await all_list();
+    setState(() {
+
+    });
+
 
   }
 
@@ -137,10 +149,20 @@ class _MyHomePageState extends State<MyHomePage> {
             actions: [
               GestureDetector(
 
-                  onTap: (){   Navigator.of(context).push(PageRouteBuilder(
+                  onTap: ()async{ setState(() {
+
+                  });
+
+                  await all_list();
+                  print(allHotels.hotels!.h1!.id);
+                  setState(() {
+
+                  });
+
+                    /*Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) =>
-                          ApplicationPage()));},
+                          ApplicationPage()));*/},
                   child:Container(
                   height: 62,
                   margin: EdgeInsets.only(right: 12, top: 12),
@@ -180,7 +202,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Отели на час в Москве',
+                                  allHotels.hotels?.h1?.rooms?[0].title!  ?? "",
+                                  //'Отели на час в Москве',
                                   style: TextStyle(
                                       fontSize: 30,
                                       fontWeight: FontWeight.bold,

@@ -24,8 +24,8 @@ Future all_list() async {
     final _json = response.data;
     if ((response.statusCode == 200) & (_json['success'] == true)) {
 
-      allHotels = allList.Hotel.fromJson(_json['hotels']) ;
-//print(allHotels.toString());
+      allHotels = allList.AllHotel.fromJson(_json) ;
+print(allHotels.toString());
       print("all_list success " + DateTime.now().toString());
       return "success";
     } else if (_json['error'] != null) {
@@ -132,7 +132,7 @@ Future all_hotels_info() async {
     final _json = response.data;
     if ((response.statusCode == 200) & (_json['success'] == true)) {
 
-      allHotelsInfo = AllHotelsInfo.fromJson(_json['hotels']) ;
+      allHotelsInfo = AllHotelsInfo.fromJson(_json) ;
 print(allHotelsInfo.toString());
       print("all_hotels_info success " + DateTime.now().toString());
       return "success";

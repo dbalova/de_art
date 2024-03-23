@@ -1,35 +1,41 @@
-class Hotel {
+class AllHotel {
+  bool? success;
   Hotels? hotels;
+  int? count;
 
-  Hotel({this.hotels});
+  AllHotel({this.success, this.hotels, this.count});
 
-  Hotel.fromJson(Map<String, dynamic> json) {
+  AllHotel.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
     hotels =
-    json['hotels'] != null ? new Hotels.fromJson(json['hotels']) : null;
+     new Hotels.fromJson(json['hotels']) ;
+    count = json['count'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['success'] = this.success;
     if (this.hotels != null) {
       data['hotels'] = this.hotels!.toJson();
     }
+    data['count'] = this.count;
     return data;
   }
 }
 
 class Hotels {
   H1? h1;
-  H1? h4;
   H1? h2;
+  H1? h4;
   H1? h5;
   H1? h6;
 
-  Hotels({this.h1, this.h4, this.h2, this.h5, this.h6});
+  Hotels({this.h1, this.h2, this.h4, this.h5, this.h6});
 
   Hotels.fromJson(Map<String, dynamic> json) {
     h1 = json['1'] != null ? new H1.fromJson(json['1']) : null;
-    h4 = json['4'] != null ? new H1.fromJson(json['4']) : null;
     h2 = json['2'] != null ? new H1.fromJson(json['2']) : null;
+    h4 = json['4'] != null ? new H1.fromJson(json['4']) : null;
     h5 = json['5'] != null ? new H1.fromJson(json['5']) : null;
     h6 = json['6'] != null ? new H1.fromJson(json['6']) : null;
   }
@@ -39,11 +45,11 @@ class Hotels {
     if (this.h1 != null) {
       data['1'] = this.h1!.toJson();
     }
-    if (this.h4 != null) {
-      data['4'] = this.h4!.toJson();
-    }
     if (this.h2 != null) {
       data['2'] = this.h2!.toJson();
+    }
+    if (this.h4 != null) {
+      data['4'] = this.h4!.toJson();
     }
     if (this.h5 != null) {
       data['5'] = this.h5!.toJson();
