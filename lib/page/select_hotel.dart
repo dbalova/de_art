@@ -1,5 +1,6 @@
 import 'package:de_art/page/reviews_page.dart';
 import 'package:de_art/page/room_page.dart';
+import 'package:de_art/service/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
@@ -8,8 +9,10 @@ import '../custom_widget/buttonModel.dart';
 import '../custom_widget/footer.dart';
 import '../main.dart';
 import '../palette.dart';
+import '../service/api.dart';
 import 'Map.dart';
 import 'application_Page.dart';
+import 'booking_page.dart';
 import 'menu_page.dart';
 
 class SelectHotelPage extends StatefulWidget {
@@ -33,7 +36,17 @@ List<Image> fotoRoom = [
   Image.asset("assets/3.png"),
 ];
 
+final _scrollController = ScrollController();
+
 class _SelectHotelPageState extends State<SelectHotelPage> {
+  String phone = "";
+  @override void initState() {
+    for(var i = 0; i < selectHotelInfo.hotel!.phone!.length; i++ ){
+      phone = phone + "   " + selectHotelInfo.hotel!.phone![i];
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,14 +107,14 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "De Art 13 отель на Таганской",
+                        selectHotelInfo.hotel?.h1.toString() ?? "",
                         style: TextStyle(
                             fontSize: 30,
                             color: Palette().red,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.only(top: 28.0),
                       child: Row(
                         children: [
@@ -109,7 +122,7 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                             padding: EdgeInsets.only(right: 8.0),
                             child: Icon(Icons.place),
                           ),
-                          Text("Москва, ул. Народная, дом 14, стр.1")
+                          Text(selectHotelInfo.hotel?.address.toString() ?? "",)
                         ],
                       ),
                     ),
@@ -124,7 +137,7 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                           Container(
                               width: MediaQuery.of(context).size.width / 1.3,
                               child: Text(
-                                "+7(929)-562-43-90      +7(499)-178-10-68",
+                                phone,
                                 overflow: TextOverflow.clip,
                               ))
                         ],
@@ -241,7 +254,7 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                         ),
                                       ),
                                       content: Container(
-margin:EdgeInsets.only(top:24),
+                                        margin:EdgeInsets.only(top:24),
                                         height: MediaQuery.of(context)
                                             .size
                                             .height/2,
@@ -381,16 +394,14 @@ margin:EdgeInsets.only(top:24),
                               color: _isJacuzzi? Colors.transparent:Colors.black,
                             ),
                           ),
-                          child: Text("С джакузи",style: TextStyle(color: _isJacuzzi? Colors.white:Colors.black,),),
+                          child: Text(selectHotelInfo.filter?.f1?.title?.toString() ?? "" ,style: TextStyle(color: _isJacuzzi? Colors.white:Colors.black,),),
                         )),
-                       GestureDetector(
+                        selectHotelInfo.numFilter! >=1 ? GestureDetector(
                            onTap: (){
                              _isParking=!_isParking;
                              setState(() {
-
                              });
                            },
-
                            child: Container(
                           margin: EdgeInsets.only(
                             right: 8,
@@ -407,8 +418,8 @@ margin:EdgeInsets.only(top:24),
                             ),
                           ),
                           child: Text("С парковкой",style: TextStyle(color: _isParking? Colors.white:Colors.black,),),
-                        )),
-                       GestureDetector(
+                        )) : Container(),
+                        selectHotelInfo.numFilter! >=2 ? GestureDetector(
                            onTap: (){
                              _price550=!_price550;
                              setState(() {
@@ -429,13 +440,13 @@ margin:EdgeInsets.only(top:24),
                             ),
                           ),
                           child: Text("До 550 в час",style: TextStyle(color: _price550? Colors.white:Colors.black,),),
-                        )),
+                        ))  : Container(),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        GestureDetector(
+                        selectHotelInfo.numFilter! >=3 ? GestureDetector(
                             onTap: (){
                               _price750=!_price750;
                               setState(() {
@@ -457,8 +468,8 @@ margin:EdgeInsets.only(top:24),
                             ),
                           ),
                           child: Text("До 750 в час",style: TextStyle(color: _price750? Colors.white:Colors.black,),),
-                        )),
-                        GestureDetector(
+                        )): Container(),
+                        selectHotelInfo.numFilter! >=4 ? GestureDetector(
                             onTap: (){
                               _price1100=!_price1100;
                               setState(() {
@@ -480,591 +491,242 @@ margin:EdgeInsets.only(top:24),
                             ),
                           ),
                           child: Text("До 1 100 в час",style: TextStyle(color: _price1100? Colors.white:Colors.black,),),
-                        )),
+                        )): Container(),
                       ],
                     ),
-                    Container(
-                      margin: EdgeInsets.only(top: 12, bottom: 12),
-                      decoration: BoxDecoration(
-                          color: Color.fromRGBO(245, 245, 245, 1)),
-                      child: Column(
-                        children: [
-                       GestureDetector(
-                           onTap:(){  Navigator.of(context).push(PageRouteBuilder(
-                               opaque: false,
-                               pageBuilder: (BuildContext context, _, __) =>
-                                   RoomPage()));},
-                           child:   Container(
-                              height: 265,
-                              child: Swiper(
-                                itemBuilder: (context, index) {
-                                  return fotoRoom[index];
-                                },
-                                itemCount: fotoRoom.length,
-                                //pagination: const SwiperPagination(),
-                                control: const SwiperControl(
-                                    color: Colors.white,
-                                    iconNext: Icons.arrow_circle_right_outlined,
-                                    iconPrevious:
-                                    Icons.arrow_circle_left_outlined),
-                              ))),
-                          Container(
-                              padding: EdgeInsets.only(top: 12, bottom: 12),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                      padding:
-                                      EdgeInsets.only(left: 12, right: 12),
-                                      child: Text(
-                                        '209 Cтандарт Морской с джакузи',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  Padding(
-                                      padding: EdgeInsets.only(
-                                          bottom: 12,
-                                          top: 12,
-                                          left: 12,
-                                          right: 12),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                              child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time1.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        'Час',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                            FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        '750 ₽',
-                                                        style:
-                                                        TextStyle(fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              )),
-                                          Container(
-                                              child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time12.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        'Ночь',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                            FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        '3 500 ₽',
-                                                        style:
-                                                        TextStyle(fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              )),
-                                          Container(
-                                              child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time24.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        'Сутки',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                            FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        '4 500 ₽',
-                                                        style:
-                                                        TextStyle(fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              ))
-                                        ],
-                                      )),
-                                  Padding(
-                                      padding: EdgeInsets.only(
-                                          bottom: 12,
-                                          top: 12,
-                                          left: 12,
-                                          right: 12),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          SvgPicture.asset(
-                                            'assets/mark.svg',
-                                          ),
-                                          SizedBox(
-                                            width: 12,
-                                          ),
-                                          Text(
-                                            'Профсоюзная',
-                                            style: TextStyle(fontSize: 18),
-                                          ),
-                                          Spacer(
-                                            flex: 2,
-                                          ),
-                                          GestureDetector(
-                                              onTap: (){
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (BuildContext context) => const RoomPage(),
-                                                  ),
-                                                );
-                                              },
-                                              child: Text(
-                                                'Подробнее',
-                                                style: TextStyle(
-                                                    decoration:
-                                                    TextDecoration.underline,
-                                                    decorationThickness: 2,
-                                                    fontSize: 18),
-                                              )),
-                                        ],
-                                      )),
-                                  Padding(
-                                      padding:
-                                      EdgeInsets.only(left: 12, right: 12),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          SvgPicture.asset(
-                                            'assets/stars.svg',
-                                          ),
-                                          RedButton(
-                                              Palette().red,
-                                              "Бронировать",
-                                              Palette().white,
-                                              15,
-                                              FontWeight.normal),
-                                        ],
-                                      )),
-                                ],
-                              ))
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 12, bottom: 12),
-                      decoration: BoxDecoration(
-                          color: Color.fromRGBO(245, 245, 245, 1)),
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                              onTap:(){  Navigator.of(context).push(PageRouteBuilder(
-                                  opaque: false,
-                                  pageBuilder: (BuildContext context, _, __) =>
-                                      RoomPage()));},
-                              child:   Container(
-                                  height: 265,
-                                  child: Swiper(
-                                    itemBuilder: (context, index) {
-                                      return fotoRoom[index];
+                    ListView.builder(
+                        shrinkWrap: true,
+                        controller: _scrollController,
+                        itemCount: selectHotelInfo.numRooms,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: EdgeInsets.only(
+                                left: 12, top: 12, right: 12, bottom: 12),
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(245, 245, 245, 1)),
+                            child: Column(
+                              children: [
+                                GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).push(PageRouteBuilder(
+                                          opaque: false,
+                                          pageBuilder:
+                                              (BuildContext context, _, __) =>
+                                              RoomPage()));
                                     },
-                                    itemCount: fotoRoom.length,
-                                    //pagination: const SwiperPagination(),
-                                    control: const SwiperControl(
-                                        color: Colors.white,
-                                        iconNext: Icons.arrow_circle_right_outlined,
-                                        iconPrevious:
-                                        Icons.arrow_circle_left_outlined),
-                                  ))),
-                          Container(
-                              padding: EdgeInsets.only(top: 12, bottom: 12),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                      padding:
-                                      EdgeInsets.only(left: 12, right: 12),
-                                      child: Text(
-                                        '209 Cтандарт Морской с джакузи',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  Padding(
-                                      padding: EdgeInsets.only(
-                                          bottom: 12,
-                                          top: 12,
-                                          left: 12,
-                                          right: 12),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                              child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time1.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        'Час',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                            FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        '750 ₽',
-                                                        style:
-                                                        TextStyle(fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              )),
-                                          Container(
-                                              child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time12.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        'Ночь',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                            FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        '3 500 ₽',
-                                                        style:
-                                                        TextStyle(fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              )),
-                                          Container(
-                                              child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time24.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        'Сутки',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                            FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        '4 500 ₽',
-                                                        style:
-                                                        TextStyle(fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              ))
-                                        ],
-                                      )),
-                                  Padding(
-                                      padding: EdgeInsets.only(
-                                          bottom: 12,
-                                          top: 12,
-                                          left: 12,
-                                          right: 12),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          SvgPicture.asset(
-                                            'assets/mark.svg',
-                                          ),
-                                          SizedBox(
-                                            width: 12,
-                                          ),
-                                          Text(
-                                            'Профсоюзная',
-                                            style: TextStyle(fontSize: 18),
-                                          ),
-                                          Spacer(
-                                            flex: 2,
-                                          ),
-                                          GestureDetector(
-                                              onTap: (){
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (BuildContext context) => const RoomPage(),
-                                                  ),
-                                                );
-                                              },
-                                              child: Text(
-                                                'Подробнее',
-                                                style: TextStyle(
-                                                    decoration:
-                                                    TextDecoration.underline,
-                                                    decorationThickness: 2,
-                                                    fontSize: 18),
-                                              )),
-                                        ],
-                                      )),
-                                  Padding(
-                                      padding:
-                                      EdgeInsets.only(left: 12, right: 12),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          SvgPicture.asset(
-                                            'assets/stars.svg',
-                                          ),
-                                          RedButton(
-                                              Palette().red,
-                                              "Бронировать",
-                                              Palette().white,
-                                              15,
-                                              FontWeight.normal),
-                                        ],
-                                      )),
-                                ],
-                              ))
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 12, bottom: 12),
-                      decoration: BoxDecoration(
-                          color: Color.fromRGBO(245, 245, 245, 1)),
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                              onTap:(){  Navigator.of(context).push(PageRouteBuilder(
-                                  opaque: false,
-                                  pageBuilder: (BuildContext context, _, __) =>
-                                      RoomPage()));},
-                              child:   Container(
-                                  height: 265,
-                                  child: Swiper(
-                                    itemBuilder: (context, index) {
-                                      return fotoRoom[index];
-                                    },
-                                    itemCount: fotoRoom.length,
-                                    //pagination: const SwiperPagination(),
-                                    control: const SwiperControl(
-                                        color: Colors.white,
-                                        iconNext: Icons.arrow_circle_right_outlined,
-                                        iconPrevious:
-                                        Icons.arrow_circle_left_outlined),
-                                  ))),
-                          Container(
-                              padding: EdgeInsets.only(top: 12, bottom: 12),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                      padding:
-                                      EdgeInsets.only(left: 12, right: 12),
-                                      child: Text(
-                                        '209 Cтандарт Морской с джакузи',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                  Padding(
-                                      padding: EdgeInsets.only(
-                                          bottom: 12,
-                                          top: 12,
-                                          left: 12,
-                                          right: 12),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                              child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time1.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        'Час',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                            FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        '750 ₽',
-                                                        style:
-                                                        TextStyle(fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              )),
-                                          Container(
-                                              child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time12.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        'Ночь',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                            FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        '3 500 ₽',
-                                                        style:
-                                                        TextStyle(fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              )),
-                                          Container(
-                                              child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time24.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        'Сутки',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                            FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        '4 500 ₽',
-                                                        style:
-                                                        TextStyle(fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              ))
-                                        ],
-                                      )),
-                                  Padding(
-                                      padding: EdgeInsets.only(
-                                          bottom: 12,
-                                          top: 12,
-                                          left: 12,
-                                          right: 12),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          SvgPicture.asset(
-                                            'assets/mark.svg',
-                                          ),
-                                          SizedBox(
-                                            width: 12,
-                                          ),
-                                          Text(
-                                            'Профсоюзная',
-                                            style: TextStyle(fontSize: 18),
-                                          ),
-                                          Spacer(
-                                            flex: 2,
-                                          ),
-                                          GestureDetector(
-                                              onTap: (){
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (BuildContext context) => const RoomPage(),
-                                                  ),
-                                                );
-                                              },
-                                              child: Text(
-                                                'Подробнее',
-                                                style: TextStyle(
-                                                    decoration:
-                                                    TextDecoration.underline,
-                                                    decorationThickness: 2,
-                                                    fontSize: 18),
-                                              )),
-                                        ],
-                                      )),
-                                  Padding(
-                                      padding:
-                                      EdgeInsets.only(left: 12, right: 12),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          SvgPicture.asset(
-                                            'assets/stars.svg',
-                                          ),
-                                          RedButton(
-                                              Palette().red,
-                                              "Бронировать",
-                                              Palette().white,
-                                              15,
-                                              FontWeight.normal),
-                                        ],
-                                      )),
-                                ],
-                              ))
-                        ],
-                      ),
-                    ),
+                                    child: Container(
+                                        height: 265,
+                                        child: Swiper(
+                                          itemBuilder: (context, i) {
+                                            return Image.network(
+                                                "https://deart-13.ru${selectHotelInfo.rooms?[index].images?[i].photo ?? ""}");
+                                          },
+                                          itemCount: selectHotelInfo
+                                              .rooms?[index]
+                                              .images
+                                              ?.length ??
+                                              0,
+                                          //pagination: const SwiperPagination(),
+                                          control: const SwiperControl(
+                                              color: Colors.white,
+                                              iconNext: Icons
+                                                  .arrow_circle_right_outlined,
+                                              iconPrevious: Icons
+                                                  .arrow_circle_left_outlined),
+                                        ))),
+                                Container(
+                                    padding: EdgeInsets.only(
+                                        left: 12, top: 12, right: 12, bottom: 12),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 12, right: 12),
+                                            child: Text(
+                                              selectHotelInfo.rooms?[index]
+                                                  .title
+                                                  .toString() ??
+                                                  "",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                bottom: 12,
+                                                top: 12,
+                                                left: 12,
+                                                right: 12),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Container(
+                                                    child: Row(
+                                                      children: [
+                                                        SvgPicture.asset(
+                                                          'assets/time1.svg',
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                          children: [
+                                                            Text(
+                                                              'Час',
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                  FontWeight.bold,
+                                                                  fontSize: 15),
+                                                            ),
+                                                            Text(
+                                                              "${selectHotelInfo.rooms?[index].price?.hour.toString() ?? ""}  ₽",
+                                                              style: TextStyle(
+                                                                  fontSize: 15),
+                                                            ),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    )),
+                                                Container(
+                                                    child: Row(
+                                                      children: [
+                                                        SvgPicture.asset(
+                                                          'assets/time12.svg',
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                          children: [
+                                                            Text(
+                                                              'Ночь',
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                  FontWeight.bold,
+                                                                  fontSize: 15),
+                                                            ),
+                                                            Text(
+                                                              "${selectHotelInfo.rooms?[index].price?.night.toString() ?? ""}  ₽",
+                                                              style: TextStyle(
+                                                                  fontSize: 15),
+                                                            ),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    )),
+                                                Container(
+                                                    child: Row(
+                                                      children: [
+                                                        SvgPicture.asset(
+                                                          'assets/time24.svg',
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                          children: [
+                                                            Text(
+                                                              'Сутки',
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                  FontWeight.bold,
+                                                                  fontSize: 15),
+                                                            ),
+                                                            Text(
+                                                              "${selectHotelInfo.rooms?[index].price?.price.toString() ?? ""}  ₽",
+                                                              style: TextStyle(
+                                                                  fontSize: 15),
+                                                            ),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ))
+                                              ],
+                                            )),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                bottom: 12,
+                                                top: 12,
+                                                left: 12,
+                                                right: 12),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/mark.svg',
+                                                ),
+                                                SizedBox(
+                                                  width: 12,
+                                                ),
+                                                Text(
+                                                  'Профсоюзная',
+                                                  style: TextStyle(fontSize: 18),
+                                                ),
+                                                Spacer(
+                                                  flex: 2,
+                                                ),
+                                                GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.of(context).push(
+                                                          PageRouteBuilder(
+                                                              opaque: false,
+                                                              pageBuilder:
+                                                                  (BuildContext
+                                                              context,
+                                                                  _,
+                                                                  __) =>
+                                                                  RoomPage()));
+                                                    },
+                                                    child: Text(
+                                                      'Подробнее',
+                                                      style: TextStyle(
+                                                          decoration:
+                                                          TextDecoration
+                                                              .underline,
+                                                          decorationThickness: 2,
+                                                          fontSize: 18),
+                                                    )),
+                                              ],
+                                            )),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 12, right: 12),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/stars.svg',
+                                                ),
+                                                GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.of(context).push(
+                                                          PageRouteBuilder(
+                                                              opaque: false,
+                                                              pageBuilder: (BuildContext
+                                                              context,
+                                                                  _,
+                                                                  __) =>
+                                                                  BookingPage()));
+                                                    },
+                                                    child: RedButton(
+                                                        Palette().red,
+                                                        "Бронировать",
+                                                        Palette().white,
+                                                        15,
+                                                        FontWeight.normal)),
+                                              ],
+                                            )),
+                                      ],
+                                    ))
+                              ],
+                            ),
+                          );
+                        }),
                     Padding(
                         padding: EdgeInsets.only(
                             bottom: 12, top: 12, left: 12, right: 12),
@@ -1079,7 +741,6 @@ margin:EdgeInsets.only(top:24),
                                   fontWeight: FontWeight.bold),
                             ),
                           GestureDetector(
-
                             onTap: (){
                               Navigator.push(
                                 context,
@@ -1088,7 +749,6 @@ margin:EdgeInsets.only(top:24),
                                 ),
                               );
                             },
-
                               child:  Text(
                               'Смотреть все отзывы',
                               style: TextStyle(
@@ -1100,41 +760,55 @@ margin:EdgeInsets.only(top:24),
                           ],
                         )),
                     Container(
-                      margin: EdgeInsets.only(left: 12, right: 12, bottom: 12),
-                      padding: EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Palette().red,
-                          width: 1,
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            "Антон",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
-                          ),
-                          SvgPicture.asset(
-                            'assets/stars.svg',
-                          ),
-                          Text(
-                            "Хорошая гостиница в красивом районе. На Таганской выбор отелей на час не так велик, так что Де Арт прямо спасение. Мы брали Английский номер, остались всем довольны. Советую бронировать заранее",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 13),
-                          ),
-                          SizedBox(
-                            height: 50,
-                          ),
-                          Text(
-                            "18 ноября 2022 г.",
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: Color.fromRGBO(74, 74, 74, 1)),
-                          ),
-                        ],
-                      ),
-                    ),
+                        width: MediaQuery.of(context).size.width - 30,
+                        height: MediaQuery.of(context).size.height / 3,
+                        child: Swiper(
+                          itemBuilder: (context, i) {
+                            return Container(
+                              margin: EdgeInsets.only(
+                                  left: 12, right: 12, bottom: 12),
+                              padding: EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Palette().red,
+                                  width: 1,
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    allReviews[i].name.toString(),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  ),
+                                  SvgPicture.asset(
+                                    'assets/stars.svg',
+                                  ),
+                                  Text(
+                                    allReviews[i].text.toString(),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(fontSize: 13),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 5,
+                                  ),
+                                  SizedBox(
+                                    height: 24,
+                                  ),
+                                  Text(
+                                    allReviews[i].dateAdd.toString(),
+                                    style: TextStyle(
+                                        fontSize: 13,
+                                        color: Color.fromRGBO(74, 74, 74, 1)),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                          itemCount: allReviews.length,
+                          //pagination: const SwiperPagination(),
+                        )),
                     Row(
                       children: [
                         Spacer(flex: 3),
@@ -1181,7 +855,7 @@ margin:EdgeInsets.only(top:24),
                               ),
                               TextSpan(
                                 text:
-                                    ' De art Art 13 находится по адресу: улица Народная, дом 14, строение 1.',
+                                    selectHotelInfo.hotel?.location.toString() ?? "",
                                 style: TextStyle(
                                     fontSize: 14, color: Colors.black),
                               )
@@ -1227,12 +901,11 @@ margin:EdgeInsets.only(top:24),
                     Padding(
                       padding: EdgeInsets.only(top: 24, bottom: 12),
                       child: Text(
-                          "Эстетика классики и комфорт современности сплелись воедино в нашем отеле De art Art 13. Никто не останется равнодушным, если проведет здесь хотя бы одну ночь. Для наших гостей доступны стильные номера со всем необходимым: телевизор, белоснежные кровати, мини-бар, кондиционер, включенный в оплату завтрак, ванна и самое главное — отличный сервис."),
+                        selectHotelInfo.hotel?.about.toString() ?? "",
+                      ),
                     ),
-                    Text(
-                        'Забронировать номер в отеле можно на сутки, на ночь или почасово. Это очень удобно и востребовано для всех посетителей. Также в нашем отеле есть ночной бар, в котором можно провести время ярко и незабываемо.'),
                     Padding(
-                        padding: EdgeInsets.only(top: 64, bottom: 16),
+                        padding: EdgeInsets.only(top: 42, bottom: 16),
                         child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
