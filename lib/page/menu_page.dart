@@ -1,6 +1,7 @@
 import 'package:de_art/page/about_us.dart';
 import 'package:de_art/page/application_Page.dart';
 import 'package:de_art/page/contacts.dart';
+import 'package:de_art/page/regPage.dart';
 import 'package:de_art/page/select_hotel.dart';
 import 'package:de_art/palette.dart';
 import 'package:flutter/material.dart';
@@ -106,6 +107,12 @@ SizedBox(height: 50,),
 
 
           }, child:Text("test",style: TextStyle(color: Colors.white,fontSize: 18),)),
+        TextButton(onPressed: (){Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => const regPage(),
+          ),
+        );}, child:Text("Лояльность",style: TextStyle(color: Colors.white,fontSize: 18),)),
         TextButton(onPressed: (){Navigator.push(
           context,
           MaterialPageRoute(
