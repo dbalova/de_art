@@ -979,6 +979,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                               false,
                                               false,
                                             ];
+                                            _time = [
+                                              false,
+                                              false,
+                                              false,
+                                              false,
+                                              false,
+                                            ];
                                             setState(() {});
                                           },
                                           child: RedButton(
