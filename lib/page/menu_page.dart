@@ -35,26 +35,30 @@ class _MenuPageState extends State<MenuPage> {
             title: Center(
                 child: Container(
                     height: 55,
-                    child: GestureDetector
-                      (
-                        onTap: (){Navigator.pushAndRemoveUntil<dynamic>(
-                          context,
-                          MaterialPageRoute<dynamic>(
-                            builder: (BuildContext context) => MyHomePage(title: 'De Art 13'),
-                          ),
-                              (route) => false,//if you want to disable back feature set to false
-                        );},
+                    child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushAndRemoveUntil<dynamic>(
+                            context,
+                            MaterialPageRoute<dynamic>(
+                              builder: (BuildContext context) =>
+                                  MyHomePage(title: 'De Art 13'),
+                            ),
+                            (route) =>
+                                false, //if you want to disable back feature set to false
+                          );
+                        },
                         child: SvgPicture.asset(
                           'assets/logoWhite.svg',
                         )))),
             actions: [
               GestureDetector(
-
-                  onTap: (){   Navigator.of(context).push(PageRouteBuilder(
-                      opaque: false,
-                      pageBuilder: (BuildContext context, _, __) =>
-                          ApplicationPage()));},
-                  child:Container(
+                  onTap: () {
+                    Navigator.of(context).push(PageRouteBuilder(
+                        opaque: false,
+                        pageBuilder: (BuildContext context, _, __) =>
+                            ApplicationPage()));
+                  },
+                  child: Container(
                       height: 62,
                       margin: EdgeInsets.only(right: 12, top: 12),
                       child: SvgPicture.asset(
@@ -62,69 +66,147 @@ class _MenuPageState extends State<MenuPage> {
                       )))
             ],
           )),
-      body: Column(children: [
-        Divider(color: Colors.white,),
-        SizedBox(height:36 ,),
-        TextButton(onPressed: (){ Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) => const SelectHotelPage(),
+      body: Column(
+        children: [
+          Divider(
+            color: Colors.white,
           ),
-        );}, child:Text("Профсоюзная",style: TextStyle(color: Colors.white,fontSize: 18),)),
-        TextButton(onPressed: (){ Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) => const SelectHotelPage(),
+          SizedBox(
+            height: 36,
           ),
-        );}, child:Text("Таганская",style: TextStyle(color: Colors.white,fontSize: 18),)),
-        TextButton(onPressed: (){ Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) => const SelectHotelPage(),
+          TextButton(
+              onPressed: () async {
+                await select_hotel_info("1");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const SelectHotelPage(),
+                  ),
+                );
+              },
+              child: Text(
+                "Профсоюзная",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              )),
+          TextButton(
+              onPressed: () async {
+                await select_hotel_info("4");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const SelectHotelPage(),
+                  ),
+                );
+              },
+              child: Text(
+                "Таганская",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              )),
+          TextButton(
+              onPressed: () async {
+                await select_hotel_info("2");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const SelectHotelPage(),
+                  ),
+                );
+              },
+              child: Text(
+                "Новокосино",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              )),
+          TextButton(
+              onPressed: () async {
+                await select_hotel_info("5");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const SelectHotelPage(),
+                  ),
+                );
+              },
+              child: Text(
+                "Текстильщики",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              )),
+          TextButton(
+              onPressed: () async {
+                await select_hotel_info("6");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const SelectHotelPage(),
+                  ),
+                );
+              },
+              child: Text(
+                "Кропоткинская",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              )),
+          SizedBox(
+            height: 50,
           ),
-        );}, child:Text("Новокосино",style: TextStyle(color: Colors.white,fontSize: 18),)),
-        TextButton(onPressed: (){ Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) => const SelectHotelPage(),
-          ),
-        );}, child:Text("Текстильщики",style: TextStyle(color: Colors.white,fontSize: 18),)),
-        TextButton(onPressed: (){ Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) => const SelectHotelPage(),
-          ),
-        );}, child:Text("Кропоткинская",style: TextStyle(color: Colors.white,fontSize: 18),)),
-SizedBox(height: 50,),
-        TextButton(onPressed: ()async{
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (BuildContext context) => const regPage(),
-            ),
-          );
-
-          }, child:Text("test",style: TextStyle(color: Colors.white,fontSize: 18),)),
-        TextButton(onPressed: (){Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) => const regPage(),
-          ),
-        );}, child:Text("Лояльность",style: TextStyle(color: Colors.white,fontSize: 18),)),
-        TextButton(onPressed: (){Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) => const AboutUs(),
-          ),
-        );}, child:Text("О De Art 13",style: TextStyle(color: Colors.white,fontSize: 18),)),
-        TextButton(onPressed: (){  Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) => const Contacts(),
-          ),
-        );}, child:Text("Контакты",style: TextStyle(color: Colors.white,fontSize: 18),)),
-        TextButton(onPressed: (){}, child:Text("+7 (499) 460 52 13",style: TextStyle(color: Colors.white,fontSize: 18),)),
-      ],),
+          TextButton(
+              onPressed: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const regPage(),
+                  ),
+                );
+              },
+              child: Text(
+                "test",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              )),
+          TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const regPage(),
+                  ),
+                );
+              },
+              child: Text(
+                "Лояльность",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              )),
+          TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const AboutUs(),
+                  ),
+                );
+              },
+              child: Text(
+                "О De Art 13",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              )),
+          TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const Contacts(),
+                  ),
+                );
+              },
+              child: Text(
+                "Контакты",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              )),
+          TextButton(
+              onPressed: () {},
+              child: Text(
+                "+7 (499) 460 52 13",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              )),
+        ],
+      ),
     );
   }
 }

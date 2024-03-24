@@ -6,6 +6,7 @@ import '../custom_widget/buttonModel.dart';
 import '../custom_widget/footer.dart';
 import '../main.dart';
 import '../palette.dart';
+import '../service/global.dart';
 import 'Map.dart';
 import 'application_Page.dart';
 import 'menu_page.dart';
@@ -18,6 +19,9 @@ class ReviewsPage extends StatefulWidget {
 }
 
 class _ReviewsPageState extends State<ReviewsPage> {
+  final _scrollController = ScrollController();
+  int _reviewsCount = 4;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,119 +109,79 @@ class _ReviewsPageState extends State<ReviewsPage> {
                       Palette().white,
                       15,
                       FontWeight.bold)))),
-
-                  Container(
-                    margin: EdgeInsets.only( bottom: 12),
-                    padding: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Palette().red,
-                        width: 1,
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          "Антон",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                        ),
-                        SvgPicture.asset(
-                          'assets/stars.svg',
-                        ),
-                        Text(
-                          "Хорошая гостиница в красивом районе. На Таганской выбор отелей на час не так велик, так что Де Арт прямо спасение. Мы брали Английский номер, остались всем довольны. Советую бронировать заранее",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 13),
-                        ),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        Text(
-                          "18 ноября 2022 г.",
-                          style: TextStyle(
-                              fontSize: 13, color: Color.fromRGBO(74, 74, 74, 1)),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only( bottom: 12),
-                    padding: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Palette().red,
-                        width: 1,
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          "Антон",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                        ),
-                        SvgPicture.asset(
-                          'assets/stars.svg',
-                        ),
-                        Text(
-                          "Хорошая гостиница в красивом районе. На Таганской выбор отелей на час не так велик, так что Де Арт прямо спасение. Мы брали Английский номер, остались всем довольны. Советую бронировать заранее",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 13),
-                        ),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        Text(
-                          "18 ноября 2022 г.",
-                          style: TextStyle(
-                              fontSize: 13, color: Color.fromRGBO(74, 74, 74, 1)),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 12),
-                    padding: EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Palette().red,
-                        width: 1,
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          "Антон",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                        ),
-                        SvgPicture.asset(
-                          'assets/stars.svg',
-                        ),
-                        Text(
-                          "Хорошая гостиница в красивом районе. На Таганской выбор отелей на час не так велик, так что Де Арт прямо спасение. Мы брали Английский номер, остались всем довольны. Советую бронировать заранее",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 13),
-                        ),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        Text(
-                          "18 ноября 2022 г.",
-                          style: TextStyle(
-                              fontSize: 13, color: Color.fromRGBO(74, 74, 74, 1)),
-                        ),
-                      ],
-                    ),
-                  ),
-
-
+                  ListView.builder(
+                      shrinkWrap: true,
+                      controller: _scrollController,
+                      itemCount: _reviewsCount,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.only(
+                              left: 12, right: 12, bottom: 12),
+                          padding: EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Palette().red,
+                              width: 1,
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                allReviews[index].name.toString(),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
+                              SvgPicture.asset(
+                                'assets/stars.svg',
+                              ),
+                              Text(
+                                allReviews[index].text.toString(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 13),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 5,
+                              ),
+                              SizedBox(
+                                height: 24,
+                              ),
+                              Text(
+                                allReviews[index].dateAdd.toString(),
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: Color.fromRGBO(74, 74, 74, 1)),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
                 Padding(
                     padding: EdgeInsets.only(top:24, bottom:48 ),
-                    child:  RedButton(
-                     Palette().red,
-                      "Показать ещё",
-                      Palette().white,
-                      15,
-                      FontWeight.bold)),
+                    child:  GestureDetector(
+                      onTap: (){
+                        if (_reviewsCount >= allReviews.length-1){
+
+                        } else if (_reviewsCount + 1 == allReviews.length-1){
+                          _reviewsCount += 1;
+                        } else if (_reviewsCount + 2 == allReviews.length-1){
+                          _reviewsCount += 2;
+                        } else if (_reviewsCount + 3 == allReviews.length-1){
+                          _reviewsCount += 3;
+                        } else {
+                          _reviewsCount += 4;
+                        }
+                        setState(() {
+
+                        });
+                      },
+                      child: RedButton(
+                       Palette().red,
+                        "Показать ещё",
+                        Palette().white,
+                        15,
+                        FontWeight.bold),
+                    )),
 
                 ],
               ),

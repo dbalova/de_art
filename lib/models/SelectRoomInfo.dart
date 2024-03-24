@@ -100,7 +100,7 @@ class SelectRoomInfo {
     titleLand = json['title_land'];
     sortkey = json['sortkey'];
     alias = json['alias'];
-    options = json['options'];
+    options = json['options'].toString();
     priceHour = json['price_hour'];
     descr = json['descr'];
     noSmoking = json['no_smoking'];
@@ -108,7 +108,7 @@ class SelectRoomInfo {
     bed = json['bed'];
     bath = json['bath'];
     equipmentList = json['equipment_list'];
-    equipment = json['equipment'];
+    equipment = json['equipment']!=''? json['equipment'].cast<String>():[];
     equipmentOther = json['equipment_other'];
     food = json['food'];
     metaTitle = json['meta_title'];
@@ -138,7 +138,7 @@ class SelectRoomInfo {
     useNight = json['use_night'];
     useHour = json['use_hour'];
    if(json['onroombig']!=null) onroombig = json['onroombig'].cast<String>() ;
-    if(json['onroom']!=null) onroom = json['onroom'].List<String>();
+    if(json['onroom']!=null) onroom = json['onroom'].cast<String>();
     numOnroom = json['num_onroom'];
     numOnroombig = json['num_onroombig'];
     isJacuzzi = json['is_jacuzzi'];

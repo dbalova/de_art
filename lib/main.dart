@@ -24,8 +24,6 @@ void main() {
   runApp(const MyApp());
 }
 
-
-
 bool _isFilter = false;
 bool? _isJacuzzi;
 bool? _isParcking;
@@ -1020,7 +1018,12 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Column(
                             children: [
                               GestureDetector(
-                                  onTap: () {
+                                  onTap: () async {
+                                    await select_room_info(allHotels
+                                            .hotels?.h1?.rooms?[index].id
+                                            .toString() ??
+                                        "");
+                                    await select_hotel_info("1");
                                     Navigator.of(context).push(PageRouteBuilder(
                                         opaque: false,
                                         pageBuilder:
@@ -1281,7 +1284,12 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Column(
                             children: [
                               GestureDetector(
-                                  onTap: () {
+                                  onTap: () async {
+                                    await select_room_info(allHotels
+                                            .hotels?.h4?.rooms?[index].id
+                                            .toString() ??
+                                        "");
+                                    await select_hotel_info("4");
                                     Navigator.of(context).push(PageRouteBuilder(
                                         opaque: false,
                                         pageBuilder:
@@ -1504,7 +1512,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         );
                       }),
                   GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        await select_hotel_info("4");
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -1541,7 +1550,12 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Column(
                             children: [
                               GestureDetector(
-                                  onTap: () {
+                                  onTap: () async {
+                                    await select_room_info(allHotels
+                                            .hotels?.h2?.rooms?[index].id
+                                            .toString() ??
+                                        "");
+                                    await select_hotel_info("2");
                                     Navigator.of(context).push(PageRouteBuilder(
                                         opaque: false,
                                         pageBuilder:
@@ -1764,7 +1778,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         );
                       }),
                   GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        await select_hotel_info("2");
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -1801,7 +1816,12 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Column(
                             children: [
                               GestureDetector(
-                                  onTap: () {
+                                  onTap: () async {
+                                    await select_room_info(allHotels
+                                            .hotels?.h5?.rooms?[index].id
+                                            .toString() ??
+                                        "");
+                                    await select_hotel_info("5");
                                     Navigator.of(context).push(PageRouteBuilder(
                                         opaque: false,
                                         pageBuilder:
@@ -2024,7 +2044,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         );
                       }),
                   GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        await select_hotel_info("5");
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -2061,7 +2082,12 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Column(
                             children: [
                               GestureDetector(
-                                  onTap: () {
+                                  onTap: () async {
+                                    await select_room_info(allHotels
+                                            .hotels?.h6?.rooms?[index].id
+                                            .toString() ??
+                                        "");
+                                    await select_hotel_info("6");
                                     Navigator.of(context).push(PageRouteBuilder(
                                         opaque: false,
                                         pageBuilder:
@@ -2284,7 +2310,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         );
                       }),
                   GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        await select_hotel_info("6");
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -3134,8 +3161,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       style: TextStyle(
                                           fontSize: 16, color: Colors.black),
                                     )
-                                  ]))
-                                  ),
+                                  ]))),
                             ],
                           ),
                           SizedBox(
@@ -3167,8 +3193,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       style: TextStyle(
                                           fontSize: 16, color: Colors.black),
                                     )
-                                  ]))
-                                  ),
+                                  ]))),
                             ],
                           ),
                           Padding(

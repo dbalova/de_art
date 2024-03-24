@@ -240,7 +240,7 @@ Future select_room_info(String id) async {
     final _json = response.data;
     if ((response.statusCode == 200) & (_json['success'] == true)) {
 
-      selectRoomInfo = SelectRoomInfo.fromJson(_json) ;
+      selectRoomInfo = SelectRoomInfo.fromJson(_json['room']) ;
       print(selectRoomInfo.toString());
       print("select_room_info success " + DateTime.now().toString());
       return "success";
