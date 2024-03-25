@@ -187,7 +187,8 @@ class _MenuPageState extends State<MenuPage> {
                 style: TextStyle(color: Colors.white, fontSize: 18),
               )),
           TextButton(
-              onPressed: () {
+              onPressed: () async {
+                await select_hotel_info("1");
                 Navigator.push(
                   context,
                   MaterialPageRoute(

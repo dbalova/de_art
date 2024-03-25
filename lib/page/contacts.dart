@@ -1,5 +1,7 @@
 import 'package:de_art/custom_widget/how_to_get.dart';
 import 'package:de_art/page/select_hotel.dart';
+import 'package:de_art/service/api.dart';
+import 'package:de_art/service/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../custom_widget/buttonModel.dart';
@@ -18,6 +20,20 @@ class Contacts extends StatefulWidget {
 }
 
 class _ContactsState extends State<Contacts> {
+  String phone = "";
+
+  loadPhone() {
+    for (var i = 0; i < selectHotelInfo.hotel!.phone!.length; i++) {
+      phone = phone + "   " + selectHotelInfo.hotel!.phone![i];
+    }
+  }
+
+  @override
+  void initState() {
+    loadPhone();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,41 +42,47 @@ class _ContactsState extends State<Contacts> {
           child: AppBar(
             backgroundColor: Colors.white,
             leading: GestureDetector(
-                onTap: (){  Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => const MenuPage(),
-                  ),
-                );},
-                child:Container(
-                margin: const EdgeInsets.only(left: 12, top: 12),
-                height: 62,
-                child: SvgPicture.asset(
-                  'assets/menu.svg',
-                ))),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => const MenuPage(),
+                    ),
+                  );
+                },
+                child: Container(
+                    margin: const EdgeInsets.only(left: 12, top: 12),
+                    height: 62,
+                    child: SvgPicture.asset(
+                      'assets/menu.svg',
+                    ))),
             title: Center(
                 child: Container(
                     height: 55,
-                    child: GestureDetector
-                      (
-                        onTap: (){Navigator.pushAndRemoveUntil<dynamic>(
-                          context,
-                          MaterialPageRoute<dynamic>(
-                            builder: (BuildContext context) => MyHomePage(title: 'De Art 13'),
-                          ),
-                              (route) => false,//if you want to disable back feature set to false
-                        );},
+                    child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushAndRemoveUntil<dynamic>(
+                            context,
+                            MaterialPageRoute<dynamic>(
+                              builder: (BuildContext context) =>
+                                  MyHomePage(title: 'De Art 13'),
+                            ),
+                            (route) =>
+                                false, //if you want to disable back feature set to false
+                          );
+                        },
                         child: SvgPicture.asset(
                           'assets/logo.svg',
                         )))),
             actions: [
               GestureDetector(
-
-                  onTap: (){   Navigator.of(context).push(PageRouteBuilder(
-                      opaque: false,
-                      pageBuilder: (BuildContext context, _, __) =>
-                          ApplicationPage()));},
-                  child:Container(
+                  onTap: () {
+                    Navigator.of(context).push(PageRouteBuilder(
+                        opaque: false,
+                        pageBuilder: (BuildContext context, _, __) =>
+                            ApplicationPage()));
+                  },
+                  child: Container(
                       height: 62,
                       margin: EdgeInsets.only(right: 12, top: 12),
                       child: SvgPicture.asset(
@@ -88,88 +110,118 @@ class _ContactsState extends State<Contacts> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Column(
-                        children: [
-                          Container(
-                            child: Text(
-                              "Профсоюзная",
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom:
-                                    BorderSide(width: 1.0, color: Colors.black),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: 24,),
-                      Column(
-                        children: [
-                          Container(
-                            child: Text(
-                              "Таганская",
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom:
-                                    BorderSide(width: 1.0, color: Colors.black),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),SizedBox(width: 24,),
-                      Column(
-                        children: [
-                          Container(
-                            child: Text(
-                              "Новокосино",
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom:
-                                    BorderSide(width: 1.0, color: Colors.black),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          await select_hotel_info("1");
+                          setState(() {
 
+                          });
+                        },
+                        child: Container(
+                          child: Text(
+                            "Профсоюзная",
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom:
+                                  BorderSide(width: 1.0, color: Colors.black),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 24,
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          await select_hotel_info("4");
+                          setState(() {
+
+                          });
+                        },
+                        child: Container(
+                          child: Text(
+                            "Таганская",
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom:
+                                  BorderSide(width: 1.0, color: Colors.black),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 24,
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          await select_hotel_info("2");
+                          setState(() {
+
+                          });
+                        },
+                        child: Container(
+                          child: Text(
+                            "Новокосино",
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom:
+                                  BorderSide(width: 1.0, color: Colors.black),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [ Column(
                     children: [
-                      Container(
-                        child: Text(
-                          "Текстильщики",
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom:
-                            BorderSide(width: 1.0, color: Colors.black),
+                      GestureDetector(
+                        onTap: () async {
+                          await select_hotel_info("5");
+                          setState(() {
+
+                          });
+                        },
+                        child: Container(
+                          child: Text(
+                            "Текстильщики",
+                          ),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom:
+                                  BorderSide(width: 1.0, color: Colors.black),
+                            ),
                           ),
                         ),
                       ),
-                    ],
-                  ),SizedBox(width: 24,),
-                    Column(
-                      children: [
-                        Container(
+                      SizedBox(
+                        width: 24,
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          await select_hotel_info("6");
+                          setState(() {
+
+                          });
+                        },
+                        child: Container(
                           child: Text(
                             "Кропоткинская",
                           ),
                           decoration: BoxDecoration(
                             border: Border(
                               bottom:
-                              BorderSide(width: 1.0, color: Colors.black),
+                                  BorderSide(width: 1.0, color: Colors.black),
                             ),
                           ),
                         ),
-                      ],
-                    ),],),
-                  const Padding(
+                      ),
+                    ],
+                  ),
+                  Padding(
                     padding: EdgeInsets.only(top: 28.0),
                     child: Row(
                       children: [
@@ -177,7 +229,7 @@ class _ContactsState extends State<Contacts> {
                           padding: EdgeInsets.only(right: 8.0),
                           child: Icon(Icons.place),
                         ),
-                        Text("Москва, ул. Артюхиной, 14/8 , стр. 1")
+                        Text(selectHotelInfo.hotel?.address ?? "")
                       ],
                     ),
                   ),
@@ -192,7 +244,7 @@ class _ContactsState extends State<Contacts> {
                         Container(
                             width: MediaQuery.of(context).size.width / 1.3,
                             child: Text(
-                              "+7(925)-288-33-13      +7(499)-178-10-68",
+                              phone,
                               overflow: TextOverflow.clip,
                             ))
                       ],
@@ -217,44 +269,40 @@ class _ContactsState extends State<Contacts> {
                         context,
                         'assets/IconBus.svg',
                         "Общественным транспортом:",
-                        " от метро Текстильщики на автобусе №530 до остановки Люблинская улица. Далее пешком прямо до пересечения с ул. Артюхиной, затем повернуть направо."),
+                        selectHotelInfo.hotel?.goTransport ?? ""),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 24.0),
-                    child: HowToGet(
-                        context,
-                        'assets/IconHuman.svg',
-                        "Пешком:",
-                        " выход из метро Текстильщики в сторону Люблинской, далее мимо культурного центра Москвич и спортивного клуба Москвич. Далее по Люблинской до дома 17 к.1,"
-                            " после магазина Пятерочка повернуть налево.Далее до 1-й ул.Текстильщиков, мимо школы № 2010, затем направо, по Артюхиной вдоль аллеи Славы. Перейти ул. Юных Ленинцев, прямо по тротуару."),
+                    child: HowToGet(context, 'assets/IconHuman.svg', "Пешком:",
+                        selectHotelInfo.hotel?.goWalking ?? ""),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             Navigator.of(context).push(PageRouteBuilder(
                                 opaque: false,
                                 pageBuilder: (BuildContext context, _, __) =>
                                     SelectHotelPage()));
                           },
-                          child:RedButton(Palette().red, "Подобрать номера",
-                          Palette().white, 15, FontWeight.bold)),
+                          child: RedButton(Palette().red, "Подобрать номера",
+                              Palette().white, 15, FontWeight.bold)),
                       GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             Navigator.of(context).push(PageRouteBuilder(
                                 opaque: false,
                                 pageBuilder: (BuildContext context, _, __) =>
                                     ApplicationPage()));
                           },
-
-                          child:RedButton(Palette().red, "Написать нам",
-                          Palette().white, 15, FontWeight.bold)),
+                          child: RedButton(Palette().red, "Написать нам",
+                              Palette().white, 15, FontWeight.bold)),
                     ],
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 24, top: 24),
-                    child: Image.asset("assets/4.png"),
+                    child: Image.network(
+                        "https://deart-13.ru${selectHotelInfo.hotel?.reachFacade ?? ""}"),
                   ),
                 ],
               ),
