@@ -1702,7 +1702,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           },
                                           itemCount: allHotels
                                                   .hotels
-                                                  ?.h1
+                                                  ?.h4
                                                   ?.rooms?[index]
                                                   .images
                                                   ?.length ??
@@ -1998,7 +1998,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           },
                                           itemCount: allHotels
                                                   .hotels
-                                                  ?.h1
+                                                  ?.h2
                                                   ?.rooms?[index]
                                                   .images
                                                   ?.length ??
@@ -2294,7 +2294,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           },
                                           itemCount: allHotels
                                                   .hotels
-                                                  ?.h1
+                                                  ?.h5
                                                   ?.rooms?[index]
                                                   .images
                                                   ?.length ??
@@ -2590,7 +2590,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           },
                                           itemCount: allHotels
                                                   .hotels
-                                                  ?.h1
+                                                  ?.h6
                                                   ?.rooms?[index]
                                                   .images
                                                   ?.length ??
