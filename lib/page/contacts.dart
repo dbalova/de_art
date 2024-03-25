@@ -32,11 +32,6 @@ class _ContactsState extends State<Contacts> {
   @override
   void initState() {
     loadPhone();
-    super.initState();
-  }
-
-  @override
-  void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       gg().then(() {mapController.moveCamera(
         animation: const MapAnimation(type: MapAnimationType.linear, duration: 1),
