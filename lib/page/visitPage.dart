@@ -7,6 +7,7 @@ import 'package:syncfusion_flutter_sliders/sliders.dart';
 import '../custom_widget/footer.dart';
 import '../main.dart';
 import '../palette.dart';
+import '../service/global.dart';
 import 'application_Page.dart';
 import 'menu_page.dart';
 
@@ -108,7 +109,7 @@ class _VisitPageState extends State<VisitPage> {
                           color: Colors.white) ,
                       dataModuleStyle: QrDataModuleStyle(color: Colors.white,dataModuleShape: QrDataModuleShape.square),
                       //backgroundColor: Colors.white,
-                      data: '10',
+                      data: myPhone,
                       version: QrVersions.auto,
                       size: 200,
                       gapless: false,
