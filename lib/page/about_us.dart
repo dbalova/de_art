@@ -1,12 +1,14 @@
 import 'package:de_art/page/select_hotel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 import '../custom_widget/buttonModel.dart';
 import '../custom_widget/footer.dart';
 import '../custom_widget/icon_text_container.dart';
 import '../main.dart';
 import '../palette.dart';
+import '../service/api.dart';
 import 'Map.dart';
 import 'application_Page.dart';
 import 'menu_page.dart';
@@ -19,6 +21,29 @@ class AboutUs extends StatefulWidget {
 }
 
 class _AboutUsState extends State<AboutUs> {
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      gg().then(() {mapController.moveCamera(
+        animation: const MapAnimation(type: MapAnimationType.linear, duration: 1),
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: Point(
+              latitude: 55.7522200,
+              longitude:37.6155600,
+
+            ),
+            zoom: 10,
+          ),
+        ),
+      );
+        setState(() {});
+      });
+    });
+    super.initState();
+  }
+  gg(){}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,63 +129,113 @@ class _AboutUsState extends State<AboutUs> {
                           fontSize: 14, fontWeight: FontWeight.normal),
                     ),
                   ),
-                  const Padding(
+                   Padding(
                     padding: EdgeInsets.only(bottom: 8),
-                    child: Text(
+                    child:GestureDetector(
+                        onTap: ()async{ await select_hotel_info("1");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => const SelectHotelPage(),
+                          ),
+                        );},
+                        child: Text(
                       'Гостиница на Профсоюзной',
                       style: TextStyle(
                           decoration: TextDecoration.underline,
                           decorationThickness: 2,
                           fontSize: 18),
-                    ),
+                    )),
                   ),
-                  const Padding(
+                   Padding(
                     padding: EdgeInsets.only(bottom: 8),
-                    child: Text(
+                    child: GestureDetector(
+                        onTap: ()async{ await select_hotel_info("4");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => const SelectHotelPage(),
+                          ),
+                        );},
+                        child:Text(
                       'Гостиница на Таганской',
                       style: TextStyle(
                           decoration: TextDecoration.underline,
                           decorationThickness: 2,
                           fontSize: 18),
-                    ),
+                    )),
                   ),
-                  const Padding(
+                   Padding(
                     padding: EdgeInsets.only(bottom: 8),
-                    child: Text(
+                    child: GestureDetector(
+                        onTap: ()async{
+                          await select_hotel_info("2");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => const SelectHotelPage(),
+                            ),
+                          );
+
+                        },
+                        child:Text(
                       'Гостиница в Новокосино',
                       style: TextStyle(
                           decoration: TextDecoration.underline,
                           decorationThickness: 2,
                           fontSize: 18),
-                    ),
+                    )),
                   ),
-                  const Padding(
+                   Padding(
                     padding: EdgeInsets.only(bottom: 8),
-                    child: Text(
+                    child: GestureDetector(
+                        onTap: ()async{
+                          await select_hotel_info("5");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => const SelectHotelPage(),
+                            ),
+                          );
+                        },
+                        child:Text(
                       'Гостиница в Текстильщиках',
                       style: TextStyle(
                           decoration: TextDecoration.underline,
                           decorationThickness: 2,
                           fontSize: 18),
-                    ),
+                    )),
                   ),
-                  const Padding(
+                   Padding(
                     padding: EdgeInsets.only(bottom: 24),
-                    child: Text(
+                    child: GestureDetector(
+                        onTap: ()async{ await select_hotel_info("6");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => const SelectHotelPage(),
+                          ),
+                        );},
+                        child:Text(
                       'Гостиница на Кропоткинской',
                       style: TextStyle(
                           decoration: TextDecoration.underline,
                           decorationThickness: 2,
                           fontSize: 18),
-                    ),
+                    )),
                   ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 56),
                     child: GestureDetector(
-                        onTap: (){  Navigator.of(context).push(PageRouteBuilder(
-                            opaque: false,
-                            pageBuilder: (BuildContext context, _, __) =>
-                                SelectHotelPage()));},
+                        onTap: (){     Navigator.pushAndRemoveUntil<dynamic>(
+                          context,
+                          MaterialPageRoute<dynamic>(
+                            builder: (BuildContext context) =>
+                                MyHomePage(title: 'De Art 13'),
+                          ),
+                              (route) =>
+                          false, //if you want to disable back feature set to false
+                        );},
                         child:RedButton(Palette().red, "Подобрать номера",
                         Palette().white, 15, FontWeight.bold)),
                   ),
