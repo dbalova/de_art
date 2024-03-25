@@ -3,6 +3,7 @@ import 'package:de_art/service/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
 import '../custom_widget/conveniences.dart';
 import '../custom_widget/footer.dart';
 import '../custom_widget/icon_text_container.dart';
@@ -27,6 +28,23 @@ class _RoomPageState extends State<RoomPage> {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      gg().then(() {mapController.moveCamera(
+        animation: const MapAnimation(type: MapAnimationType.linear, duration: 1),
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: Point(
+              latitude: 55.7522200,
+              longitude:37.6155600,
+
+            ),
+            zoom: 10,
+          ),
+        ),
+      );
+      setState(() {});
+      });
+    });
     for (var i = 0; i < selectHotelInfo.hotel!.phone!.length; i++) {
       phone = phone + "  " + selectHotelInfo.hotel!.phone![i];
     }
@@ -39,8 +57,13 @@ class _RoomPageState extends State<RoomPage> {
     } else {
       minHour = "часов";
     }
+
     super.initState();
   }
+
+
+
+  gg(){}
 
   @override
   Widget build(BuildContext context) {

@@ -11,10 +11,11 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 import '../main.dart';
+import '../service/api.dart';
 
 
 
-
+late  YandexMapController mapController;
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
 
@@ -100,12 +101,15 @@ Widget miniMap( context){
                 scale: 2,
               ),
             ),
-            onTap: (_, __) =>    Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => const SelectHotelPage(),
-              ),
-            ),
+            onTap: (_,__) async {
+              await select_hotel_info("1");
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => const SelectHotelPage(),
+                ),
+              );
+            },
           ),
           PlacemarkMapObject(
             mapId: MapObjectId('MapObject 2'),
@@ -119,12 +123,15 @@ Widget miniMap( context){
                 scale: 2,
               ),
             ),
-            onTap: (_, __) =>    Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => const SelectHotelPage(),
-              ),
-            ),
+            onTap: (_, __) async{
+              await select_hotel_info("4");
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => const SelectHotelPage(),
+                ),
+              );
+            },
           ),
           PlacemarkMapObject(
             mapId: MapObjectId('MapObject 3'),
@@ -138,12 +145,15 @@ Widget miniMap( context){
                 scale: 2,
               ),
             ),
-            onTap: (_, __) =>    Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => const SelectHotelPage(),
-              ),
-            ),
+            onTap: (_, __) async{
+              await select_hotel_info("2");
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => const SelectHotelPage(),
+                ),
+              );
+            },
           ),
           PlacemarkMapObject(
             mapId: MapObjectId('MapObject 4'),
@@ -157,12 +167,38 @@ Widget miniMap( context){
                 scale: 2,
               ),
             ),
-            onTap: (_, __) =>    Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => const SelectHotelPage(),
+            onTap: (_, __) async
+            { await select_hotel_info("5");
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => const SelectHotelPage(),
+                ),
+              );
+            },
+          ),
+          PlacemarkMapObject(
+            mapId: MapObjectId('MapObject 5'),
+            point: Point(latitude:55.747247, longitude: 37.609083 ),
+
+            opacity: 1,
+            icon: PlacemarkIcon.single(
+              PlacemarkIconStyle(
+                image: BitmapDescriptor.fromAssetImage(
+                  'assets/Map_Kropotinskaya.png',
+                ),
+                scale: 2,
               ),
             ),
+            onTap: (_,__) async{
+              await select_hotel_info("6");
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => const SelectHotelPage(),
+                ),
+              );
+            },
           ),
        /*   PlacemarkMapObject(
             mapId: MapObjectId('MapObject 5'),

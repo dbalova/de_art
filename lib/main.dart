@@ -56,7 +56,7 @@ String jacuzzi = "";
 String parking = "";
 String bar = "";
 
-late final YandexMapController mapController;
+
 final _scrollController = ScrollController();
 
 void _scrollToIndex(index) {
@@ -73,6 +73,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -108,9 +110,22 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       loadInfo().then(() {
-        setState(() {});
+        setState(() {});mapController.moveCamera(
+          animation: const MapAnimation(type: MapAnimationType.linear, duration: 1),
+          CameraUpdate.newCameraPosition(
+            CameraPosition(
+              target: Point(
+                latitude: 55.7522200,
+                longitude:37.6155600,
+
+              ),
+              zoom: 10,
+            ),
+          ),
+        );
       });
     });
+
   }
 
   loadInfo() async {
@@ -1293,7 +1308,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                             parking,
                                             bar,);
 
-                                        
+
 
                                           setState(() {});
                                         },

@@ -1,6 +1,7 @@
 import 'package:de_art/page/create_reviews_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 import '../custom_widget/buttonModel.dart';
 import '../custom_widget/footer.dart';
@@ -21,6 +22,30 @@ class ReviewsPage extends StatefulWidget {
 class _ReviewsPageState extends State<ReviewsPage> {
   final _scrollController = ScrollController();
   int _reviewsCount = 4;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      gg().then(() {mapController.moveCamera(
+        animation: const MapAnimation(type: MapAnimationType.linear, duration: 1),
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: Point(
+              latitude: 55.7522200,
+              longitude:37.6155600,
+
+            ),
+            zoom: 10,
+          ),
+        ),
+      );
+      setState(() {});
+      });
+    });
+    super.initState();
+  }
+  gg(){}
+
 
   @override
   Widget build(BuildContext context) {
