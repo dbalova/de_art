@@ -24,25 +24,34 @@ void main() {
   runApp(const MyApp());
 }
 
+TextEditingController _controllerFrom = TextEditingController();
+TextEditingController _controllerTo = TextEditingController();
 bool _isFilter = false;
 bool? _isJacuzzi;
-bool? _isParcking;
+bool? _isParking;
 bool? _isBar;
 List<bool> _typeRoom = [false, false, false];
 List<bool> _cost = [false, false, false];
-List<bool> _metro = [false, false, false, false];
-List<bool> _time = [
-  false,
-  false,
-  false,
-  false,
-  false,
-];
-List<bool> _typeBed = [
-  false,
-  false,
-  false,
-];
+List<bool> _metro = [false, false, false, false, false];
+List<bool> _time = [false, false, false, false, false,];
+List<bool> _typeBed = [false, false, false, false,];
+
+String metroPROF = "";
+String metroVIH = "";
+String metroTAG = "";
+String metroTEKST = "";
+String metroKROP = "";
+String timeToWithdraw = "";
+String bed = "";
+String priceFrom = "";
+String priceTo = "";
+String typeEconomy = "";
+String typeLuxury = "";
+String typeDeluxe = "";
+String jacuzzi = "";
+String parking = "";
+String bar = "";
+
 late final YandexMapController mapController;
 final _scrollController = ScrollController();
 
@@ -88,6 +97,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool filter = false;
+
   @override
   void initState() {
     super.initState();
@@ -100,6 +111,43 @@ class _MyHomePageState extends State<MyHomePage> {
 
   loadInfo() async {
     await all_list();
+    await all_reviews();
+    setState(() {});
+  }
+
+  loadFilter(
+    String metroPROF,
+    String metroVIH,
+    String metroTAG,
+    String metroTEKST,
+    String metroKROP,
+    String timeToWithdraw,
+    String bed,
+    String priceFrom,
+    String priceTo,
+    String typeEconomy,
+    String typeLuxury,
+    String typeDeluxe,
+    String jacuzzi,
+    String parking,
+    String bar,
+  ) async {
+    await all_list_filters(
+        metroPROF,
+        metroVIH,
+        metroTAG,
+        metroTEKST,
+        metroKROP,
+        timeToWithdraw,
+        bed,
+        priceFrom,
+        priceTo,
+        typeEconomy,
+        typeLuxury,
+        typeDeluxe,
+        jacuzzi,
+        parking,
+        bar);
     await all_reviews();
     setState(() {});
   }
@@ -272,6 +320,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                   GestureDetector(
                                       onTap: () {
                                         _metro[0] = !_metro[0];
+                                        if (_metro[0]) {
+                                          metroPROF = "metro[]=Профсоюзная";
+                                        } else {
+                                          metroPROF = "";
+                                        }
                                         setState(() {});
                                       },
                                       child: Container(
@@ -295,6 +348,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                   GestureDetector(
                                       onTap: () {
                                         _metro[1] = !_metro[1];
+                                        if (_metro[1]) {
+                                          metroVIH = "metro[]=Выхино";
+                                        } else {
+                                          metroVIH = "";
+                                        }
                                         setState(() {});
                                       },
                                       child: Container(
@@ -314,10 +372,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                               color: _metro[1]
                                                   ? Palette().yellow
                                                   : Colors.grey.shade300),
-                                          child: Text('Таганская'))),
+                                          child: Text('Выхино'))),
                                   GestureDetector(
                                       onTap: () {
                                         _metro[2] = !_metro[2];
+                                        if (_metro[2]) {
+                                          metroTAG = "metro[]=Таганская";
+                                        } else {
+                                          metroTAG = "";
+                                        }
                                         setState(() {});
                                       },
                                       child: Container(
@@ -337,14 +400,19 @@ class _MyHomePageState extends State<MyHomePage> {
                                               color: _metro[2]
                                                   ? Palette().yellow
                                                   : Colors.grey.shade300),
-                                          child: Text('Новокосино'))),
+                                          child: Text('Таганская'))),
                                 ],
                               ),
-                              Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: GestureDetector(
+                              Row(
+                                children: [
+                                  GestureDetector(
                                       onTap: () {
                                         _metro[3] = !_metro[3];
+                                        if (_metro[3]) {
+                                          metroTEKST = "metro[]=Текстильщики";
+                                        } else {
+                                          metroTEKST = "";
+                                        }
                                         setState(() {});
                                       },
                                       child: Container(
@@ -364,7 +432,37 @@ class _MyHomePageState extends State<MyHomePage> {
                                               color: _metro[3]
                                                   ? Palette().yellow
                                                   : Colors.grey.shade300),
-                                          child: Text('Текстильщики')))),
+                                          child: Text('Текстильщики'))),
+                                  GestureDetector(
+                                      onTap: () {
+                                        _metro[4] = !_metro[4];
+                                        if (_metro[4]) {
+                                          metroKROP = "metro[]=Кропоткинская";
+                                        } else {
+                                          metroKROP = "";
+                                        }
+                                        setState(() {});
+                                      },
+                                      child: Container(
+                                          margin: EdgeInsets.only(
+                                              top: 8,
+                                              bottom: 8,
+                                              left: 4,
+                                              right: 4),
+                                          padding: EdgeInsets.only(
+                                              top: 10,
+                                              bottom: 10,
+                                              left: 12,
+                                              right: 12),
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(100)),
+                                              color: _metro[4]
+                                                  ? Palette().yellow
+                                                  : Colors.grey.shade300),
+                                          child: Text('Кропоткинская'))),
+                                ],
+                              ),
                               Text("Время:",
                                   style:
                                       TextStyle(fontWeight: FontWeight.bold)),
@@ -373,6 +471,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                   GestureDetector(
                                       onTap: () {
                                         _time[0] = !_time[0];
+                                        for (var i = 0;
+                                            i <= _time.length - 1;
+                                            i++) {
+                                          if (i != 0) {
+                                            _time[i] = false;
+                                          }
+                                        }
+                                        if (_time[0]) {
+                                          timeToWithdraw = "time[]=1";
+                                        } else {
+                                          timeToWithdraw = "";
+                                        }
                                         setState(() {});
                                       },
                                       child: Container(
@@ -396,6 +506,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                   GestureDetector(
                                       onTap: () {
                                         _time[1] = !_time[1];
+                                        for (var i = 0;
+                                            i <= _time.length - 1;
+                                            i++) {
+                                          if (i != 1) {
+                                            _time[i] = false;
+                                          }
+                                        }
+                                        if (_time[1]) {
+                                          timeToWithdraw = "time[]=2";
+                                        } else {
+                                          timeToWithdraw = "";
+                                        }
                                         setState(() {});
                                       },
                                       child: Container(
@@ -419,6 +541,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                   GestureDetector(
                                       onTap: () {
                                         _time[2] = !_time[2];
+                                        for (var i = 0;
+                                            i <= _time.length - 1;
+                                            i++) {
+                                          if (i != 2) {
+                                            _time[i] = false;
+                                          }
+                                        }
+                                        if (_time[2]) {
+                                          timeToWithdraw = "time[]=3";
+                                        } else {
+                                          timeToWithdraw = "";
+                                        }
                                         setState(() {});
                                       },
                                       child: Container(
@@ -446,6 +580,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                   GestureDetector(
                                       onTap: () {
                                         _time[3] = !_time[3];
+                                        for (var i = 0;
+                                            i <= _time.length - 1;
+                                            i++) {
+                                          if (i != 3) {
+                                            _time[i] = false;
+                                          }
+                                        }
+                                        if (_time[3]) {
+                                          timeToWithdraw = "time[]=12";
+                                        } else {
+                                          timeToWithdraw = "";
+                                        }
                                         setState(() {});
                                       },
                                       child: Container(
@@ -469,6 +615,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                   GestureDetector(
                                       onTap: () {
                                         _time[4] = !_time[4];
+                                        for (var i = 0;
+                                            i <= _time.length - 1;
+                                            i++) {
+                                          if (i != 4) {
+                                            _time[i] = false;
+                                          }
+                                        }
+                                        if (_time[4]) {
+                                          timeToWithdraw = "time[]=24";
+                                        } else {
+                                          timeToWithdraw = "";
+                                        }
                                         setState(() {});
                                       },
                                       child: Container(
@@ -499,6 +657,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                   GestureDetector(
                                       onTap: () {
                                         _typeBed[0] = !_typeBed[0];
+                                        for (var i = 0;
+                                            i <= _typeBed.length - 1;
+                                            i++) {
+                                          if (i != 0) {
+                                            _typeBed[i] = false;
+                                          }
+                                        }
+                                        if (_typeBed[0]) {
+                                          bed = "bed=Односпальная кровать";
+                                        } else {
+                                          bed = "";
+                                        }
                                         setState(() {});
                                       },
                                       child: Container(
@@ -518,10 +688,22 @@ class _MyHomePageState extends State<MyHomePage> {
                                               color: _typeBed[0]
                                                   ? Palette().yellow
                                                   : Colors.grey.shade300),
-                                          child: Text('Круглая'))),
+                                          child: Text('Односпальная кровать'))),
                                   GestureDetector(
                                       onTap: () {
                                         _typeBed[1] = !_typeBed[1];
+                                        for (var i = 0;
+                                            i <= _typeBed.length - 1;
+                                            i++) {
+                                          if (i != 1) {
+                                            _typeBed[i] = false;
+                                          }
+                                        }
+                                        if (_typeBed[1]) {
+                                          bed = "bed=Двуспальная кровать";
+                                        } else {
+                                          bed = "";
+                                        }
                                         setState(() {});
                                       },
                                       child: Container(
@@ -541,34 +723,74 @@ class _MyHomePageState extends State<MyHomePage> {
                                               color: _typeBed[1]
                                                   ? Palette().yellow
                                                   : Colors.grey.shade300),
-                                          child: Text('Обычная двуспальная'))),
+                                          child: Text('Двуспальная кровать'))),
                                 ],
                               ),
-                              Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: GestureDetector(
-                                      onTap: () {
-                                        _typeBed[2] = !_typeBed[2];
-                                        setState(() {});
-                                      },
-                                      child: Container(
-                                          margin: EdgeInsets.only(
-                                              top: 8,
-                                              bottom: 8,
-                                              left: 4,
-                                              right: 4),
-                                          padding: EdgeInsets.only(
-                                              top: 10,
-                                              bottom: 10,
-                                              left: 12,
-                                              right: 12),
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(100)),
-                                              color: _typeBed[2]
-                                                  ? Palette().yellow
-                                                  : Colors.grey.shade300),
-                                          child: Text('Большая двуспальная')))),
+                              GestureDetector(
+                                  onTap: () {
+                                    _typeBed[2] = !_typeBed[2];
+                                    for (var i = 0;
+                                        i <= _typeBed.length - 1;
+                                        i++) {
+                                      if (i != 2) {
+                                        _typeBed[i] = false;
+                                      }
+                                    }
+                                    if (_typeBed[2]) {
+                                      bed = "bed=Большая двуспальная кровать";
+                                    } else {
+                                      bed = "";
+                                    }
+                                    setState(() {});
+                                  },
+                                  child: Container(
+                                      margin: EdgeInsets.only(
+                                          top: 8, bottom: 8, left: 4, right: 4),
+                                      padding: EdgeInsets.only(
+                                          top: 10,
+                                          bottom: 10,
+                                          left: 12,
+                                          right: 12),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(100)),
+                                          color: _typeBed[2]
+                                              ? Palette().yellow
+                                              : Colors.grey.shade300),
+                                      child:
+                                          Text('Большая двуспальная кровать'))),
+                              GestureDetector(
+                                  onTap: () {
+                                    _typeBed[3] = !_typeBed[3];
+                                    for (var i = 0;
+                                        i <= _typeBed.length - 1;
+                                        i++) {
+                                      if (i != 3) {
+                                        _typeBed[i] = false;
+                                      }
+                                    }
+                                    if (_typeBed[3]) {
+                                      bed = "bed=Две раздельные кровати";
+                                    } else {
+                                      bed = "";
+                                    }
+                                    setState(() {});
+                                  },
+                                  child: Container(
+                                      margin: EdgeInsets.only(
+                                          top: 8, bottom: 8, left: 4, right: 4),
+                                      padding: EdgeInsets.only(
+                                          top: 10,
+                                          bottom: 10,
+                                          left: 12,
+                                          right: 12),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(100)),
+                                          color: _typeBed[3]
+                                              ? Palette().yellow
+                                              : Colors.grey.shade300),
+                                      child: Text('Две раздельные кровати'))),
                               Text("Стоимость:",
                                   style:
                                       TextStyle(fontWeight: FontWeight.bold)),
@@ -587,10 +809,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                               Radius.circular(100)),
                                           color: Colors.grey.shade300),
                                       child: TextField(
+                                        controller: _controllerFrom,
+                                        keyboardType: TextInputType.number,
                                         decoration: const InputDecoration(
                                           isDense: true,
                                           border: InputBorder.none,
                                         ),
+                                        onChanged: (text) {
+                                          priceFrom = "price_from=${_controllerFrom.text}";
+                                        },
                                       )),
                                   Text("До"),
                                   Container(
@@ -605,10 +832,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                               Radius.circular(100)),
                                           color: Colors.grey.shade300),
                                       child: TextField(
+                                        controller: _controllerTo,
+                                        keyboardType: TextInputType.number,
                                         decoration: const InputDecoration(
                                           isDense: true,
                                           border: InputBorder.none,
                                         ),
+                                        onChanged: (text) {
+                                          priceTo = "price_to=${_controllerTo.text}";
+                                        },
                                       )),
                                 ],
                               ),
@@ -617,6 +849,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                   GestureDetector(
                                       onTap: () {
                                         _cost[0] = !_cost[0];
+                                        for (var i = 0;
+                                        i <= _cost.length - 1;
+                                        i++) {
+                                          if (i != 0) {
+                                            _cost[i] = false;
+                                          }
+                                        }
+                                        if(_cost[0]){
+                                          priceTo = "price_to=550";
+                                        } else {
+                                          priceTo = "";
+                                        }
                                         setState(() {});
                                       },
                                       child: Container(
@@ -640,6 +884,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                   GestureDetector(
                                       onTap: () {
                                         _cost[1] = !_cost[1];
+                                        for (var i = 0;
+                                        i <= _cost.length - 1;
+                                        i++) {
+                                          if (i != 1) {
+                                            _cost[i] = false;
+                                          }
+                                        }
+                                        if(_cost[1]){
+                                          priceTo = "price_to=750";
+                                        } else {
+                                          priceTo = "";
+                                        }
                                         setState(() {});
                                       },
                                       child: Container(
@@ -663,6 +919,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                   GestureDetector(
                                       onTap: () {
                                         _cost[2] = !_cost[2];
+                                        for (var i = 0;
+                                        i <= _cost.length - 1;
+                                        i++) {
+                                          if (i != 2) {
+                                            _cost[i] = false;
+                                          }
+                                        }
+                                        if(_cost[2]){
+                                          priceTo = "price_to=1100";
+                                        } else {
+                                          priceTo = "";
+                                        }
                                         setState(() {});
                                       },
                                       child: Container(
@@ -693,6 +961,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                   GestureDetector(
                                       onTap: () {
                                         _typeRoom[0] = !_typeRoom[0];
+                                        for (var i = 0;
+                                            i <= _typeRoom.length - 1;
+                                            i++) {
+                                          if (i != 0) {
+                                            _typeRoom[i] = false;
+                                          }
+                                        }
+                                        if (_typeRoom[0]) {
+                                          typeEconomy = "type[]=Эконом";
+                                        } else {
+                                          typeEconomy = "";
+                                        }
                                         setState(() {});
                                       },
                                       child: Container(
@@ -716,6 +996,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                   GestureDetector(
                                       onTap: () {
                                         _typeRoom[1] = !_typeRoom[1];
+                                        for (var i = 0;
+                                            i <= _typeRoom.length - 1;
+                                            i++) {
+                                          if (i != 1) {
+                                            _typeRoom[i] = false;
+                                          }
+                                        }
+                                        if (_typeRoom[1]) {
+                                          typeEconomy = "type[]=Люкс";
+                                        }  else {
+                                          typeEconomy = "";
+                                        }
                                         setState(() {});
                                       },
                                       child: Container(
@@ -739,6 +1031,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                   GestureDetector(
                                       onTap: () {
                                         _typeRoom[2] = !_typeRoom[2];
+                                        for (var i = 0;
+                                            i <= _typeRoom.length - 1;
+                                            i++) {
+                                          if (i != 2) {
+                                            _typeRoom[i] = false;
+                                          }
+                                        }
+                                        if (_typeRoom[2]) {
+                                          typeEconomy = "type[]=Делюкс";
+                                        }  else {
+                                          typeEconomy = "";
+                                        }
                                         setState(() {});
                                       },
                                       child: Container(
@@ -769,6 +1073,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   GestureDetector(
                                       onTap: () {
                                         _isJacuzzi = true;
+                                        jacuzzi = "jacuzzi=Y";
                                         setState(() {});
                                       },
                                       child: Container(
@@ -792,6 +1097,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   GestureDetector(
                                       onTap: () {
                                         _isJacuzzi = false;
+                                        jacuzzi = "jacuzzi=N";
                                         setState(() {});
                                       },
                                       child: Container(
@@ -831,7 +1137,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                         children: [
                                           GestureDetector(
                                               onTap: () {
-                                                _isParcking = true;
+                                                _isParking = true;
+                                                parking = "parking=Y";
                                                 setState(() {});
                                               },
                                               child: Container(
@@ -850,15 +1157,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                                           BorderRadius.all(
                                                               Radius.circular(
                                                                   100)),
-                                                      color:
-                                                          _isParcking ?? false
-                                                              ? Palette().yellow
-                                                              : Colors.grey
-                                                                  .shade300),
+                                                      color: _isParking ?? false
+                                                          ? Palette().yellow
+                                                          : Colors
+                                                              .grey.shade300),
                                                   child: Text('Да'))),
                                           GestureDetector(
                                               onTap: () {
-                                                _isParcking = false;
+                                                _isParking = false;
+                                                parking = "parking=N";
                                                 setState(() {});
                                               },
                                               child: Container(
@@ -877,7 +1184,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                           BorderRadius.all(
                                                               Radius.circular(
                                                                   100)),
-                                                      color: _isParcking ?? true
+                                                      color: _isParking ?? true
                                                           ? Colors.grey.shade300
                                                           : Palette().yellow),
                                                   child: Text('Нет'))),
@@ -899,6 +1206,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           GestureDetector(
                                               onTap: () {
                                                 _isBar = true;
+                                                bar = "bar=Y";
                                                 setState(() {});
                                               },
                                               child: Container(
@@ -925,6 +1233,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           GestureDetector(
                                               onTap: () {
                                                 _isBar = false;
+                                                bar = "bar=N";
                                                 setState(() {});
                                               },
                                               child: Container(
@@ -960,38 +1269,78 @@ class _MyHomePageState extends State<MyHomePage> {
                                         MainAxisAlignment.spaceAround,
                                     children: [
                                       GestureDetector(
-                                        onTap: (){
-
+                                        onTap: () {
+                                          filter = true;
+                                          print("https://deart-13.ru/api/v1/index?token=bQWc9FDWI3DiEEYYk6lQvHwlAUjTfDrw&use_filter=Y${metroPROF}&${metroVIH}&${metroTAG}&${metroTEKST}&${metroKROP}&${timeToWithdraw}"
+                                              "&${bed}&${priceFrom}&${priceTo}&${typeEconomy}&${typeLuxury}&${typeDeluxe}&${jacuzzi}&${parking}&${bar}");
+                                          loadFilter(metroPROF,
+                                            metroVIH,
+                                            metroTAG,
+                                            metroTEKST,
+                                            metroKROP,
+                                            timeToWithdraw,
+                                            bed,
+                                            priceFrom,
+                                            priceTo,
+                                            typeEconomy,
+                                            typeLuxury,
+                                            typeDeluxe,
+                                            jacuzzi,
+                                            parking,
+                                            bar,);
+                                          print("--------------------------");
+                                          print(metroPROF);
+                                          print(metroVIH);
+                                          print(metroTEKST);
+                                          print(metroTAG);
+                                          print(metroKROP);
+                                          print(timeToWithdraw);
+                                          print(bed);
+                                          print(priceFrom);
+                                          print(priceTo);
+                                          print(typeEconomy);
+                                          print(typeLuxury);
+                                          print(typeDeluxe);
+                                          print(jacuzzi);
+                                          print(parking);
+                                          print(bar);
+                                          print("------------------------------");
+                                          setState(() {});
                                         },
-                                        child: RedButton(Palette().red, "Применить",
-                                            Colors.white, 16, FontWeight.bold),
+                                        child: RedButton(
+                                            Palette().red,
+                                            "Применить",
+                                            Colors.white,
+                                            16,
+                                            FontWeight.bold),
                                       ),
                                       GestureDetector(
                                           onTap: () {
                                             _isBar = null;
                                             _isJacuzzi = null;
-                                            _isParcking = null;
+                                            _isParking = null;
                                             _typeRoom = [false, false, false];
                                             _cost = [false, false, false];
-                                            _metro = [
-                                              false,
-                                              false,
-                                              false,
-                                              false
-                                            ];
-                                            _typeBed = [
-                                              false,
-                                              false,
-                                              false,
-                                            ];
-                                            _time = [
-                                              false,
-                                              false,
-                                              false,
-                                              false,
-                                              false,
-                                            ];
+                                            _metro = [false, false, false, false, false];
+                                            _time = [false, false, false, false, false,];
+                                            _typeBed = [false, false, false, false,];
+                                            loadInfo();
                                             setState(() {});
+                                            metroPROF = "";
+                                            metroVIH = "";
+                                            metroTAG = "";
+                                            metroTEKST = "";
+                                            metroKROP = "";
+                                            timeToWithdraw = "";
+                                            bed = "";
+                                            priceFrom = "";
+                                            priceTo = "";
+                                            typeEconomy = "";
+                                            typeLuxury = "";
+                                            typeDeluxe = "";
+                                            jacuzzi = "";
+                                            parking = "";
+                                            bar = "";
                                           },
                                           child: RedButton(
                                               Palette().red,
@@ -1004,1386 +1353,1486 @@ class _MyHomePageState extends State<MyHomePage> {
                             ],
                           ))
                       : Container(),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 12.0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Отель на Профсоюзной',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Palette().red),
+
+                  Visibility(
+                    visible: allHotels.hotels?.h1?.numRooms == null ? false : true,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 12.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Отель на Профсоюзной',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Palette().red),
+                        ),
                       ),
                     ),
                   ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      controller: _scrollController,
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.only(
-                              left: 12, top: 12, right: 12, bottom: 12),
-                          decoration: BoxDecoration(
-                              color: Color.fromRGBO(245, 245, 245, 1)),
-                          child: Column(
-                            children: [
-                              GestureDetector(
-                                  onTap: () async {
-                                    await select_room_info(allHotels
-                                            .hotels?.h1?.rooms?[index].id
-                                            .toString() ??
-                                        "");
-                                    await select_hotel_info("1");
-                                    Navigator.of(context).push(PageRouteBuilder(
-                                        opaque: false,
-                                        pageBuilder:
-                                            (BuildContext context, _, __) =>
-                                                RoomPage()));
-                                  },
-                                  child: Container(
-                                      height: 265,
-                                      child: Swiper(
-                                        itemBuilder: (context, i) {
-                                          return Image.network(
-                                              "https://deart-13.ru${allHotels.hotels?.h1?.rooms?[index].images?[i].photo ?? ""}");
-                                        },
-                                        itemCount: allHotels
-                                                .hotels
-                                                ?.h1
-                                                ?.rooms?[index]
-                                                .images
-                                                ?.length ??
-                                            0,
-                                        //pagination: const SwiperPagination(),
-                                        control: const SwiperControl(
-                                            color: Colors.white,
-                                            iconNext: Icons
-                                                .arrow_circle_right_outlined,
-                                            iconPrevious: Icons
-                                                .arrow_circle_left_outlined),
-                                      ))),
-                              Container(
-                                  padding: EdgeInsets.only(
-                                      left: 12, top: 12, right: 12, bottom: 12),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 12, right: 12),
-                                          child: Text(
-                                            allHotels.hotels?.h1?.rooms?[index]
-                                                    .title
-                                                    .toString() ??
-                                                "",
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              bottom: 12,
-                                              top: 12,
-                                              left: 12,
-                                              right: 12),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                  child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time1.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Час',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        "${allHotels.hotels?.h1?.rooms?[index].price?.hour.toString() ?? ""}  ₽",
-                                                        style: TextStyle(
-                                                            fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              )),
-                                              Container(
-                                                  child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time12.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Ночь',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        "${allHotels.hotels?.h1?.rooms?[index].price?.night.toString() ?? ""}  ₽",
-                                                        style: TextStyle(
-                                                            fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              )),
-                                              Container(
-                                                  child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time24.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Сутки',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        "${allHotels.hotels?.h1?.rooms?[index].price?.price.toString() ?? ""}  ₽",
-                                                        style: TextStyle(
-                                                            fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              ))
-                                            ],
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              bottom: 12,
-                                              top: 12,
-                                              left: 12,
-                                              right: 12),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SvgPicture.asset(
-                                                'assets/mark.svg',
-                                              ),
-                                              SizedBox(
-                                                width: 12,
-                                              ),
-                                              Text(
-                                                'Профсоюзная',
-                                                style: TextStyle(fontSize: 18),
-                                              ),
-                                              Spacer(
-                                                flex: 2,
-                                              ),
-                                              GestureDetector(
-                                                  onTap: () async {
-                                                    await select_room_info(allHotels
-                                                        .hotels?.h1?.rooms?[index].id
-                                                        .toString() ??
-                                                        "");
-                                                    await select_hotel_info("1");
-                                                    Navigator.of(context).push(
-                                                        PageRouteBuilder(
-                                                            opaque: false,
-                                                            pageBuilder:
-                                                                (BuildContext
-                                                                            context,
-                                                                        _,
-                                                                        __) =>
-                                                                    RoomPage()));
-                                                  },
-                                                  child: Text(
-                                                    'Подробнее',
-                                                    style: TextStyle(
-                                                        decoration:
-                                                            TextDecoration
-                                                                .underline,
-                                                        decorationThickness: 2,
-                                                        fontSize: 18),
-                                                  )),
-                                            ],
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 12, right: 12),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SvgPicture.asset(
-                                                'assets/stars.svg',
-                                              ),
-                                              GestureDetector(
-                                                  onTap: () async {
-                                                    await select_room_info(allHotels
-                                                        .hotels?.h1?.rooms?[index].id
-                                                        .toString() ??
-                                                        "");
-                                                    await select_hotel_info("1");
-                                                    Navigator.of(context).push(
-                                                        PageRouteBuilder(
-                                                            opaque: false,
-                                                            pageBuilder: (BuildContext
-                                                                        context,
-                                                                    _,
-                                                                    __) =>
-                                                                BookingPage()));
-                                                  },
-                                                  child: RedButton(
-                                                      Palette().red,
-                                                      "Бронировать",
-                                                      Palette().white,
-                                                      15,
-                                                      FontWeight.normal)),
-                                            ],
-                                          )),
-                                    ],
-                                  ))
-                            ],
-                          ),
-                        );
-                      }),
-                  GestureDetector(
-                      onTap: () async {
-                        await select_hotel_info("1");
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                const SelectHotelPage(),
-                          ),
-                        );
-                      },
-                      child: RedButton(Palette().red, "Все номера",
-                          Palette().white, 15, FontWeight.bold)),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 12.0, top: 46),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Отель на Таганской',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Palette().red),
+                  Visibility(
+                    visible: allHotels.hotels?.h1?.numRooms == null ? false : true,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        controller: _scrollController,
+                        itemCount: allHotels.hotels?.h1?.numRooms,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: EdgeInsets.only(
+                                left: 12, top: 12, right: 12, bottom: 12),
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(245, 245, 245, 1)),
+                            child: Column(
+                              children: [
+                                GestureDetector(
+                                    onTap: () async {
+                                      await select_room_info(allHotels
+                                              .hotels?.h1?.rooms?[index].id
+                                              .toString() ??
+                                          "");
+                                      await select_hotel_info("1");
+                                      Navigator.of(context).push(PageRouteBuilder(
+                                          opaque: false,
+                                          pageBuilder:
+                                              (BuildContext context, _, __) =>
+                                                  RoomPage()));
+                                    },
+                                    child: Container(
+                                        height: 265,
+                                        child: Swiper(
+                                          itemBuilder: (context, i) {
+                                            return Image.network(
+                                                "https://deart-13.ru${allHotels.hotels?.h1?.rooms?[index].images?[i].photo ?? ""}");
+                                          },
+                                          itemCount: allHotels
+                                                  .hotels
+                                                  ?.h1
+                                                  ?.rooms?[index]
+                                                  .images
+                                                  ?.length ??
+                                              0,
+                                          //pagination: const SwiperPagination(),
+                                          control: const SwiperControl(
+                                              color: Colors.white,
+                                              iconNext: Icons
+                                                  .arrow_circle_right_outlined,
+                                              iconPrevious: Icons
+                                                  .arrow_circle_left_outlined),
+                                        ))),
+                                Container(
+                                    padding: EdgeInsets.only(
+                                        left: 12, top: 12, right: 12, bottom: 12),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 12, right: 12),
+                                            child: Text(
+                                              allHotels.hotels?.h1?.rooms?[index]
+                                                      .title
+                                                      .toString() ??
+                                                  "",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                bottom: 12,
+                                                top: 12,
+                                                left: 12,
+                                                right: 12),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Container(
+                                                    child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/time1.svg',
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'Час',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                              fontSize: 15),
+                                                        ),
+                                                        Text(
+                                                          "${allHotels.hotels?.h1?.rooms?[index].price?.hour.toString() ?? ""}  ₽",
+                                                          style: TextStyle(
+                                                              fontSize: 15),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                )),
+                                                Container(
+                                                    child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/time12.svg',
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'Ночь',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                              fontSize: 15),
+                                                        ),
+                                                        Text(
+                                                          "${allHotels.hotels?.h1?.rooms?[index].price?.night.toString() ?? ""}  ₽",
+                                                          style: TextStyle(
+                                                              fontSize: 15),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                )),
+                                                Container(
+                                                    child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/time24.svg',
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'Сутки',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                              fontSize: 15),
+                                                        ),
+                                                        Text(
+                                                          "${allHotels.hotels?.h1?.rooms?[index].price?.price.toString() ?? ""}  ₽",
+                                                          style: TextStyle(
+                                                              fontSize: 15),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ))
+                                              ],
+                                            )),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                bottom: 12,
+                                                top: 12,
+                                                left: 12,
+                                                right: 12),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/mark.svg',
+                                                ),
+                                                SizedBox(
+                                                  width: 12,
+                                                ),
+                                                Text(
+                                                  'Профсоюзная',
+                                                  style: TextStyle(fontSize: 18),
+                                                ),
+                                                Spacer(
+                                                  flex: 2,
+                                                ),
+                                                GestureDetector(
+                                                    onTap: () async {
+                                                      await select_room_info(
+                                                          allHotels
+                                                                  .hotels
+                                                                  ?.h1
+                                                                  ?.rooms?[index]
+                                                                  .id
+                                                                  .toString() ??
+                                                              "");
+                                                      await select_hotel_info(
+                                                          "1");
+                                                      Navigator.of(context).push(
+                                                          PageRouteBuilder(
+                                                              opaque: false,
+                                                              pageBuilder:
+                                                                  (BuildContext
+                                                                              context,
+                                                                          _,
+                                                                          __) =>
+                                                                      RoomPage()));
+                                                    },
+                                                    child: Text(
+                                                      'Подробнее',
+                                                      style: TextStyle(
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .underline,
+                                                          decorationThickness: 2,
+                                                          fontSize: 18),
+                                                    )),
+                                              ],
+                                            )),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 12, right: 12),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/stars.svg',
+                                                ),
+                                                GestureDetector(
+                                                    onTap: () async {
+                                                      await select_room_info(
+                                                          allHotels
+                                                                  .hotels
+                                                                  ?.h1
+                                                                  ?.rooms?[index]
+                                                                  .id
+                                                                  .toString() ??
+                                                              "");
+                                                      await select_hotel_info(
+                                                          "1");
+                                                      Navigator.of(context).push(
+                                                          PageRouteBuilder(
+                                                              opaque: false,
+                                                              pageBuilder: (BuildContext
+                                                                          context,
+                                                                      _,
+                                                                      __) =>
+                                                                  BookingPage()));
+                                                    },
+                                                    child: RedButton(
+                                                        Palette().red,
+                                                        "Бронировать",
+                                                        Palette().white,
+                                                        15,
+                                                        FontWeight.normal)),
+                                              ],
+                                            )),
+                                      ],
+                                    ))
+                              ],
+                            ),
+                          );
+                        }),
+                  ),
+                  Visibility(
+                    visible: allHotels.hotels?.h1?.numRooms == null ? false : true,
+                    child: GestureDetector(
+                        onTap: () async {
+                          await select_hotel_info("1");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const SelectHotelPage(),
+                            ),
+                          );
+                        },
+                        child: RedButton(Palette().red, "Все номера",
+                            Palette().white, 15, FontWeight.bold)),
+                  ),
+
+                  Visibility(
+                    visible: allHotels.hotels?.h4?.numRooms == null ? false : true,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 12.0, top: 46),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Отель на Таганской',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Palette().red),
+                        ),
                       ),
                     ),
                   ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      controller: _scrollController,
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.only(
-                              left: 12, top: 12, right: 12, bottom: 12),
-                          decoration: BoxDecoration(
-                              color: Color.fromRGBO(245, 245, 245, 1)),
-                          child: Column(
-                            children: [
-                              GestureDetector(
-                                  onTap: () async {
-                                    await select_room_info(allHotels
-                                            .hotels?.h4?.rooms?[index].id
-                                            .toString() ??
-                                        "");
-                                    await select_hotel_info("4");
-                                    Navigator.of(context).push(PageRouteBuilder(
-                                        opaque: false,
-                                        pageBuilder:
-                                            (BuildContext context, _, __) =>
-                                                RoomPage()));
-                                  },
-                                  child: Container(
-                                      height: 265,
-                                      child: Swiper(
-                                        itemBuilder: (context, i) {
-                                          return Image.network(
-                                              "https://deart-13.ru${allHotels.hotels?.h4?.rooms?[index].images?[i].photo ?? ""}");
-                                        },
-                                        itemCount: allHotels
-                                                .hotels
-                                                ?.h1
-                                                ?.rooms?[index]
-                                                .images
-                                                ?.length ??
-                                            0,
-                                        //pagination: const SwiperPagination(),
-                                        control: const SwiperControl(
-                                            color: Colors.white,
-                                            iconNext: Icons
-                                                .arrow_circle_right_outlined,
-                                            iconPrevious: Icons
-                                                .arrow_circle_left_outlined),
-                                      ))),
-                              Container(
-                                  padding: EdgeInsets.only(
-                                      left: 12, top: 12, right: 12, bottom: 12),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 12, right: 12),
-                                          child: Text(
-                                            allHotels.hotels?.h4?.rooms?[index]
-                                                    .title
-                                                    .toString() ??
-                                                "",
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              bottom: 12,
-                                              top: 12,
-                                              left: 12,
-                                              right: 12),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                  child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time1.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Час',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        "${allHotels.hotels?.h4?.rooms?[index].price?.hour.toString() ?? ""}  ₽",
-                                                        style: TextStyle(
-                                                            fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              )),
-                                              Container(
-                                                  child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time12.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Ночь',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        "${allHotels.hotels?.h4?.rooms?[index].price?.night.toString() ?? ""}  ₽",
-                                                        style: TextStyle(
-                                                            fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              )),
-                                              Container(
-                                                  child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time24.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Сутки',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        "${allHotels.hotels?.h4?.rooms?[index].price?.price.toString() ?? ""}  ₽",
-                                                        style: TextStyle(
-                                                            fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              ))
-                                            ],
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              bottom: 12,
-                                              top: 12,
-                                              left: 12,
-                                              right: 12),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SvgPicture.asset(
-                                                'assets/mark.svg',
-                                              ),
-                                              SizedBox(
-                                                width: 12,
-                                              ),
-                                              Text(
-                                                'Таганская',
-                                                style: TextStyle(fontSize: 18),
-                                              ),
-                                              Spacer(
-                                                flex: 2,
-                                              ),
-                                              GestureDetector(
-                                                  onTap: () async {
-                                                    await select_room_info(allHotels
-                                                        .hotels?.h4?.rooms?[index].id
-                                                        .toString() ??
-                                                        "");
-                                                    await select_hotel_info("4");
-                                                    Navigator.of(context).push(
-                                                        PageRouteBuilder(
-                                                            opaque: false,
-                                                            pageBuilder:
-                                                                (BuildContext
-                                                                            context,
-                                                                        _,
-                                                                        __) =>
-                                                                    RoomPage()));
-                                                  },
-                                                  child: Text(
-                                                    'Подробнее',
-                                                    style: TextStyle(
-                                                        decoration:
-                                                            TextDecoration
-                                                                .underline,
-                                                        decorationThickness: 2,
-                                                        fontSize: 18),
-                                                  )),
-                                            ],
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 12, right: 12),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SvgPicture.asset(
-                                                'assets/stars.svg',
-                                              ),
-                                              GestureDetector(
-                                                  onTap: () async {
-                                                    await select_room_info(allHotels
-                                                        .hotels?.h4?.rooms?[index].id
-                                                        .toString() ??
-                                                        "");
-                                                    await select_hotel_info("4");
-                                                    Navigator.of(context).push(
-                                                        PageRouteBuilder(
-                                                            opaque: false,
-                                                            pageBuilder: (BuildContext
-                                                                        context,
-                                                                    _,
-                                                                    __) =>
-                                                                BookingPage()));
-                                                  },
-                                                  child: RedButton(
-                                                      Palette().red,
-                                                      "Бронировать",
-                                                      Palette().white,
-                                                      15,
-                                                      FontWeight.normal)),
-                                            ],
-                                          )),
-                                    ],
-                                  ))
-                            ],
-                          ),
-                        );
-                      }),
-                  GestureDetector(
-                      onTap: () async {
-                        await select_hotel_info("4");
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                const SelectHotelPage(),
-                          ),
-                        );
-                      },
-                      child: RedButton(Palette().red, "Все номера",
-                          Palette().white, 15, FontWeight.bold)),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 12.0, top: 46),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Отель на Новокосино',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Palette().red),
+                  Visibility(
+                    visible: allHotels.hotels?.h4?.numRooms == null ? false : true,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        controller: _scrollController,
+                        itemCount: allHotels.hotels?.h4?.numRooms,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: EdgeInsets.only(
+                                left: 12, top: 12, right: 12, bottom: 12),
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(245, 245, 245, 1)),
+                            child: Column(
+                              children: [
+                                GestureDetector(
+                                    onTap: () async {
+                                      await select_room_info(allHotels
+                                              .hotels?.h4?.rooms?[index].id
+                                              .toString() ??
+                                          "");
+                                      await select_hotel_info("4");
+                                      Navigator.of(context).push(PageRouteBuilder(
+                                          opaque: false,
+                                          pageBuilder:
+                                              (BuildContext context, _, __) =>
+                                                  RoomPage()));
+                                    },
+                                    child: Container(
+                                        height: 265,
+                                        child: Swiper(
+                                          itemBuilder: (context, i) {
+                                            return Image.network(
+                                                "https://deart-13.ru${allHotels.hotels?.h4?.rooms?[index].images?[i].photo ?? ""}");
+                                          },
+                                          itemCount: allHotels
+                                                  .hotels
+                                                  ?.h1
+                                                  ?.rooms?[index]
+                                                  .images
+                                                  ?.length ??
+                                              0,
+                                          //pagination: const SwiperPagination(),
+                                          control: const SwiperControl(
+                                              color: Colors.white,
+                                              iconNext: Icons
+                                                  .arrow_circle_right_outlined,
+                                              iconPrevious: Icons
+                                                  .arrow_circle_left_outlined),
+                                        ))),
+                                Container(
+                                    padding: EdgeInsets.only(
+                                        left: 12, top: 12, right: 12, bottom: 12),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 12, right: 12),
+                                            child: Text(
+                                              allHotels.hotels?.h4?.rooms?[index]
+                                                      .title
+                                                      .toString() ??
+                                                  "",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                bottom: 12,
+                                                top: 12,
+                                                left: 12,
+                                                right: 12),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Container(
+                                                    child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/time1.svg',
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'Час',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                              fontSize: 15),
+                                                        ),
+                                                        Text(
+                                                          "${allHotels.hotels?.h4?.rooms?[index].price?.hour.toString() ?? ""}  ₽",
+                                                          style: TextStyle(
+                                                              fontSize: 15),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                )),
+                                                Container(
+                                                    child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/time12.svg',
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'Ночь',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                              fontSize: 15),
+                                                        ),
+                                                        Text(
+                                                          "${allHotels.hotels?.h4?.rooms?[index].price?.night.toString() ?? ""}  ₽",
+                                                          style: TextStyle(
+                                                              fontSize: 15),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                )),
+                                                Container(
+                                                    child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/time24.svg',
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'Сутки',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                              fontSize: 15),
+                                                        ),
+                                                        Text(
+                                                          "${allHotels.hotels?.h4?.rooms?[index].price?.price.toString() ?? ""}  ₽",
+                                                          style: TextStyle(
+                                                              fontSize: 15),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ))
+                                              ],
+                                            )),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                bottom: 12,
+                                                top: 12,
+                                                left: 12,
+                                                right: 12),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/mark.svg',
+                                                ),
+                                                SizedBox(
+                                                  width: 12,
+                                                ),
+                                                Text(
+                                                  'Таганская',
+                                                  style: TextStyle(fontSize: 18),
+                                                ),
+                                                Spacer(
+                                                  flex: 2,
+                                                ),
+                                                GestureDetector(
+                                                    onTap: () async {
+                                                      await select_room_info(
+                                                          allHotels
+                                                                  .hotels
+                                                                  ?.h4
+                                                                  ?.rooms?[index]
+                                                                  .id
+                                                                  .toString() ??
+                                                              "");
+                                                      await select_hotel_info(
+                                                          "4");
+                                                      Navigator.of(context).push(
+                                                          PageRouteBuilder(
+                                                              opaque: false,
+                                                              pageBuilder:
+                                                                  (BuildContext
+                                                                              context,
+                                                                          _,
+                                                                          __) =>
+                                                                      RoomPage()));
+                                                    },
+                                                    child: Text(
+                                                      'Подробнее',
+                                                      style: TextStyle(
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .underline,
+                                                          decorationThickness: 2,
+                                                          fontSize: 18),
+                                                    )),
+                                              ],
+                                            )),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 12, right: 12),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/stars.svg',
+                                                ),
+                                                GestureDetector(
+                                                    onTap: () async {
+                                                      await select_room_info(
+                                                          allHotels
+                                                                  .hotels
+                                                                  ?.h4
+                                                                  ?.rooms?[index]
+                                                                  .id
+                                                                  .toString() ??
+                                                              "");
+                                                      await select_hotel_info(
+                                                          "4");
+                                                      Navigator.of(context).push(
+                                                          PageRouteBuilder(
+                                                              opaque: false,
+                                                              pageBuilder: (BuildContext
+                                                                          context,
+                                                                      _,
+                                                                      __) =>
+                                                                  BookingPage()));
+                                                    },
+                                                    child: RedButton(
+                                                        Palette().red,
+                                                        "Бронировать",
+                                                        Palette().white,
+                                                        15,
+                                                        FontWeight.normal)),
+                                              ],
+                                            )),
+                                      ],
+                                    ))
+                              ],
+                            ),
+                          );
+                        }),
+                  ),
+                  Visibility(
+                    visible: allHotels.hotels?.h4?.numRooms == null ? false : true,
+                    child: GestureDetector(
+                        onTap: () async {
+                          await select_hotel_info("4");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const SelectHotelPage(),
+                            ),
+                          );
+                        },
+                        child: RedButton(Palette().red, "Все номера",
+                            Palette().white, 15, FontWeight.bold)),
+                  ),
+
+                  Visibility(
+                    visible: allHotels.hotels?.h2?.numRooms == null ? false : true,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 12.0, top: 46),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Отель на Новокосино',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Palette().red),
+                        ),
                       ),
                     ),
                   ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      controller: _scrollController,
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.only(
-                              left: 12, top: 12, right: 12, bottom: 12),
-                          decoration: BoxDecoration(
-                              color: Color.fromRGBO(245, 245, 245, 1)),
-                          child: Column(
-                            children: [
-                              GestureDetector(
-                                  onTap: () async {
-                                    await select_room_info(allHotels
-                                            .hotels?.h2?.rooms?[index].id
-                                            .toString() ??
-                                        "");
-                                    await select_hotel_info("2");
-                                    Navigator.of(context).push(PageRouteBuilder(
-                                        opaque: false,
-                                        pageBuilder:
-                                            (BuildContext context, _, __) =>
-                                                RoomPage()));
-                                  },
-                                  child: Container(
-                                      height: 265,
-                                      child: Swiper(
-                                        itemBuilder: (context, i) {
-                                          return Image.network(
-                                              "https://deart-13.ru${allHotels.hotels?.h2?.rooms?[index].images?[i].photo ?? ""}");
-                                        },
-                                        itemCount: allHotels
-                                                .hotels
-                                                ?.h1
-                                                ?.rooms?[index]
-                                                .images
-                                                ?.length ??
-                                            0,
-                                        //pagination: const SwiperPagination(),
-                                        control: const SwiperControl(
-                                            color: Colors.white,
-                                            iconNext: Icons
-                                                .arrow_circle_right_outlined,
-                                            iconPrevious: Icons
-                                                .arrow_circle_left_outlined),
-                                      ))),
-                              Container(
-                                  padding: EdgeInsets.only(
-                                      left: 12, top: 12, right: 12, bottom: 12),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 12, right: 12),
-                                          child: Text(
-                                            allHotels.hotels?.h2?.rooms?[index]
-                                                    .title
-                                                    .toString() ??
-                                                "",
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              bottom: 12,
-                                              top: 12,
-                                              left: 12,
-                                              right: 12),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                  child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time1.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Час',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        "${allHotels.hotels?.h2?.rooms?[index].price?.hour.toString() ?? ""}  ₽",
-                                                        style: TextStyle(
-                                                            fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              )),
-                                              Container(
-                                                  child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time12.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Ночь',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        "${allHotels.hotels?.h2?.rooms?[index].price?.night.toString() ?? ""}  ₽",
-                                                        style: TextStyle(
-                                                            fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              )),
-                                              Container(
-                                                  child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time24.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Сутки',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        "${allHotels.hotels?.h2?.rooms?[index].price?.price.toString() ?? ""}  ₽",
-                                                        style: TextStyle(
-                                                            fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              ))
-                                            ],
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              bottom: 12,
-                                              top: 12,
-                                              left: 12,
-                                              right: 12),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SvgPicture.asset(
-                                                'assets/mark.svg',
-                                              ),
-                                              SizedBox(
-                                                width: 12,
-                                              ),
-                                              Text(
-                                                'Новокосино',
-                                                style: TextStyle(fontSize: 18),
-                                              ),
-                                              Spacer(
-                                                flex: 2,
-                                              ),
-                                              GestureDetector(
-                                                  onTap: () async {
-                                                    await select_room_info(allHotels
-                                                        .hotels?.h2?.rooms?[index].id
-                                                        .toString() ??
-                                                        "");
-                                                    await select_hotel_info("2");
-                                                    Navigator.of(context).push(
-                                                        PageRouteBuilder(
-                                                            opaque: false,
-                                                            pageBuilder:
-                                                                (BuildContext
-                                                                            context,
-                                                                        _,
-                                                                        __) =>
-                                                                    RoomPage()));
-                                                  },
-                                                  child: Text(
-                                                    'Подробнее',
-                                                    style: TextStyle(
-                                                        decoration:
-                                                            TextDecoration
-                                                                .underline,
-                                                        decorationThickness: 2,
-                                                        fontSize: 18),
-                                                  )),
-                                            ],
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 12, right: 12),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SvgPicture.asset(
-                                                'assets/stars.svg',
-                                              ),
-                                              GestureDetector(
-                                                  onTap: () async {
-                                                    await select_room_info(allHotels
-                                                        .hotels?.h2?.rooms?[index].id
-                                                        .toString() ??
-                                                        "");
-                                                    await select_hotel_info("2");
-                                                    Navigator.of(context).push(
-                                                        PageRouteBuilder(
-                                                            opaque: false,
-                                                            pageBuilder: (BuildContext
-                                                                        context,
-                                                                    _,
-                                                                    __) =>
-                                                                BookingPage()));
-                                                  },
-                                                  child: RedButton(
-                                                      Palette().red,
-                                                      "Бронировать",
-                                                      Palette().white,
-                                                      15,
-                                                      FontWeight.normal)),
-                                            ],
-                                          )),
-                                    ],
-                                  ))
-                            ],
-                          ),
-                        );
-                      }),
-                  GestureDetector(
-                      onTap: () async {
-                        await select_hotel_info("2");
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                const SelectHotelPage(),
-                          ),
-                        );
-                      },
-                      child: RedButton(Palette().red, "Все номера",
-                          Palette().white, 15, FontWeight.bold)),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 12.0, top: 46),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Отель на Текстильщиках',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Palette().red),
+                  Visibility(
+                    visible: allHotels.hotels?.h2?.numRooms == null ? false : true,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        controller: _scrollController,
+                        itemCount: allHotels.hotels?.h2?.numRooms,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: EdgeInsets.only(
+                                left: 12, top: 12, right: 12, bottom: 12),
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(245, 245, 245, 1)),
+                            child: Column(
+                              children: [
+                                GestureDetector(
+                                    onTap: () async {
+                                      await select_room_info(allHotels
+                                              .hotels?.h2?.rooms?[index].id
+                                              .toString() ??
+                                          "");
+                                      await select_hotel_info("2");
+                                      Navigator.of(context).push(PageRouteBuilder(
+                                          opaque: false,
+                                          pageBuilder:
+                                              (BuildContext context, _, __) =>
+                                                  RoomPage()));
+                                    },
+                                    child: Container(
+                                        height: 265,
+                                        child: Swiper(
+                                          itemBuilder: (context, i) {
+                                            return Image.network(
+                                                "https://deart-13.ru${allHotels.hotels?.h2?.rooms?[index].images?[i].photo ?? ""}");
+                                          },
+                                          itemCount: allHotels
+                                                  .hotels
+                                                  ?.h1
+                                                  ?.rooms?[index]
+                                                  .images
+                                                  ?.length ??
+                                              0,
+                                          //pagination: const SwiperPagination(),
+                                          control: const SwiperControl(
+                                              color: Colors.white,
+                                              iconNext: Icons
+                                                  .arrow_circle_right_outlined,
+                                              iconPrevious: Icons
+                                                  .arrow_circle_left_outlined),
+                                        ))),
+                                Container(
+                                    padding: EdgeInsets.only(
+                                        left: 12, top: 12, right: 12, bottom: 12),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 12, right: 12),
+                                            child: Text(
+                                              allHotels.hotels?.h2?.rooms?[index]
+                                                      .title
+                                                      .toString() ??
+                                                  "",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                bottom: 12,
+                                                top: 12,
+                                                left: 12,
+                                                right: 12),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Container(
+                                                    child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/time1.svg',
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'Час',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                              fontSize: 15),
+                                                        ),
+                                                        Text(
+                                                          "${allHotels.hotels?.h2?.rooms?[index].price?.hour.toString() ?? ""}  ₽",
+                                                          style: TextStyle(
+                                                              fontSize: 15),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                )),
+                                                Container(
+                                                    child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/time12.svg',
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'Ночь',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                              fontSize: 15),
+                                                        ),
+                                                        Text(
+                                                          "${allHotels.hotels?.h2?.rooms?[index].price?.night.toString() ?? ""}  ₽",
+                                                          style: TextStyle(
+                                                              fontSize: 15),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                )),
+                                                Container(
+                                                    child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/time24.svg',
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'Сутки',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                              fontSize: 15),
+                                                        ),
+                                                        Text(
+                                                          "${allHotels.hotels?.h2?.rooms?[index].price?.price.toString() ?? ""}  ₽",
+                                                          style: TextStyle(
+                                                              fontSize: 15),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ))
+                                              ],
+                                            )),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                bottom: 12,
+                                                top: 12,
+                                                left: 12,
+                                                right: 12),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/mark.svg',
+                                                ),
+                                                SizedBox(
+                                                  width: 12,
+                                                ),
+                                                Text(
+                                                  'Новокосино',
+                                                  style: TextStyle(fontSize: 18),
+                                                ),
+                                                Spacer(
+                                                  flex: 2,
+                                                ),
+                                                GestureDetector(
+                                                    onTap: () async {
+                                                      await select_room_info(
+                                                          allHotels
+                                                                  .hotels
+                                                                  ?.h2
+                                                                  ?.rooms?[index]
+                                                                  .id
+                                                                  .toString() ??
+                                                              "");
+                                                      await select_hotel_info(
+                                                          "2");
+                                                      Navigator.of(context).push(
+                                                          PageRouteBuilder(
+                                                              opaque: false,
+                                                              pageBuilder:
+                                                                  (BuildContext
+                                                                              context,
+                                                                          _,
+                                                                          __) =>
+                                                                      RoomPage()));
+                                                    },
+                                                    child: Text(
+                                                      'Подробнее',
+                                                      style: TextStyle(
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .underline,
+                                                          decorationThickness: 2,
+                                                          fontSize: 18),
+                                                    )),
+                                              ],
+                                            )),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 12, right: 12),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/stars.svg',
+                                                ),
+                                                GestureDetector(
+                                                    onTap: () async {
+                                                      await select_room_info(
+                                                          allHotels
+                                                                  .hotels
+                                                                  ?.h2
+                                                                  ?.rooms?[index]
+                                                                  .id
+                                                                  .toString() ??
+                                                              "");
+                                                      await select_hotel_info(
+                                                          "2");
+                                                      Navigator.of(context).push(
+                                                          PageRouteBuilder(
+                                                              opaque: false,
+                                                              pageBuilder: (BuildContext
+                                                                          context,
+                                                                      _,
+                                                                      __) =>
+                                                                  BookingPage()));
+                                                    },
+                                                    child: RedButton(
+                                                        Palette().red,
+                                                        "Бронировать",
+                                                        Palette().white,
+                                                        15,
+                                                        FontWeight.normal)),
+                                              ],
+                                            )),
+                                      ],
+                                    ))
+                              ],
+                            ),
+                          );
+                        }),
+                  ),
+                  Visibility(
+                    visible: allHotels.hotels?.h2?.numRooms == null ? false : true,
+                    child: GestureDetector(
+                        onTap: () async {
+                          await select_hotel_info("2");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const SelectHotelPage(),
+                            ),
+                          );
+                        },
+                        child: RedButton(Palette().red, "Все номера",
+                            Palette().white, 15, FontWeight.bold)),
+                  ),
+
+                  Visibility(
+                    visible: allHotels.hotels?.h5?.numRooms == null ? false : true,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 12.0, top: 46),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Отель на Текстильщиках',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Palette().red),
+                        ),
                       ),
                     ),
                   ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      controller: _scrollController,
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.only(
-                              left: 12, top: 12, right: 12, bottom: 12),
-                          decoration: BoxDecoration(
-                              color: Color.fromRGBO(245, 245, 245, 1)),
-                          child: Column(
-                            children: [
-                              GestureDetector(
-                                  onTap: () async {
-                                    await select_room_info(allHotels
-                                            .hotels?.h5?.rooms?[index].id
-                                            .toString() ??
-                                        "");
-                                    await select_hotel_info("5");
-                                    Navigator.of(context).push(PageRouteBuilder(
-                                        opaque: false,
-                                        pageBuilder:
-                                            (BuildContext context, _, __) =>
-                                                RoomPage()));
-                                  },
-                                  child: Container(
-                                      height: 265,
-                                      child: Swiper(
-                                        itemBuilder: (context, i) {
-                                          return Image.network(
-                                              "https://deart-13.ru${allHotels.hotels?.h5?.rooms?[index].images?[i].photo ?? ""}");
-                                        },
-                                        itemCount: allHotels
-                                                .hotels
-                                                ?.h1
-                                                ?.rooms?[index]
-                                                .images
-                                                ?.length ??
-                                            0,
-                                        //pagination: const SwiperPagination(),
-                                        control: const SwiperControl(
-                                            color: Colors.white,
-                                            iconNext: Icons
-                                                .arrow_circle_right_outlined,
-                                            iconPrevious: Icons
-                                                .arrow_circle_left_outlined),
-                                      ))),
-                              Container(
-                                  padding: EdgeInsets.only(
-                                      left: 12, top: 12, right: 12, bottom: 12),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 12, right: 12),
-                                          child: Text(
-                                            allHotels.hotels?.h5?.rooms?[index]
-                                                    .title
-                                                    .toString() ??
-                                                "",
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              bottom: 12,
-                                              top: 12,
-                                              left: 12,
-                                              right: 12),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                  child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time1.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Час',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        "${allHotels.hotels?.h5?.rooms?[index].price?.hour.toString() ?? ""}  ₽",
-                                                        style: TextStyle(
-                                                            fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              )),
-                                              Container(
-                                                  child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time12.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Ночь',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        "${allHotels.hotels?.h5?.rooms?[index].price?.night.toString() ?? ""}  ₽",
-                                                        style: TextStyle(
-                                                            fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              )),
-                                              Container(
-                                                  child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time24.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Сутки',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        "${allHotels.hotels?.h5?.rooms?[index].price?.price.toString() ?? ""}  ₽",
-                                                        style: TextStyle(
-                                                            fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              ))
-                                            ],
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              bottom: 12,
-                                              top: 12,
-                                              left: 12,
-                                              right: 12),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SvgPicture.asset(
-                                                'assets/mark.svg',
-                                              ),
-                                              SizedBox(
-                                                width: 12,
-                                              ),
-                                              Text(
-                                                'Текстильщики',
-                                                style: TextStyle(fontSize: 18),
-                                              ),
-                                              Spacer(
-                                                flex: 2,
-                                              ),
-                                              GestureDetector(
-                                                  onTap: () async {
-                                                    await select_room_info(allHotels
-                                                        .hotels?.h5?.rooms?[index].id
-                                                        .toString() ??
-                                                        "");
-                                                    await select_hotel_info("5");
-                                                    Navigator.of(context).push(
-                                                        PageRouteBuilder(
-                                                            opaque: false,
-                                                            pageBuilder:
-                                                                (BuildContext
-                                                                            context,
-                                                                        _,
-                                                                        __) =>
-                                                                    RoomPage()));
-                                                  },
-                                                  child: Text(
-                                                    'Подробнее',
-                                                    style: TextStyle(
-                                                        decoration:
-                                                            TextDecoration
-                                                                .underline,
-                                                        decorationThickness: 2,
-                                                        fontSize: 18),
-                                                  )),
-                                            ],
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 12, right: 12),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SvgPicture.asset(
-                                                'assets/stars.svg',
-                                              ),
-                                              GestureDetector(
-                                                  onTap: () async {
-                                                    await select_room_info(allHotels
-                                                        .hotels?.h5?.rooms?[index].id
-                                                        .toString() ??
-                                                        "");
-                                                    await select_hotel_info("5");
-                                                    Navigator.of(context).push(
-                                                        PageRouteBuilder(
-                                                            opaque: false,
-                                                            pageBuilder: (BuildContext
-                                                                        context,
-                                                                    _,
-                                                                    __) =>
-                                                                BookingPage()));
-                                                  },
-                                                  child: RedButton(
-                                                      Palette().red,
-                                                      "Бронировать",
-                                                      Palette().white,
-                                                      15,
-                                                      FontWeight.normal)),
-                                            ],
-                                          )),
-                                    ],
-                                  ))
-                            ],
-                          ),
-                        );
-                      }),
-                  GestureDetector(
-                      onTap: () async {
-                        await select_hotel_info("5");
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                const SelectHotelPage(),
-                          ),
-                        );
-                      },
-                      child: RedButton(Palette().red, "Все номера",
-                          Palette().white, 15, FontWeight.bold)),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 12.0, top: 46),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Отель на Кропоткинской',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Palette().red),
+                  Visibility(
+                    visible: allHotels.hotels?.h5?.numRooms == null ? false : true,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        controller: _scrollController,
+                        itemCount: allHotels.hotels?.h5?.numRooms,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: EdgeInsets.only(
+                                left: 12, top: 12, right: 12, bottom: 12),
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(245, 245, 245, 1)),
+                            child: Column(
+                              children: [
+                                GestureDetector(
+                                    onTap: () async {
+                                      await select_room_info(allHotels
+                                              .hotels?.h5?.rooms?[index].id
+                                              .toString() ??
+                                          "");
+                                      await select_hotel_info("5");
+                                      Navigator.of(context).push(PageRouteBuilder(
+                                          opaque: false,
+                                          pageBuilder:
+                                              (BuildContext context, _, __) =>
+                                                  RoomPage()));
+                                    },
+                                    child: Container(
+                                        height: 265,
+                                        child: Swiper(
+                                          itemBuilder: (context, i) {
+                                            return Image.network(
+                                                "https://deart-13.ru${allHotels.hotels?.h5?.rooms?[index].images?[i].photo ?? ""}");
+                                          },
+                                          itemCount: allHotels
+                                                  .hotels
+                                                  ?.h1
+                                                  ?.rooms?[index]
+                                                  .images
+                                                  ?.length ??
+                                              0,
+                                          //pagination: const SwiperPagination(),
+                                          control: const SwiperControl(
+                                              color: Colors.white,
+                                              iconNext: Icons
+                                                  .arrow_circle_right_outlined,
+                                              iconPrevious: Icons
+                                                  .arrow_circle_left_outlined),
+                                        ))),
+                                Container(
+                                    padding: EdgeInsets.only(
+                                        left: 12, top: 12, right: 12, bottom: 12),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 12, right: 12),
+                                            child: Text(
+                                              allHotels.hotels?.h5?.rooms?[index]
+                                                      .title
+                                                      .toString() ??
+                                                  "",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                bottom: 12,
+                                                top: 12,
+                                                left: 12,
+                                                right: 12),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Container(
+                                                    child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/time1.svg',
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'Час',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                              fontSize: 15),
+                                                        ),
+                                                        Text(
+                                                          "${allHotels.hotels?.h5?.rooms?[index].price?.hour.toString() ?? ""}  ₽",
+                                                          style: TextStyle(
+                                                              fontSize: 15),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                )),
+                                                Container(
+                                                    child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/time12.svg',
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'Ночь',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                              fontSize: 15),
+                                                        ),
+                                                        Text(
+                                                          "${allHotels.hotels?.h5?.rooms?[index].price?.night.toString() ?? ""}  ₽",
+                                                          style: TextStyle(
+                                                              fontSize: 15),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                )),
+                                                Container(
+                                                    child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/time24.svg',
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'Сутки',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                              fontSize: 15),
+                                                        ),
+                                                        Text(
+                                                          "${allHotels.hotels?.h5?.rooms?[index].price?.price.toString() ?? ""}  ₽",
+                                                          style: TextStyle(
+                                                              fontSize: 15),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ))
+                                              ],
+                                            )),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                bottom: 12,
+                                                top: 12,
+                                                left: 12,
+                                                right: 12),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/mark.svg',
+                                                ),
+                                                SizedBox(
+                                                  width: 12,
+                                                ),
+                                                Text(
+                                                  'Текстильщики',
+                                                  style: TextStyle(fontSize: 18),
+                                                ),
+                                                Spacer(
+                                                  flex: 2,
+                                                ),
+                                                GestureDetector(
+                                                    onTap: () async {
+                                                      await select_room_info(
+                                                          allHotels
+                                                                  .hotels
+                                                                  ?.h5
+                                                                  ?.rooms?[index]
+                                                                  .id
+                                                                  .toString() ??
+                                                              "");
+                                                      await select_hotel_info(
+                                                          "5");
+                                                      Navigator.of(context).push(
+                                                          PageRouteBuilder(
+                                                              opaque: false,
+                                                              pageBuilder:
+                                                                  (BuildContext
+                                                                              context,
+                                                                          _,
+                                                                          __) =>
+                                                                      RoomPage()));
+                                                    },
+                                                    child: Text(
+                                                      'Подробнее',
+                                                      style: TextStyle(
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .underline,
+                                                          decorationThickness: 2,
+                                                          fontSize: 18),
+                                                    )),
+                                              ],
+                                            )),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 12, right: 12),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/stars.svg',
+                                                ),
+                                                GestureDetector(
+                                                    onTap: () async {
+                                                      await select_room_info(
+                                                          allHotels
+                                                                  .hotels
+                                                                  ?.h5
+                                                                  ?.rooms?[index]
+                                                                  .id
+                                                                  .toString() ??
+                                                              "");
+                                                      await select_hotel_info(
+                                                          "5");
+                                                      Navigator.of(context).push(
+                                                          PageRouteBuilder(
+                                                              opaque: false,
+                                                              pageBuilder: (BuildContext
+                                                                          context,
+                                                                      _,
+                                                                      __) =>
+                                                                  BookingPage()));
+                                                    },
+                                                    child: RedButton(
+                                                        Palette().red,
+                                                        "Бронировать",
+                                                        Palette().white,
+                                                        15,
+                                                        FontWeight.normal)),
+                                              ],
+                                            )),
+                                      ],
+                                    ))
+                              ],
+                            ),
+                          );
+                        }),
+                  ),
+                  Visibility(
+                    visible: allHotels.hotels?.h5?.numRooms == null ? false : true,
+                    child: GestureDetector(
+                        onTap: () async {
+                          await select_hotel_info("5");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const SelectHotelPage(),
+                            ),
+                          );
+                        },
+                        child: RedButton(Palette().red, "Все номера",
+                            Palette().white, 15, FontWeight.bold)),
+                  ),
+
+                  Visibility(
+                    visible: allHotels.hotels?.h6?.numRooms == null ? false : true,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 12.0, top: 46),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Отель на Кропоткинской',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Palette().red),
+                        ),
                       ),
                     ),
                   ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      controller: _scrollController,
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.only(
-                              left: 12, top: 12, right: 12, bottom: 12),
-                          decoration: BoxDecoration(
-                              color: Color.fromRGBO(245, 245, 245, 1)),
-                          child: Column(
-                            children: [
-                              GestureDetector(
-                                  onTap: () async {
-                                    await select_room_info(allHotels
-                                            .hotels?.h6?.rooms?[index].id
-                                            .toString() ??
-                                        "");
-                                    await select_hotel_info("6");
-                                    Navigator.of(context).push(PageRouteBuilder(
-                                        opaque: false,
-                                        pageBuilder:
-                                            (BuildContext context, _, __) =>
-                                                RoomPage()));
-                                  },
-                                  child: Container(
-                                      height: 265,
-                                      child: Swiper(
-                                        itemBuilder: (context, i) {
-                                          return Image.network(
-                                              "https://deart-13.ru${allHotels.hotels?.h6?.rooms?[index].images?[i].photo ?? ""}");
-                                        },
-                                        itemCount: allHotels
-                                                .hotels
-                                                ?.h1
-                                                ?.rooms?[index]
-                                                .images
-                                                ?.length ??
-                                            0,
-                                        //pagination: const SwiperPagination(),
-                                        control: const SwiperControl(
-                                            color: Colors.white,
-                                            iconNext: Icons
-                                                .arrow_circle_right_outlined,
-                                            iconPrevious: Icons
-                                                .arrow_circle_left_outlined),
-                                      ))),
-                              Container(
-                                  padding: EdgeInsets.only(
-                                      left: 12, top: 12, right: 12, bottom: 12),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 12, right: 12),
-                                          child: Text(
-                                            allHotels.hotels?.h6?.rooms?[index]
-                                                    .title
-                                                    .toString() ??
-                                                "",
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              bottom: 12,
-                                              top: 12,
-                                              left: 12,
-                                              right: 12),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                  child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time1.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Час',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        "${allHotels.hotels?.h6?.rooms?[index].price?.hour.toString() ?? ""}  ₽",
-                                                        style: TextStyle(
-                                                            fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              )),
-                                              Container(
-                                                  child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time12.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Ночь',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        "${allHotels.hotels?.h6?.rooms?[index].price?.night.toString() ?? ""}  ₽",
-                                                        style: TextStyle(
-                                                            fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              )),
-                                              Container(
-                                                  child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/time24.svg',
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        'Сутки',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 15),
-                                                      ),
-                                                      Text(
-                                                        "${allHotels.hotels?.h6?.rooms?[index].price?.price.toString() ?? ""}  ₽",
-                                                        style: TextStyle(
-                                                            fontSize: 15),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              ))
-                                            ],
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              bottom: 12,
-                                              top: 12,
-                                              left: 12,
-                                              right: 12),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SvgPicture.asset(
-                                                'assets/mark.svg',
-                                              ),
-                                              SizedBox(
-                                                width: 12,
-                                              ),
-                                              Text(
-                                                'Текстильщики',
-                                                style: TextStyle(fontSize: 18),
-                                              ),
-                                              Spacer(
-                                                flex: 2,
-                                              ),
-                                              GestureDetector(
-                                                  onTap: () async {
-                                                    await select_room_info(allHotels
-                                                        .hotels?.h6?.rooms?[index].id
-                                                        .toString() ??
-                                                        "");
-                                                    await select_hotel_info("6");
-                                                    Navigator.of(context).push(
-                                                        PageRouteBuilder(
-                                                            opaque: false,
-                                                            pageBuilder:
-                                                                (BuildContext
-                                                                            context,
-                                                                        _,
-                                                                        __) =>
-                                                                    RoomPage()));
-                                                  },
-                                                  child: Text(
-                                                    'Подробнее',
-                                                    style: TextStyle(
-                                                        decoration:
-                                                            TextDecoration
-                                                                .underline,
-                                                        decorationThickness: 2,
-                                                        fontSize: 18),
-                                                  )),
-                                            ],
-                                          )),
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 12, right: 12),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SvgPicture.asset(
-                                                'assets/stars.svg',
-                                              ),
-                                              GestureDetector(
-                                                  onTap: () async {
-                                                    await select_room_info(allHotels
-                                                        .hotels?.h6?.rooms?[index].id
-                                                        .toString() ??
-                                                        "");
-                                                    await select_hotel_info("6");
-                                                    Navigator.of(context).push(
-                                                        PageRouteBuilder(
-                                                            opaque: false,
-                                                            pageBuilder: (BuildContext
-                                                                        context,
-                                                                    _,
-                                                                    __) =>
-                                                                BookingPage()));
-                                                  },
-                                                  child: RedButton(
-                                                      Palette().red,
-                                                      "Бронировать",
-                                                      Palette().white,
-                                                      15,
-                                                      FontWeight.normal)),
-                                            ],
-                                          )),
-                                    ],
-                                  ))
-                            ],
-                          ),
-                        );
-                      }),
-                  GestureDetector(
-                      onTap: () async {
-                        await select_hotel_info("6");
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                const SelectHotelPage(),
-                          ),
-                        );
-                      },
-                      child: RedButton(Palette().red, "Все номера",
-                          Palette().white, 15, FontWeight.bold)),
+                  Visibility(
+                    visible: allHotels.hotels?.h6?.numRooms == null ? false : true,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        controller: _scrollController,
+                        itemCount: allHotels.hotels?.h6?.numRooms,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: EdgeInsets.only(
+                                left: 12, top: 12, right: 12, bottom: 12),
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(245, 245, 245, 1)),
+                            child: Column(
+                              children: [
+                                GestureDetector(
+                                    onTap: () async {
+                                      await select_room_info(allHotels
+                                              .hotels?.h6?.rooms?[index].id
+                                              .toString() ??
+                                          "");
+                                      await select_hotel_info("6");
+                                      Navigator.of(context).push(PageRouteBuilder(
+                                          opaque: false,
+                                          pageBuilder:
+                                              (BuildContext context, _, __) =>
+                                                  RoomPage()));
+                                    },
+                                    child: Container(
+                                        height: 265,
+                                        child: Swiper(
+                                          itemBuilder: (context, i) {
+                                            return Image.network(
+                                                "https://deart-13.ru${allHotels.hotels?.h6?.rooms?[index].images?[i].photo ?? ""}");
+                                          },
+                                          itemCount: allHotels
+                                                  .hotels
+                                                  ?.h1
+                                                  ?.rooms?[index]
+                                                  .images
+                                                  ?.length ??
+                                              0,
+                                          //pagination: const SwiperPagination(),
+                                          control: const SwiperControl(
+                                              color: Colors.white,
+                                              iconNext: Icons
+                                                  .arrow_circle_right_outlined,
+                                              iconPrevious: Icons
+                                                  .arrow_circle_left_outlined),
+                                        ))),
+                                Container(
+                                    padding: EdgeInsets.only(
+                                        left: 12, top: 12, right: 12, bottom: 12),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 12, right: 12),
+                                            child: Text(
+                                              allHotels.hotels?.h6?.rooms?[index]
+                                                      .title
+                                                      .toString() ??
+                                                  "",
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                bottom: 12,
+                                                top: 12,
+                                                left: 12,
+                                                right: 12),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Container(
+                                                    child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/time1.svg',
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'Час',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                              fontSize: 15),
+                                                        ),
+                                                        Text(
+                                                          "${allHotels.hotels?.h6?.rooms?[index].price?.hour.toString() ?? ""}  ₽",
+                                                          style: TextStyle(
+                                                              fontSize: 15),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                )),
+                                                Container(
+                                                    child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/time12.svg',
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'Ночь',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                              fontSize: 15),
+                                                        ),
+                                                        Text(
+                                                          "${allHotels.hotels?.h6?.rooms?[index].price?.night.toString() ?? ""}  ₽",
+                                                          style: TextStyle(
+                                                              fontSize: 15),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                )),
+                                                Container(
+                                                    child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/time24.svg',
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          'Сутки',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight.bold,
+                                                              fontSize: 15),
+                                                        ),
+                                                        Text(
+                                                          "${allHotels.hotels?.h6?.rooms?[index].price?.price.toString() ?? ""}  ₽",
+                                                          style: TextStyle(
+                                                              fontSize: 15),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ],
+                                                ))
+                                              ],
+                                            )),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                bottom: 12,
+                                                top: 12,
+                                                left: 12,
+                                                right: 12),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/mark.svg',
+                                                ),
+                                                SizedBox(
+                                                  width: 12,
+                                                ),
+                                                Text(
+                                                  'Текстильщики',
+                                                  style: TextStyle(fontSize: 18),
+                                                ),
+                                                Spacer(
+                                                  flex: 2,
+                                                ),
+                                                GestureDetector(
+                                                    onTap: () async {
+                                                      await select_room_info(
+                                                          allHotels
+                                                                  .hotels
+                                                                  ?.h6
+                                                                  ?.rooms?[index]
+                                                                  .id
+                                                                  .toString() ??
+                                                              "");
+                                                      await select_hotel_info(
+                                                          "6");
+                                                      Navigator.of(context).push(
+                                                          PageRouteBuilder(
+                                                              opaque: false,
+                                                              pageBuilder:
+                                                                  (BuildContext
+                                                                              context,
+                                                                          _,
+                                                                          __) =>
+                                                                      RoomPage()));
+                                                    },
+                                                    child: Text(
+                                                      'Подробнее',
+                                                      style: TextStyle(
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .underline,
+                                                          decorationThickness: 2,
+                                                          fontSize: 18),
+                                                    )),
+                                              ],
+                                            )),
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 12, right: 12),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/stars.svg',
+                                                ),
+                                                GestureDetector(
+                                                    onTap: () async {
+                                                      await select_room_info(
+                                                          allHotels
+                                                                  .hotels
+                                                                  ?.h6
+                                                                  ?.rooms?[index]
+                                                                  .id
+                                                                  .toString() ??
+                                                              "");
+                                                      await select_hotel_info(
+                                                          "6");
+                                                      Navigator.of(context).push(
+                                                          PageRouteBuilder(
+                                                              opaque: false,
+                                                              pageBuilder: (BuildContext
+                                                                          context,
+                                                                      _,
+                                                                      __) =>
+                                                                  BookingPage()));
+                                                    },
+                                                    child: RedButton(
+                                                        Palette().red,
+                                                        "Бронировать",
+                                                        Palette().white,
+                                                        15,
+                                                        FontWeight.normal)),
+                                              ],
+                                            )),
+                                      ],
+                                    ))
+                              ],
+                            ),
+                          );
+                        }),
+                  ),
+                  Visibility(
+                    visible: allHotels.hotels?.h6?.numRooms == null ? false : true,
+                    child: GestureDetector(
+                        onTap: () async {
+                          await select_hotel_info("6");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const SelectHotelPage(),
+                            ),
+                          );
+                        },
+                        child: RedButton(Palette().red, "Все номера",
+                            Palette().white, 15, FontWeight.bold)),
+                  ),
                   Padding(
                       padding: EdgeInsets.only(
                           bottom: 12, top: 12, left: 12, right: 12),

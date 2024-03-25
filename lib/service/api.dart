@@ -263,3 +263,54 @@ Future select_room_info(String id) async {
       return e.message.toString();
   }
 }
+
+Future all_list_filters(
+    String metroPROF,
+    String metroVIH,
+    String metroTAG,
+    String metroTEKST,
+    String metroKROP,
+    String timeToWithdraw,
+    String bed,
+    String priceFrom,
+    String priceTo,
+    String typeEconomy,
+    String typeLuxury,
+    String typeDeluxe,
+    String jacuzzi,
+    String parking,
+    String bar,
+    ) async {
+  print("all_list start " + DateTime.now().toString());
+  var dio = Dio();
+  try {
+    var response = await dio.get(
+      "https://deart-13.ru/api/v1/index?token=bQWc9FDWI3DiEEYYk6lQvHwlAUjTfDrw&use_filter=Y${metroPROF}&${metroVIH}&${metroTAG}&${metroTEKST}&${metroKROP}&${timeToWithdraw}"
+          "&${bed}&${priceFrom}&${priceTo}&${typeEconomy}&${typeLuxury}&${typeDeluxe}&${jacuzzi}&${parking}&${bar}",
+    );
+    final _json = response.data;
+    if ((response.statusCode == 200) & (_json['success'] == true)) {
+
+      allHotels = allList.AllHotel.fromJson(_json) ;
+      print(allHotels.toString());
+      print("all_list success " + DateTime.now().toString());
+      return "success";
+    } else if (_json['error'] != null) {
+      print("all_list fail " +
+          DateTime.now().toString() +
+          " reason " +
+          _json["error"]);
+      return _json['error'];
+    } else
+      return "Неизвестная ошибка";
+  } on DioError catch (e) {
+    print("all_list fail " +
+        DateTime.now().toString() +
+        " reason " +
+        e.toString());
+    if (e.response != null)
+      return e.response.toString();
+    else
+      return e.message.toString();
+  }
+}
