@@ -15,3 +15,5 @@ late AllHotelsInfo allHotelsInfo;
 late SelectHotelInfo selectHotelInfo;
 late SelectPageInfo selectPageInfo;
 late SelectRoomInfo selectRoomInfo;
+var verify;
+String myPhone = '';

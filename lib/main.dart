@@ -12,6 +12,7 @@ import 'package:de_art/page/room_page.dart';
 import 'package:de_art/palette.dart';
 import 'package:de_art/service/api.dart';
 import 'package:de_art/service/global.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -19,8 +20,11 @@ import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 import 'custom_widget/footer.dart';
+import 'firebase_options.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -56,8 +60,8 @@ late final YandexMapController mapController;
 final _scrollController = ScrollController();
 
 void _scrollToIndex(index) {
-  _scrollController.animateTo(600.0 * index,
-      duration: const Duration(seconds: 1), curve: Curves.easeIn);
+  _scrollController.animateTo(800.0 * 2,
+      duration: const Duration(seconds: 2), curve: Curves.easeIn);
 }
 
 class MyApp extends StatefulWidget {
@@ -149,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
         parking,
         bar);
     await all_reviews();
-    setState(() {});
+
   }
 
   @override
@@ -1269,11 +1273,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                         MainAxisAlignment.spaceAround,
                                     children: [
                                       GestureDetector(
-                                        onTap: () {
+                                        onTap: () async{
                                           filter = true;
                                           print("https://deart-13.ru/api/v1/index?token=bQWc9FDWI3DiEEYYk6lQvHwlAUjTfDrw&use_filter=Y${metroPROF}&${metroVIH}&${metroTAG}&${metroTEKST}&${metroKROP}&${timeToWithdraw}"
                                               "&${bed}&${priceFrom}&${priceTo}&${typeEconomy}&${typeLuxury}&${typeDeluxe}&${jacuzzi}&${parking}&${bar}");
-                                          loadFilter(metroPROF,
+                                         await loadFilter(metroPROF,
                                             metroVIH,
                                             metroTAG,
                                             metroTEKST,
@@ -1288,23 +1292,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                             jacuzzi,
                                             parking,
                                             bar,);
-                                          print("--------------------------");
-                                          print(metroPROF);
-                                          print(metroVIH);
-                                          print(metroTEKST);
-                                          print(metroTAG);
-                                          print(metroKROP);
-                                          print(timeToWithdraw);
-                                          print(bed);
-                                          print(priceFrom);
-                                          print(priceTo);
-                                          print(typeEconomy);
-                                          print(typeLuxury);
-                                          print(typeDeluxe);
-                                          print(jacuzzi);
-                                          print(parking);
-                                          print(bar);
-                                          print("------------------------------");
+
+                                        
+
                                           setState(() {});
                                         },
                                         child: RedButton(
