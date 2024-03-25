@@ -843,7 +843,11 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                                   flex: 2,
                                                 ),
                                                 GestureDetector(
-                                                    onTap: () {
+                                                    onTap: () async {
+                                                      await select_room_info(selectHotelInfo
+                                                          .rooms?[index].id
+                                                          .toString() ??
+                                                          "");
                                                       Navigator.of(context).push(
                                                           PageRouteBuilder(
                                                               opaque: false,
