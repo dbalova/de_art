@@ -193,6 +193,44 @@ Future select_hotel_info(String id) async {
 }
 
 
+Future select_hotel_info_filter(String id, String filter) async {
+  print("select_hotel_info start " + DateTime.now().toString());
+  print(id);
+  print(filter);
+  print( "https://deart-13.ru/api/v1/hotel?id=$id&token=bQWc9FDWI3DiEEYYk6lQvHwlAUjTfDrw&use_filter=Y&filter=$filter");
+  var dio = Dio();
+  try {
+    var response = await dio.get(
+      "https://deart-13.ru/api/v1/hotel?id=$id&token=bQWc9FDWI3DiEEYYk6lQvHwlAUjTfDrw&use_filter=Y&filter=$filter",
+    );
+    final _json = response.data;
+    if ((response.statusCode == 200) & (_json['success'] == true)) {
+
+      selectHotelInfo = SelectHotelInfo.fromJson(_json) ;
+      print(selectHotelInfo.toString());
+      print("select_hotel_info success " + DateTime.now().toString());
+      return "success";
+    } else if (_json['error'] != null) {
+      print("select_hotel_info fail " +
+          DateTime.now().toString() +
+          " reason " +
+          _json["error"]);
+      return _json['error'];
+    } else
+      return "Неизвестная ошибка";
+  } on DioError catch (e) {
+    print("select_hotel_info fail " +
+        DateTime.now().toString() +
+        " reason " +
+        e.toString());
+    if (e.response != null)
+      return e.response.toString();
+    else
+      return e.message.toString();
+  }
+}
+
+
 
 Future select_page_info(String id) async {
   print("select_page_info start " + DateTime.now().toString());

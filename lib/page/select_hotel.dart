@@ -23,11 +23,8 @@ class SelectHotelPage extends StatefulWidget {
   State<SelectHotelPage> createState() => _SelectHotelPageState();
 }
 
-bool _isJacuzzi = false;
-bool _isParking = false;
-bool _price550 = false;
-bool _price750 = false;
-bool _price1100 = false;
+
+
 
 List<Image> fotoRoom = [
   Image.asset("assets/sea.png"),
@@ -39,6 +36,8 @@ List<Image> fotoRoom = [
 final _scrollController = ScrollController();
 
 class _SelectHotelPageState extends State<SelectHotelPage> {
+  List<bool> _filter = [false, false, false, false, false];
+  String filter = "";
   String phone = "";
   List<Review> selectReviews = [];
 
@@ -199,57 +198,16 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                             height: MediaQuery.of(context)
                                                     .size
                                                     .height /
-                                                2,
+                                                1.7,
                                             child: Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceAround,
                                               children: [
-                                                Image.asset(
-                                                    'assets/taganskaya.png'),
-                                                Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width,
-                                                    padding: EdgeInsets.only(
-                                                        top: 24, bottom: 24),
-                                                    child: RichText(
-                                                        text:
-                                                            TextSpan(children: [
-                                                      TextSpan(
-                                                        text:
-                                                            'Доехать до отеля De art Art 13 можно с помощью ',
-                                                        style: TextStyle(
-                                                            fontFamily:
-                                                                "CeraPro",
-                                                            fontSize: 14,
-                                                            color:
-                                                                Colors.black),
-                                                      ),
-                                                      TextSpan(
-                                                        text:
-                                                            'метро Таганская и далее пешком 4 минуты ',
-                                                        style: TextStyle(
-                                                            fontFamily:
-                                                                "CeraPro",
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color:
-                                                                Colors.black),
-                                                      ),
-                                                      TextSpan(
-                                                        text: '(340 метров)',
-                                                        style: TextStyle(
-                                                            fontFamily:
-                                                                "CeraPro",
-                                                            fontSize: 14,
-                                                            color:
-                                                                Colors.black),
-                                                      )
-                                                    ]))),
+                                                Image.network(
+                                                    "https://deart-13.ru${selectHotelInfo.hotel?.reachMap ?? ""}"),
                                                 Text(
-                                                    "От метро нужно сначала повернуть налево и пройти вдоль дома №7, далее перейти по пешеходному переходу на другую сторону, повернуть налево и пройти прямо вдоль дома №8."),
+                                                  selectHotelInfo.hotel?.goWalking.toString() ?? "",
+                                                ),
                                               ],
                                             ),
                                           ),
@@ -479,9 +437,24 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         GestureDetector(
-                            onTap: () {
-                              _isJacuzzi = !_isJacuzzi;
-                              setState(() {});
+                            onTap: () async {
+                              _filter[0] = !_filter[0];
+                              for (var i = 0; i <= _filter.length - 1; i++) {
+                                if (i != 0) {
+                                  _filter[i] = false;
+                                }
+                              }
+                              if (_filter[0]) {
+                                filter = "1";
+                                await select_hotel_info_filter(
+                                    selectHotelInfo.hotel?.id ?? "", filter);
+                                setState(() {});
+                              } else {
+                                filter = "";
+                                await select_hotel_info(
+                                    selectHotelInfo.hotel?.id ?? "");
+                                setState(() {});
+                              }
                             },
                             child: Container(
                               margin: EdgeInsets.only(
@@ -491,12 +464,12 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                   top: 8, bottom: 8, left: 12, right: 12),
                               decoration: BoxDecoration(
                                 color:
-                                    _isJacuzzi ? Palette().red : Colors.white,
+                                    _filter[0] ? Palette().red : Colors.white,
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(100)),
                                 border: Border.all(
                                   width: 1,
-                                  color: _isJacuzzi
+                                  color: _filter[0]
                                       ? Colors.transparent
                                       : Colors.black,
                                 ),
@@ -506,14 +479,32 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                     "",
                                 style: TextStyle(
                                   color:
-                                      _isJacuzzi ? Colors.white : Colors.black,
+                                      _filter[0] ? Colors.white : Colors.black,
                                 ),
                               ),
                             )),
                         selectHotelInfo.numFilter! >= 1
                             ? GestureDetector(
-                                onTap: () {
-                                  _isParking = !_isParking;
+                                onTap: () async {
+                                  _filter[1] = !_filter[1];
+                                  for (var i = 0;
+                                      i <= _filter.length - 1;
+                                      i++) {
+                                    if (i != 1) {
+                                      _filter[i] = false;
+                                    }
+                                  }
+                                  if (_filter[1]) {
+                                    filter = "2";
+                                    await select_hotel_info_filter(
+                                        selectHotelInfo.hotel?.id ?? "",
+                                        filter);
+                                    setState(() {});
+                                  } else {
+                                    filter = "";
+                                    await select_hotel_info(
+                                        selectHotelInfo.hotel?.id ?? "");
+                                  }
                                   setState(() {});
                                 },
                                 child: Container(
@@ -523,22 +514,24 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                   padding: EdgeInsets.only(
                                       top: 8, bottom: 8, left: 12, right: 12),
                                   decoration: BoxDecoration(
-                                    color: _isParking
+                                    color: _filter[1]
                                         ? Palette().red
                                         : Colors.white,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(100)),
                                     border: Border.all(
                                       width: 1,
-                                      color: _isParking
+                                      color: _filter[1]
                                           ? Colors.transparent
                                           : Colors.black,
                                     ),
                                   ),
                                   child: Text(
-                                    "С парковкой",
+                                    selectHotelInfo.filter?.f2?.title
+                                            ?.toString() ??
+                                        "",
                                     style: TextStyle(
-                                      color: _isParking
+                                      color: _filter[1]
                                           ? Colors.white
                                           : Colors.black,
                                     ),
@@ -547,30 +540,50 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                             : Container(),
                         selectHotelInfo.numFilter! >= 2
                             ? GestureDetector(
-                                onTap: () {
-                                  _price550 = !_price550;
+                                onTap: () async {
+                                  _filter[2] = !_filter[2];
+                                  for (var i = 0;
+                                      i <= _filter.length - 1;
+                                      i++) {
+                                    if (i != 2) {
+                                      _filter[i] = false;
+                                    }
+                                  }
+                                  if (_filter[2]) {
+                                    filter = "3";
+                                    await select_hotel_info_filter(
+                                        selectHotelInfo.hotel?.id ?? "",
+                                        filter);
+                                    setState(() {});
+                                  } else {
+                                    filter = "";
+                                    await select_hotel_info(
+                                        selectHotelInfo.hotel?.id ?? "");
+                                  }
                                   setState(() {});
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(
                                       top: 8, bottom: 8, left: 12, right: 12),
                                   decoration: BoxDecoration(
-                                    color: _price550
+                                    color: _filter[2]
                                         ? Palette().red
                                         : Colors.white,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(100)),
                                     border: Border.all(
                                       width: 1,
-                                      color: _price550
+                                      color: _filter[2]
                                           ? Colors.transparent
                                           : Colors.black,
                                     ),
                                   ),
                                   child: Text(
-                                    "До 550 в час",
+                                    selectHotelInfo.filter?.f3?.title
+                                            ?.toString() ??
+                                        "",
                                     style: TextStyle(
-                                      color: _price550
+                                      color: _filter[2]
                                           ? Colors.white
                                           : Colors.black,
                                     ),
@@ -584,8 +597,27 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                       children: [
                         selectHotelInfo.numFilter! >= 3
                             ? GestureDetector(
-                                onTap: () {
-                                  _price750 = !_price750;
+                                onTap: () async {
+                                  _filter[3] = !_filter[3];
+                                  for (var i = 0;
+                                      i <= _filter.length - 1;
+                                      i++) {
+                                    if (i != 3) {
+                                      _filter[i] = false;
+                                    }
+                                  }
+                                  if (_filter[3]) {
+                                    filter = "4";
+                                    await select_hotel_info_filter(
+                                        selectHotelInfo.hotel?.id ?? "",
+                                        filter);
+                                    setState(() {});
+                                  } else {
+                                    filter = "";
+                                    await select_hotel_info(
+                                        selectHotelInfo.hotel?.id ?? "");
+                                    filter = "";
+                                  }
                                   setState(() {});
                                 },
                                 child: Container(
@@ -593,22 +625,24 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                   padding: EdgeInsets.only(
                                       top: 8, bottom: 8, left: 12, right: 12),
                                   decoration: BoxDecoration(
-                                    color: _price750
+                                    color: _filter[3]
                                         ? Palette().red
                                         : Colors.white,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(100)),
                                     border: Border.all(
                                       width: 1,
-                                      color: _price750
+                                      color: _filter[3]
                                           ? Colors.transparent
                                           : Colors.black,
                                     ),
                                   ),
                                   child: Text(
-                                    "До 750 в час",
+                                    selectHotelInfo.filter?.f4?.title
+                                            ?.toString() ??
+                                        "",
                                     style: TextStyle(
-                                      color: _price750
+                                      color: _filter[3]
                                           ? Colors.white
                                           : Colors.black,
                                     ),
@@ -617,8 +651,27 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                             : Container(),
                         selectHotelInfo.numFilter! >= 4
                             ? GestureDetector(
-                                onTap: () {
-                                  _price1100 = !_price1100;
+                                onTap: () async {
+                                  _filter[4] = !_filter[4];
+                                  for (var i = 0;
+                                      i <= _filter.length - 1;
+                                      i++) {
+                                    if (i != 4) {
+                                      _filter[i] = false;
+                                    }
+                                  }
+                                  if (_filter[4]) {
+                                    filter = "5";
+                                    await select_hotel_info_filter(
+                                        selectHotelInfo.hotel?.id ?? "",
+                                        filter);
+                                    setState(() {});
+                                  } else {
+                                    filter = "";
+                                    await select_hotel_info(
+                                        selectHotelInfo.hotel?.id ?? "");
+                                    filter = "";
+                                  }
                                   setState(() {});
                                 },
                                 child: Container(
@@ -628,22 +681,24 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                   padding: EdgeInsets.only(
                                       top: 8, bottom: 8, left: 12, right: 12),
                                   decoration: BoxDecoration(
-                                    color: _price1100
+                                    color: _filter[4]
                                         ? Palette().red
                                         : Colors.white,
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(100)),
                                     border: Border.all(
                                       width: 1,
-                                      color: _price1100
+                                      color: _filter[4]
                                           ? Colors.transparent
                                           : Colors.black,
                                     ),
                                   ),
                                   child: Text(
-                                    "До 1 100 в час",
+                                    selectHotelInfo.filter?.f5?.title
+                                            ?.toString() ??
+                                        "",
                                     style: TextStyle(
-                                      color: _price1100
+                                      color: _filter[4]
                                           ? Colors.white
                                           : Colors.black,
                                     ),
@@ -835,7 +890,7 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                                   width: 12,
                                                 ),
                                                 Text(
-                                                  'Профсоюзная',
+                                                  selectHotelInfo.hotel?.titleMenu ?? "",
                                                   style:
                                                       TextStyle(fontSize: 18),
                                                 ),
@@ -844,10 +899,12 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                                 ),
                                                 GestureDetector(
                                                     onTap: () async {
-                                                      await select_room_info(selectHotelInfo
-                                                          .rooms?[index].id
-                                                          .toString() ??
-                                                          "");
+                                                      await select_room_info(
+                                                          selectHotelInfo
+                                                                  .rooms?[index]
+                                                                  .id
+                                                                  .toString() ??
+                                                              "");
                                                       Navigator.of(context).push(
                                                           PageRouteBuilder(
                                                               opaque: false,
