@@ -147,19 +147,7 @@ class _MenuPageState extends State<MenuPage> {
           SizedBox(
             height: 50,
           ),
-          TextButton(
-              onPressed: () async {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => const regPage(),
-                  ),
-                );
-              },
-              child: Text(
-                "test",
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              )),
+     
           TextButton(
               onPressed: () {
                 Navigator.push(

@@ -494,7 +494,7 @@ class _RoomPageState extends State<RoomPage> {
                               ),
                             ),
                           )),
-                      GestureDetector(
+                      ( selectRoomInfo.sectionId.toString() == "1")? GestureDetector(
                           onTap: () {
                             chapter = 4;
                             setState(() {});
@@ -515,13 +515,14 @@ class _RoomPageState extends State<RoomPage> {
                                     BorderSide(width: 1.0, color: Colors.black),
                               ),
                             ),
-                          )),
+                          )):Container(),
                     ],
                   ),
                   info(chapter)
                 ],
               ),
             ),
+            SizedBox(height: 12,),
             miniMap(context)
             /* Footer(context)*/
           ],
@@ -545,13 +546,13 @@ class _RoomPageState extends State<RoomPage> {
                       padding: const EdgeInsets.only(bottom: 16),
                       child: Row(
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 16.0),
+                         selectRoomInfo.isJacuzzi.toString()!="0" ?Padding(
+                            padding:  EdgeInsets.only(right: 16.0),
                             child: IconTextContainer(
                                 'assets/Icon_Djakuzi.svg', "Джакузи"),
-                          ),
-                          IconTextContainer(
-                              'assets/Icon_Air.svg', "Кондиционер")
+                          ) :Container(),
+                          selectRoomInfo.isAc.toString()!="0" ? IconTextContainer(
+                              'assets/Icon_Air.svg', "Кондиционер"): Container()
                         ],
                       ),
                     ),
@@ -764,8 +765,9 @@ class _RoomPageState extends State<RoomPage> {
               child: Conveniences(context, 'assets/IconWallet.svg',
                   "Оплата картой Visa/Mastercard"),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 24.0),
+           (( selectRoomInfo.sectionId.toString() == "2")||( selectRoomInfo.sectionId.toString() == "5")||( selectRoomInfo.sectionId.toString() == "6"))
+            ?Container(): Padding(
+              padding:  EdgeInsets.only(top: 24.0),
               child: Conveniences(
                   context, 'assets/IconBar.svg', "Круглосуточный бар"),
             ),
@@ -782,7 +784,7 @@ class _RoomPageState extends State<RoomPage> {
           ],
         );
       case 4:
-        return Column(
+        return ( selectRoomInfo.sectionId.toString() == "1")?Column(
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 24.0),
@@ -818,7 +820,7 @@ class _RoomPageState extends State<RoomPage> {
                   context, 'assets/IconCarWash.svg', "Круглосуточная мойка"),
             ),
           ],
-        );
+        ):Container();
       default:
         return Column(
           children: [
