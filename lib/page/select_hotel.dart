@@ -198,7 +198,7 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                             height: MediaQuery.of(context)
                                                     .size
                                                     .height /
-                                                1.7,
+                                                1.7 ,
                                             child: Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceAround,
