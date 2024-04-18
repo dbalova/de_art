@@ -1,6 +1,7 @@
 import 'package:de_art/page/about_us.dart';
 import 'package:de_art/page/application_Page.dart';
 import 'package:de_art/page/contacts.dart';
+import 'package:de_art/page/qrPage.dart';
 import 'package:de_art/page/regPage.dart';
 import 'package:de_art/page/select_hotel.dart';
 import 'package:de_art/palette.dart';
@@ -100,6 +101,20 @@ class _MenuPageState extends State<MenuPage> {
               },
               child: Text(
                 "Таганская",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              )),
+          TextButton(
+              onPressed: () async {
+                await select_hotel_info("4");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const SearchObjectPage(),
+                  ),
+                );
+              },
+              child: Text(
+                "qr test",
                 style: TextStyle(color: Colors.white, fontSize: 18),
               )),
           TextButton(
