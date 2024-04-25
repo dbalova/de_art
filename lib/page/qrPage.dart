@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -188,9 +189,16 @@ padding: EdgeInsets.zero,
                       ElevatedButton(
                           //style: ButtonStyle(backgroundColor: ),
                           onPressed: ()async{
+                           var _res = await FirebaseFirestore.instance.collection("visits").snapshots().length;
 
+List<String> _ph = [];
+
+                            for(var _i=0; _i<_res; _i++){
+                              FirebaseFirestore.instance.collection("visits").snapshots().forEach((element) {_ph.add(element.docs[_i].id);});
+                            }
+                            print(_ph);
                     ///ТУТ ДОЛЖЕН БЫТЬ МЕТОД ++ ПОСЕЩЕНИЕ ПО НОМЕРУ ТЕЛЕФОНА
-
+                            FirebaseFirestore.instance.collection("visits").doc('${_result?.code.toString()}').set({'visit':'6'});
 
                         _result=null;
                         setState(() {
@@ -208,7 +216,9 @@ padding: EdgeInsets.zero,
                           false, //if you want to disable back feature set to false
                         );
 
-                      }, child: Text("Отметить посещение",textAlign: TextAlign.center,style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold, color: Color.fromRGBO(114, 40, 57, 1)),))
+                      }, child: Text("Отметить посещение",textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,
+                            color: Color.fromRGBO(114, 40, 57, 1)),))
                           : Container(),],
                   )),
 

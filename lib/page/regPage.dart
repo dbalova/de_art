@@ -409,7 +409,7 @@ color: Palette().red,
                                   // Sign the user in (or link) with the credential
                                   await FirebaseAuth.instance
                                       .signInWithCredential(credential);
-                                  FirebaseFirestore.instance.collection("visits").snapshots();
+                                  FirebaseFirestore.instance.collection("visits").doc("phones").get();
                                   Navigator.of(context).push(PageRouteBuilder(
                                       opaque: false,
                                       pageBuilder: (BuildContext context, _, __) =>

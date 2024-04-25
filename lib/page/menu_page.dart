@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:de_art/page/about_us.dart';
 import 'package:de_art/page/application_Page.dart';
 import 'package:de_art/page/contacts.dart';
@@ -105,7 +106,7 @@ class _MenuPageState extends State<MenuPage> {
                 "Профсоюзная",
                 style: TextStyle(color: Colors.white, fontSize: 18),
               )),
-  /*        TextButton(
+        TextButton(
               onPressed: () async {
                 await select_hotel_info("4");
                 Navigator.push(
@@ -123,10 +124,10 @@ class _MenuPageState extends State<MenuPage> {
               onPressed: () async {
       showDialog(context: context, builder: (BuildContext context){return  AlertDialog(
                   title: Text("Введите код сотрудника",style: TextStyle(color: Palette().red, fontSize: 18,fontWeight: FontWeight.bold),),
-                  *//*titleTextStyle:
+                  titleTextStyle:
                   TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,fontSize: 20),*//*
+                      color: Colors.black,fontSize: 20),
                   actionsOverflowButtonSpacing: 20,
                   actions:  [
                     ElevatedButton(
@@ -166,9 +167,9 @@ class _MenuPageState extends State<MenuPage> {
                         keyboardType: TextInputType.number,
                         decoration: new InputDecoration(
                             hintText: "",
-                          *//*enabledBorder: UnderlineInputBorder(
+                          enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.cyan),
-                          ),*//*
+                          ),
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Palette().red),
                           ),
@@ -180,7 +181,32 @@ class _MenuPageState extends State<MenuPage> {
               child: Text(
                 "qr test",
                 style: TextStyle(color: Colors.white, fontSize: 18),
-              )),*/
+              )),
+          TextButton(
+              onPressed: () async {
+            /*   var _res =  FirebaseFirestore.instance.collection("visits").snapshots();
+               Map vis = {_res.first.toString():"${_res.last.toString()}"};
+               print(vis.toString());*/
+
+
+              //  FirebaseFirestore.instance.collection("visits").doc('новый телефон').set({'visit':'6'});
+
+               // var _res = await FirebaseFirestore.instance.collection("visits");
+                Stream snap =  FirebaseFirestore.instance.collection("visits").snapshots();
+                Future<int> ls = snap.length;
+               // print("===========================================");
+                List<String> _ph = [];
+
+                for(var _i=0; _i<ls; _i++){
+             snap.forEach((element) {_ph.add(element.docs[_i].id.toString());});
+                }
+                print("$_ph===========================================");
+
+              },
+              child: Text(
+                "fb",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              )),
           TextButton(
               onPressed: () async {
                 await select_hotel_info("2");
