@@ -7,6 +7,7 @@ import 'package:de_art/page/select_hotel.dart';
 import 'package:de_art/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../main.dart';
 import '../service/api.dart';
@@ -17,8 +18,23 @@ class MenuPage extends StatefulWidget {
   @override
   State<MenuPage> createState() => _MenuPageState();
 }
+TextEditingController _passController = TextEditingController();
 
 class _MenuPageState extends State<MenuPage> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _passController.clear();
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _passController.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +105,7 @@ class _MenuPageState extends State<MenuPage> {
                 "Профсоюзная",
                 style: TextStyle(color: Colors.white, fontSize: 18),
               )),
-          TextButton(
+  /*        TextButton(
               onPressed: () async {
                 await select_hotel_info("4");
                 Navigator.push(
@@ -105,18 +121,66 @@ class _MenuPageState extends State<MenuPage> {
               )),
           TextButton(
               onPressed: () async {
-                await select_hotel_info("4");
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => const SearchObjectPage(),
-                  ),
-                );
+      showDialog(context: context, builder: (BuildContext context){return  AlertDialog(
+                  title: Text("Введите код сотрудника",style: TextStyle(color: Palette().red, fontSize: 18,fontWeight: FontWeight.bold),),
+                  *//*titleTextStyle:
+                  TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,fontSize: 20),*//*
+                  actionsOverflowButtonSpacing: 20,
+                  actions:  [
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Palette().red,
+                            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                            ),
+
+                        onPressed: (){
+                      if(_passController.text=="1111"){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          const SearchObjectPage(),
+                                    ),
+                                  ); _passController.clear();
+                                }
+                      else Fluttertoast.showToast(
+                          msg: "Неверный код!",
+                          toastLength:
+                          Toast.LENGTH_SHORT,
+                          gravity:
+                          ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor:
+                          Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
+                              }, child: Text("Далее",style: TextStyle(color: Colors.white,fontSize: 18),)),
+
+                  ],
+                  content: Container(width:MediaQuery.of(context).size.width/3,
+                      child:TextField(
+                        cursorColor: Palette().red,
+                        controller: _passController,
+                        keyboardType: TextInputType.number,
+                        decoration: new InputDecoration(
+                            hintText: "",
+                          *//*enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.cyan),
+                          ),*//*
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Palette().red),
+                          ),
+                        ),
+                      )),
+                );});
+
               },
               child: Text(
                 "qr test",
                 style: TextStyle(color: Colors.white, fontSize: 18),
-              )),
+              )),*/
           TextButton(
               onPressed: () async {
                 await select_hotel_info("2");

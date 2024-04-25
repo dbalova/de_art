@@ -2,8 +2,10 @@ import 'package:de_art/page/tyPage.dart';
 import 'package:de_art/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../custom_widget/footer.dart';
+import '../service/api.dart';
 
 class ApplicationPage extends StatefulWidget {
   const ApplicationPage({Key? key}) : super(key: key);
@@ -11,6 +13,11 @@ class ApplicationPage extends StatefulWidget {
   @override
   State<ApplicationPage> createState() => _ApplicationPageState();
 }
+
+TextEditingController _nameController = TextEditingController();
+TextEditingController _phoneController = TextEditingController();
+TextEditingController _messageController = TextEditingController();
+
 bool _agree = false;
 class _ApplicationPageState extends State<ApplicationPage> {
   @override
@@ -46,7 +53,9 @@ class _ApplicationPageState extends State<ApplicationPage> {
                   padding: EdgeInsets.only(left:12),
                   margin: EdgeInsets.only(bottom: 12),
                   width: MediaQuery.of(context).size.width/1.5,
-                  child: TextField(   decoration: const InputDecoration(
+                  child: TextField(
+                    controller: _nameController,
+                    decoration: const InputDecoration(
                     hintText: "Иван Иванович",
                     isDense: true,
                     border: InputBorder.none, ),),
@@ -69,8 +78,11 @@ class _ApplicationPageState extends State<ApplicationPage> {
                 Container(
                   padding: EdgeInsets.only(left:12),
                   width: MediaQuery.of(context).size.width/1.5,
-                  child: TextField(   decoration: const InputDecoration(
-                    hintText: "+7 (999) 999 99 99",
+                  child: TextField(
+keyboardType: TextInputType.phone,
+                    controller: _phoneController,
+                    decoration: const InputDecoration(
+                    hintText: "+7 999 999 99 99",
                     isDense: true,
                     border: InputBorder.none, ),),
                   decoration: BoxDecoration(
@@ -91,7 +103,9 @@ class _ApplicationPageState extends State<ApplicationPage> {
                   margin: EdgeInsets.only(top:24),
                   width: MediaQuery.of(context).size.width/1.5,
                   height:MediaQuery.of(context).size.height/5,
-                  child: TextField(   decoration: const InputDecoration(
+                  child: TextField(
+                    controller: _messageController,
+                    decoration: const InputDecoration(
                     hintText: "Комментарий",
                     isDense: true,
                     border: InputBorder.none, ),),
@@ -109,12 +123,65 @@ class _ApplicationPageState extends State<ApplicationPage> {
                   ),
                 ),
              GestureDetector(
-                 onTap: (){
-                   Navigator.pop(context);
+                 onTap: () async {
+
+                   if (_agree!=true){
+                     Fluttertoast.showToast(
+                         msg: "Подтвердите согласие!",
+                         toastLength:
+                         Toast.LENGTH_SHORT,
+                         gravity:
+                         ToastGravity.CENTER,
+                         timeInSecForIosWeb: 1,
+                         backgroundColor:
+                         Colors.red,
+                         textColor: Colors.white,
+                         fontSize: 16.0);
+                   }else {
+                     if((_nameController.text!="")&(_phoneController.text!=""))
+                     {
+
+                       var _res=  await recall(_nameController.text.toString(),_phoneController.text.toString(), _messageController.text.toString());
+                       if (_res=="success"){
+                         Navigator.pop(context);
+                       Navigator.of(context).push(PageRouteBuilder(
+                           opaque: false,
+                           pageBuilder: (BuildContext context, _, __) =>
+                               TyPage()));
+                       }
+                       else {Fluttertoast.showToast(
+                           msg: "Запрос не отправлен!",
+                           toastLength:
+                           Toast.LENGTH_SHORT,
+                           gravity:
+                           ToastGravity.CENTER,
+                           timeInSecForIosWeb: 1,
+                           backgroundColor:
+                           Colors.red,
+                           textColor: Colors.white,
+                           fontSize: 16.0);
+                       Navigator.pop(context);}
+                     }else{
+
+                       Fluttertoast.showToast(
+                           msg: "Заполните данные!",
+                           toastLength:
+                           Toast.LENGTH_SHORT,
+                           gravity:
+                           ToastGravity.CENTER,
+                           timeInSecForIosWeb: 1,
+                           backgroundColor:
+                           Colors.red,
+                           textColor: Colors.white,
+                           fontSize: 16.0);
+                     }
+                   }
+
+                 /*  Navigator.pop(context);
                    Navigator.of(context).push(PageRouteBuilder(
                        opaque: false,
                        pageBuilder: (BuildContext context, _, __) =>
-                           TyPage()));
+                           TyPage()));*/
                  },
                  child:   Container(
                   width: MediaQuery.of(context).size.width/1.5,

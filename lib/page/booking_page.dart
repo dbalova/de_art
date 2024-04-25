@@ -4,7 +4,10 @@ import 'package:de_art/service/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+
+import '../service/api.dart';
 
 class BookingPage extends StatefulWidget {
   const BookingPage({Key? key}) : super(key: key);
@@ -500,7 +503,7 @@ class _BookingPageState extends State<BookingPage> {
                             ],
                           ))
                       : Container(),
-                  duration == 2
+                /*  duration == 2
                       ? Padding(
                           padding: EdgeInsets.only(top: 12),
                           child: Text("${selectRoomInfo.price?.night ?? ""} ₽",
@@ -513,7 +516,7 @@ class _BookingPageState extends State<BookingPage> {
                       child: Text("${selectRoomInfo.price?.price ?? ""} ₽",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20)))
-                      : Container(),
+                      : Container(),*/
                   Padding(
                     padding: const EdgeInsets.only(top: 24.0, bottom: 18),
                     child: Row(
@@ -647,7 +650,163 @@ class _BookingPageState extends State<BookingPage> {
                       ),
                     ),
                   ),
-                  Container(
+                GestureDetector(
+
+                  onTap: () async {
+                    if(_agree){
+                          if (duration == 1) {
+                            //counter - кол-во часов
+                            //people - кол-во людей (1 или 2)
+                            if ((inController.text != "") &
+                                (timeController.text != "") &
+                                (nameController.text != '') &
+                                (phoneController.text != '')) {
+                              var _res = await booking_room(
+                                  selectRoomInfo.id.toString(),
+                                  'hour',
+                                  inController.text.toString(),
+                                  people.toString(),
+                                  timeController.text.toString(),
+                                  "",
+                                  counter.toString(),
+                                  nameController.text.toString(),
+                                  phoneController.text.toString(),
+                                  commentController.text.toString());
+                              if (_res == "success") {
+                                Fluttertoast.showToast(
+                                    msg: "Успешно отправлено!",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "Ошибка при отправлении данных!",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              }
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "Заполните данные!",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.red,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                            }
+                          } else if (duration == 2) {
+                            //counter - кол-во часов
+                            //people - кол-во людей (1 или 2)
+                            if ((inController.text != "") &
+                                (nameController.text != '') &
+                                (phoneController.text != '')) {
+                              var _res = await booking_room(
+                                  selectRoomInfo.id.toString(),
+                                  'night',
+                                  inController.text.toString(),
+                                  people.toString(),
+                                  '',
+                                  '',
+                                  '',
+                                  nameController.text.toString(),
+                                  phoneController.text.toString(),
+                                  commentController.text.toString());
+                              if (_res == "success") {
+                                Fluttertoast.showToast(
+                                    msg: "Успешно отправлено!",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "Ошибка при отправлении данных!",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              }
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "Заполните данные!",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.red,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                            }
+                          } else if (duration == 3) {
+                            //counter - кол-во часов
+                            //people - кол-во людей (1 или 2)
+                            if ((inController.text != "") &
+                                (outController.text != "") &
+                                (nameController.text != '') &
+                                (phoneController.text != '')) {
+                              var _res = await booking_room(
+                                  selectRoomInfo.id.toString(),
+                                  'day',
+                                  inController.text.toString(),
+                                  people.toString(),
+                                  '',
+                                  outController.text.toString(),
+                                  '',
+                                  nameController.text.toString(),
+                                  phoneController.text.toString(),
+                                  commentController.text.toString());
+                              if (_res == "success") {
+                                Fluttertoast.showToast(
+                                    msg: "Успешно отправлено!",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                                Navigator.pop(context);
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: "Ошибка при отправлении данных!",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              }
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "Заполните данные!",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.red,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                            }
+                          }
+                        }else   Fluttertoast.showToast(
+                        msg: "Подтвердите согласие!",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.red,
+                        textColor: Colors.white,
+                        fontSize: 16.0);
+                      },
+
+                    child:  Container(
                     width: MediaQuery.of(context).size.width / 1.5,
                     margin: EdgeInsets.only(
                       top: 15,
@@ -668,7 +827,7 @@ class _BookingPageState extends State<BookingPage> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                  ),
+                  )),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

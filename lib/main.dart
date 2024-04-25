@@ -13,6 +13,7 @@ import 'package:de_art/palette.dart';
 import 'package:de_art/service/api.dart';
 import 'package:de_art/service/global.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

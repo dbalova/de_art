@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../palette.dart';
+import '../service/api.dart';
 
 class CreateReviewsPage extends StatefulWidget {
   const CreateReviewsPage({Key? key}) : super(key: key);
@@ -12,7 +14,8 @@ class CreateReviewsPage extends StatefulWidget {
 String selectedValue ="Профсоюзная" ;
 //String? selectedValue ;
 bool _showHotel=false;
-
+TextEditingController _nameController=TextEditingController();
+TextEditingController _reviewController=TextEditingController();
 Color dropColor = Colors.black;
 List<String>_hotel=["Профсоюзная","Таганская","Новокосино","Текстильщики"];
 int stars=0;
@@ -167,7 +170,9 @@ class _CreateReviewsPageState extends State<CreateReviewsPage> {
                   padding: EdgeInsets.only(left:12),
                   margin: EdgeInsets.only(bottom: 12),
                   width: MediaQuery.of(context).size.width/1.5,
-                  child: TextField(   decoration: const InputDecoration(
+                  child: TextField(
+                    controller: _nameController,
+                    decoration: const InputDecoration(
                     hintText: "Иван Иванович",
                     isDense: true,
                     border: InputBorder.none, ),),
@@ -322,7 +327,7 @@ class _CreateReviewsPageState extends State<CreateReviewsPage> {
                   width: MediaQuery.of(context).size.width/1.5,
                   height:MediaQuery.of(context).size.height/5,
                   child: TextField(
-
+controller: _reviewController ,
                     maxLines: 5,
                     decoration: const InputDecoration(
                     hintText: "Текст отзыва",
@@ -342,8 +347,66 @@ class _CreateReviewsPageState extends State<CreateReviewsPage> {
                   ),
                 ),
                GestureDetector(
-                   onTap: (){
-                     Navigator.pop(context);
+                   onTap: () async {
+                     if (_agree!=true){
+                       Fluttertoast.showToast(
+                           msg: "Подтвердите согласие!",
+                           toastLength:
+                           Toast.LENGTH_SHORT,
+                           gravity:
+                           ToastGravity.CENTER,
+                           timeInSecForIosWeb: 1,
+                           backgroundColor:
+                           Colors.red,
+                           textColor: Colors.white,
+                           fontSize: 16.0);
+                     }else {
+                       if((_nameController.text!="")&(_reviewController.text!=""))
+                       {
+                         String idSelectelHotel = "1";
+if(    selectedValue=="Профсоюзная"){idSelectelHotel = "1";}
+else if(   selectedValue=="Таганская"){idSelectelHotel = "4";}
+else if(selectedValue=="Новокосино"){idSelectelHotel = "2";}
+else if ( selectedValue=="Текстильщики"){idSelectelHotel = "5";}
+                       var _res=  await leave_review(idSelectelHotel.toString(),_nameController.text.toString(), _reviewController.text.toString());
+if (_res=="success"){Fluttertoast.showToast(
+    msg: "Отзыв успешно отправлен!",
+    toastLength:
+    Toast.LENGTH_SHORT,
+    gravity:
+    ToastGravity.CENTER,
+    timeInSecForIosWeb: 1,
+    backgroundColor:
+    Colors.red,
+    textColor: Colors.white,
+    fontSize: 16.0);
+Navigator.pop(context);}else {Fluttertoast.showToast(
+    msg: "Отзыв не отправлен!",
+    toastLength:
+    Toast.LENGTH_SHORT,
+    gravity:
+    ToastGravity.CENTER,
+    timeInSecForIosWeb: 1,
+    backgroundColor:
+    Colors.red,
+    textColor: Colors.white,
+    fontSize: 16.0);
+Navigator.pop(context);}
+                       }else{
+
+                         Fluttertoast.showToast(
+                             msg: "Заполните данные!",
+                             toastLength:
+                             Toast.LENGTH_SHORT,
+                             gravity:
+                             ToastGravity.CENTER,
+                             timeInSecForIosWeb: 1,
+                             backgroundColor:
+                             Colors.red,
+                             textColor: Colors.white,
+                             fontSize: 16.0);
+                       }
+                     }
                    },
                    child: Container(
                   width: MediaQuery.of(context).size.width/1.5,

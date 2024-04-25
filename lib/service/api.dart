@@ -359,14 +359,22 @@ Future all_list_filters(
 Future leave_review(String hotel_id, String name,String message) async {
   print("leave_review start " + DateTime.now().toString());
   var dio = Dio();
+  FormData formData =  FormData.fromMap({
+    'hotel_id': hotel_id,
+    'name': name,
+    'message': message,
+  });
+
   try {
     var response = await dio.post(
       "https://deart-13.ru/api/v1/review?token=bQWc9FDWI3DiEEYYk6lQvHwlAUjTfDrw",
-      data: {
+        data: formData
+
+  /*    data: {
       'hotel_id': hotel_id,
       'name': name,
       'message': message,
-    },
+    },*/
     );
 
 
@@ -399,14 +407,17 @@ Future leave_review(String hotel_id, String name,String message) async {
 Future recall (String name, String phone,String? message) async {
   print("recall start " + DateTime.now().toString());
   var dio = Dio();
+
+  FormData formData =  FormData.fromMap({
+    'phone': phone,
+    'name': name,
+    'message': message,
+  });
+
   try {
     var response = await dio.post(
       "https://deart-13.ru/api/v1/recall?token=bQWc9FDWI3DiEEYYk6lQvHwlAUjTfDrw",
-      data: {
-        'name': name,
-        'phone': phone,
-        'message': message ?? "",
-      },
+      data: formData,
     );
 
 
@@ -441,25 +452,23 @@ Future booking_room (String room_id,String period,String date_in,String adult,
     String name, String phone,String? message) async {
   print("booking_room start " + DateTime.now().toString());
   var dio = Dio();
-  try {
-    var response = await dio.post(
-      "https://deart-13.ru/api/v1/booking?token=bQWc9FDWI3DiEEYYk6lQvHwlAUjTfDrw",
-      data: period =="На час"?{
-        'room_id': room_id,
-        'period': period,
-        //  hour — На час
-        //  night — На ночь
-        //  day — На сутки
-        'date_in': date_in,
-        'time_in': time_in,
-        'num_hours': num_hours,
-        'adult': adult,
-        'name': name,
-        'phone': phone,
-        'message': message ?? "",
-      }
-      : period =="На ночь"
-      ?{
+ late FormData formData;
+  if(period =="hour") {
+     formData = FormData.fromMap({
+      'room_id': room_id,
+      'period': period,
+      //  hour — На час
+      //  night — На ночь
+      //  day — На сутки
+      'date_in': date_in,
+      'time_in': time_in,
+      'num_hours': num_hours,
+      'adult': adult,
+      'name': name,
+      'phone': phone,
+      'message': message ?? "",
+    });
+  } else if(period =="night"){   formData = FormData.fromMap({
     'room_id': room_id,
     'period': period,
     //  hour — На час
@@ -470,9 +479,8 @@ Future booking_room (String room_id,String period,String date_in,String adult,
     'name': name,
     'phone': phone,
     'message': message ?? "",
-    }
-    :{
-        'room_id': room_id,
+  });}else if(period =="day"){formData=FormData.fromMap(
+      { 'room_id': room_id,
         'period': period,
         //  hour — На час
         //  night — На ночь
@@ -482,8 +490,12 @@ Future booking_room (String room_id,String period,String date_in,String adult,
         'adult': adult,
         'name': name,
         'phone': phone,
-        'message': message ?? "",
-      },
+        'message': message ?? "",}
+);}
+  try {
+    var response = await dio.post(
+      "https://deart-13.ru/api/v1/booking?token=bQWc9FDWI3DiEEYYk6lQvHwlAUjTfDrw",
+      data: formData,
     );
 
 

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:de_art/page/visitPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -408,6 +409,7 @@ color: Palette().red,
                                   // Sign the user in (or link) with the credential
                                   await FirebaseAuth.instance
                                       .signInWithCredential(credential);
+                                  FirebaseFirestore.instance.collection("visits").snapshots();
                                   Navigator.of(context).push(PageRouteBuilder(
                                       opaque: false,
                                       pageBuilder: (BuildContext context, _, __) =>
@@ -438,10 +440,10 @@ color: Palette().red,
                   ),
                 )),
                 TextButton(onPressed: (){
-                  Navigator.of(context).push(PageRouteBuilder(
+                /*  Navigator.of(context).push(PageRouteBuilder(
                       opaque: false,
                       pageBuilder: (BuildContext context, _, __) =>
-                          VisitPage()));
+                          VisitPage()));*/
                 }, child: Text("Правила программы лояльности",
                   style: TextStyle(decoration: TextDecoration.underline, color: Colors.grey),))
 
