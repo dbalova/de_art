@@ -19,9 +19,9 @@ class RoomPage extends StatefulWidget {
   @override
   State<RoomPage> createState() => _RoomPageState();
 }
-
+SwipeIndexControllerEvent _ind = SwipeIndexControllerEvent(pos: pos, animation: animation)
 int chapter = 1;
-
+int _indexPhoto=0;
 class _RoomPageState extends State<RoomPage> {
   String phone = "";
   String minHour = "";
@@ -172,9 +172,10 @@ class _RoomPageState extends State<RoomPage> {
                   Container(
                       height: 265,
                       child: Swiper(
-                        itemBuilder: (context, i) {
+                        controller: ,
+                        itemBuilder: (context, _indexPhoto) {
                           return Image.network(
-                              "https://deart-13.ru${selectRoomInfo.images?[i].photo ?? ""}");
+                              "https://deart-13.ru${selectRoomInfo.images?[_indexPhoto].photo ?? ""}");
                         },
                         itemCount: selectRoomInfo.numImages ?? 0,
                         control: const SwiperControl(
@@ -187,13 +188,25 @@ class _RoomPageState extends State<RoomPage> {
                     child: Row(
                       children: [
                         Spacer(flex: 3),
-                        SvgPicture.asset(
+                      GestureDetector(
+                          onTap: (){
+                           if(_indexPhoto!=0) _indexPhoto--;
+                            setState(() {
+
+                            });
+                          },
+                          child:  SvgPicture.asset(
                           'assets/left.svg',
-                        ),
+                        )),
                         Spacer(flex: 1),
-                        SvgPicture.asset(
+                        GestureDetector(
+                            onTap: (){     _indexPhoto++;
+                            setState(() {
+
+                            });},
+                            child:SvgPicture.asset(
                           'assets/right.svg',
-                        ),
+                        )),
                         Spacer(flex: 3),
                       ],
                     ),
@@ -321,7 +334,7 @@ class _RoomPageState extends State<RoomPage> {
                                   ),
                                   Container(
                                     width:
-                                        MediaQuery.of(context).size.width / 2.5,
+                                        MediaQuery.of(context).size.width / 2,
                                     child: Text(
                                       phone,
                                       style: TextStyle(

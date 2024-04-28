@@ -20,7 +20,7 @@ class VisitPage extends StatefulWidget {
 }
 bool _isQr = false;
 class _VisitPageState extends State<VisitPage> {
-  SfRangeValues _values = SfRangeValues(4.0, 10.0);
+  SfRangeValues _values = SfRangeValues(int.parse(myPhoneVisits), 10.0);
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +143,7 @@ class _VisitPageState extends State<VisitPage> {
                 fontSize: 30,
                 color: Palette().red,
                 fontWeight: FontWeight.w900),textAlign: TextAlign.start,),
-            Text("До бесплатного посещения: 4 визита",style: TextStyle(
+            Text("До бесплатного посещения: ${10-int.parse(myPhoneVisits)} визита",style: TextStyle(
                 fontSize: 18,
                 color: Colors.black,
                 ),textAlign: TextAlign.start,),
@@ -168,7 +168,7 @@ class _VisitPageState extends State<VisitPage> {
                   startThumbIcon: Padding(
                     padding: const EdgeInsets.only(top: 6, left: 2),
                     child: Text(
-                      "4",
+                      myPhoneVisits,
                       style:  TextStyle(color: Colors.black, fontSize: 24),
                       textAlign: TextAlign.center,
                     ),

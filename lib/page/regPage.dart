@@ -42,6 +42,14 @@ class _regPageState extends State<regPage> {
 
   @override
   void initState() {
+    _pass1.clear();
+    _pass2.clear();
+    _pass3.clear();
+    _pass4.clear();
+    _pass5.clear();
+    _pass6.clear();
+    page1=true;
+    _phoneController.clear();
     _phoneController.text="+7";
     super.initState();
   }
@@ -409,14 +417,53 @@ color: Palette().red,
                                   // Sign the user in (or link) with the credential
                                   await FirebaseAuth.instance
                                       .signInWithCredential(credential);
-                                  FirebaseFirestore.instance.collection("visits").doc("phones").get();
-                                  Navigator.of(context).push(PageRouteBuilder(
-                                      opaque: false,
-                                      pageBuilder: (BuildContext context, _, __) =>
-                                          VisitPage()));
+    List<String> _ph = [];
+
+    QuerySnapshot qSnap = await FirebaseFirestore.instance.collection('visits').get();
+    int documents = qSnap.docs.length;
+
+
+
+
+    for(var _i=0; _i<  documents; _i++){
+    _ph.add(qSnap.docs[_i].id.toString()) ;
+
+    }
+
+    if(_ph.contains(myPhone)){
+    int _phoneIndex=0;
+    _phoneIndex= _ph.indexOf(myPhone);
+    await FirebaseFirestore.instance.collection("visits").get().then((snapshot) {
+      myPhoneVisits= snapshot.docs[_phoneIndex].get('visit').toString();
+
+    });
+    }else{myPhoneVisits='0';}
+                                  _pass1.clear();
+                                  _pass2.clear();
+                                  _pass3.clear();
+                                  _pass4.clear();
+                                  _pass5.clear();
+                                  _pass6.clear();
+                                  page1=true;
+                                  _phoneController.clear();
+
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context){
+                                    return VisitPage();
+                                  }));
                                 }
                                 catch(e){
                       print("WRONG");
+                      Fluttertoast.showToast(
+                          msg: "Неверный код!",
+                          toastLength:
+                          Toast.LENGTH_SHORT,
+                          gravity:
+                          ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor:
+                          Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0);
                     }
                                 /*   if (_isActive==true) {
                        _start = 60;

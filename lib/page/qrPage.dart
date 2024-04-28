@@ -8,9 +8,10 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'dart:developer' as dev;
 
 import '../main.dart';
+import '../palette.dart';
 
 
-
+bool _is10 = false;
 class SearchObjectPage extends StatefulWidget {
   const SearchObjectPage({Key? key}) : super(key: key);
 
@@ -189,23 +190,59 @@ padding: EdgeInsets.zero,
                       ElevatedButton(
                           //style: ButtonStyle(backgroundColor: ),
                           onPressed: ()async{
-                           var _res = await FirebaseFirestore.instance.collection("visits").snapshots().length;
+                            List<String> _ph = [];
 
-List<String> _ph = [];
+                            QuerySnapshot qSnap = await FirebaseFirestore.instance.collection('visits').get();
+                            int documents = qSnap.docs.length;
 
-                            for(var _i=0; _i<_res; _i++){
-                              FirebaseFirestore.instance.collection("visits").snapshots().forEach((element) {_ph.add(element.docs[_i].id);});
+
+
+
+                            for(var _i=0; _i<  documents; _i++){
+                              _ph.add(qSnap.docs[_i].id.toString()) ;
+
                             }
-                            print(_ph);
-                    ///ТУТ ДОЛЖЕН БЫТЬ МЕТОД ++ ПОСЕЩЕНИЕ ПО НОМЕРУ ТЕЛЕФОНА
-                            FirebaseFirestore.instance.collection("visits").doc('${_result?.code.toString()}').set({'visit':'6'});
 
-                        _result=null;
+                            if(_ph.contains(_result?.code.toString())){
+                              int _phoneIndex=0;
+                              _phoneIndex= _ph.indexOf(_result!.code.toString());
+                              int _phoneVisit=0;
+
+                              await FirebaseFirestore.instance.collection("visits").get().then((snapshot) {
+                                _phoneVisit = int.parse(snapshot.docs[_phoneIndex].get('visit').toString());
+                                print('получили визиты $_phoneVisit');
+                              });
+                              print('НАЖАЛИ ${_phoneIndex} ${_phoneVisit}');
+                              _phoneVisit++;
+                              if(_phoneVisit==10){
+                                _is10=true;
+                                await FirebaseFirestore.instance.collection("visits").doc(_result?.code.toString()).set({'visit':'0'});
+
+                              }else {
+                                FirebaseFirestore.instance
+                                    .collection("visits")
+                                    .doc(_result?.code.toString())
+                                    .set({'visit': _phoneVisit.toString()});
+                              }
+                              print('НАЖАЛИ новый визит!${_ph}');
+                            }else{ FirebaseFirestore.instance.collection("visits").doc(_result?.code.toString()).set({'visit':'1'});}
+
+                            _result=null;
                         setState(() {
 
                         });
                         _controller!.resumeCamera();
-
+                            Fluttertoast.showToast(
+                                msg: "Посещение отмечено!",
+                                toastLength:
+                                Toast.LENGTH_SHORT,
+                                gravity:
+                                ToastGravity.CENTER,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor:
+                                Colors.red,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
                         Navigator.pushAndRemoveUntil<dynamic>(
                           context,
                           MaterialPageRoute<dynamic>(
@@ -215,6 +252,29 @@ List<String> _ph = [];
                               (route) =>
                           false, //if you want to disable back feature set to false
                         );
+                        if(_is10){     _is10=false; showDialog(context: context, builder: ( context){
+                          return  AlertDialog(
+                            title: Text("Бесплатное посещение!",style: TextStyle(color: Palette().red, fontSize: 18,fontWeight: FontWeight.bold),),
+                            titleTextStyle:
+                            TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,fontSize: 20),
+                            actionsOverflowButtonSpacing: 20,
+                            actions:  [
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Palette().red,
+                                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                                  ),
+
+                                  onPressed: (){
+                                    Navigator.pop(context);
+                                  }, child: Text("Далее",style: TextStyle(color: Colors.white,fontSize: 18),)),
+
+                            ],
+                            content: Container(width:MediaQuery.of(context).size.width/3,
+                                child:Text('Посетителю доступно 10-ое бесплатное посещение в подарок в одном из предложенных номеров De Art 13.')),
+                          );});}
 
                       }, child: Text("Отметить посещение",textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,

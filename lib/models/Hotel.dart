@@ -7,8 +7,10 @@ class AllHotel {
 
   AllHotel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    hotels =
-     new Hotels.fromJson(json['hotels']) ;
+  if  (json['count']!=0)
+  {
+    hotels = Hotels.fromJson(json['hotels']);
+    }
     count = json['count'];
   }
 

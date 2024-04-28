@@ -120,93 +120,78 @@ class _MenuPageState extends State<MenuPage> {
                 "Таганская",
                 style: TextStyle(color: Colors.white, fontSize: 18),
               )),
-          TextButton(
+
+          /*TextButton(
               onPressed: () async {
-      showDialog(context: context, builder: (BuildContext context){return  AlertDialog(
-                  title: Text("Введите код сотрудника",style: TextStyle(color: Palette().red, fontSize: 18,fontWeight: FontWeight.bold),),
-                  titleTextStyle:
-                  TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,fontSize: 20),
-                  actionsOverflowButtonSpacing: 20,
-                  actions:  [
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Palette().red,
-                            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-                            ),
-
-                        onPressed: (){
-                      if(_passController.text=="1111"){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          const SearchObjectPage(),
-                                    ),
-                                  ); _passController.clear();
-                                }
-                      else Fluttertoast.showToast(
-                          msg: "Неверный код!",
-                          toastLength:
-                          Toast.LENGTH_SHORT,
-                          gravity:
-                          ToastGravity.CENTER,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor:
-                          Colors.red,
-                          textColor: Colors.white,
-                          fontSize: 16.0);
-                              }, child: Text("Далее",style: TextStyle(color: Colors.white,fontSize: 18),)),
-
-                  ],
-                  content: Container(width:MediaQuery.of(context).size.width/3,
-                      child:TextField(
-                        cursorColor: Palette().red,
-                        controller: _passController,
-                        keyboardType: TextInputType.number,
-                        decoration: new InputDecoration(
-                            hintText: "",
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.cyan),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Palette().red),
-                          ),
-                        ),
-                      )),
-                );});
-
-              },
-              child: Text(
-                "qr test",
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              )),
-          TextButton(
-              onPressed: () async {
-            /*   var _res =  FirebaseFirestore.instance.collection("visits").snapshots();
+            *//*   var _res =  FirebaseFirestore.instance.collection("visits").snapshots();
                Map vis = {_res.first.toString():"${_res.last.toString()}"};
-               print(vis.toString());*/
+               print(vis.toString());*//*
 
-
+print('НАЖАЛИ');
               //  FirebaseFirestore.instance.collection("visits").doc('новый телефон').set({'visit':'6'});
-
-               // var _res = await FirebaseFirestore.instance.collection("visits");
-                Stream snap =  FirebaseFirestore.instance.collection("visits").snapshots();
-                Future<int> ls = snap.length;
-               // print("===========================================");
                 List<String> _ph = [];
 
-                for(var _i=0; _i<ls; _i++){
-             snap.forEach((element) {_ph.add(element.docs[_i].id.toString());});
+                 QuerySnapshot qSnap = await FirebaseFirestore.instance.collection('visits').get();
+                 int documents = qSnap.docs.length;
+
+
+
+
+                for(var _i=0; _i<  documents; _i++){
+                 _ph.add(qSnap.docs[_i].id.toString()) ;
+
                 }
-                print("$_ph===========================================");
+
+               if(_ph.contains("09090909")){
+                 int _phoneIndex=0;
+                 _phoneIndex= _ph.indexOf("09090909");
+                 int _phoneVisit=0;
+                 
+                 await FirebaseFirestore.instance.collection("visits").get().then((snapshot) {
+                   _phoneVisit = int.parse(snapshot.docs[_phoneIndex].get('visit').toString());
+                   print('получили визиты $_phoneVisit');
+                 });
+                 print('НАЖАЛИ ${_phoneIndex} ${_phoneVisit}');
+                 _phoneVisit++;
+                 if(_phoneVisit==10){
+                   await FirebaseFirestore.instance.collection("visits").doc("09090909").set({'visit':'0'});
+                   showDialog(context: context, builder: (BuildContext context){
+                     return  AlertDialog(
+                     title: Text("Бесплатное посещение!",style: TextStyle(color: Palette().red, fontSize: 18,fontWeight: FontWeight.bold),),
+                     titleTextStyle:
+                     TextStyle(
+                         fontWeight: FontWeight.bold,
+                         color: Colors.black,fontSize: 20),
+                     actionsOverflowButtonSpacing: 20,
+                     actions:  [
+                       ElevatedButton(
+                           style: ElevatedButton.styleFrom(
+                             backgroundColor: Palette().red,
+                             padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                           ),
+
+                           onPressed: (){
+Navigator.pop(context);
+                           }, child: Text("Далее",style: TextStyle(color: Colors.white,fontSize: 18),)),
+
+                     ],
+                     content: Container(width:MediaQuery.of(context).size.width/3,
+                         child:Text('Посетителю доступно 10-ое бесплатное посещение в подарок в одном из предложенных номеров De Art 13.')),
+                   );});
+                 }else {
+                    FirebaseFirestore.instance
+                        .collection("visits")
+                        .doc("09090909")
+                        .set({'visit': _phoneVisit.toString()});
+                  }
+                  print('НАЖАЛИ новый визит!${_ph}');
+               }else{ FirebaseFirestore.instance.collection("visits").doc("09090909").set({'visit':'1'});}
 
               },
               child: Text(
                 "fb",
                 style: TextStyle(color: Colors.white, fontSize: 18),
-              )),
+              )),*/
           TextButton(
               onPressed: () async {
                 await select_hotel_info("2");
@@ -223,7 +208,8 @@ class _MenuPageState extends State<MenuPage> {
               )),
           TextButton(
               onPressed: () async {
-                await select_hotel_info("5");
+
+               await select_hotel_info("5");
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -264,6 +250,68 @@ class _MenuPageState extends State<MenuPage> {
               },
               child: Text(
                 "Лояльность",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              )),
+          TextButton(
+              onPressed: () async {
+                showDialog(context: context, builder: (BuildContext context){return  AlertDialog(
+                  title: Text("Введите код сотрудника",style: TextStyle(color: Palette().red, fontSize: 18,fontWeight: FontWeight.bold),),
+                  titleTextStyle:
+                  TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,fontSize: 20),
+                  actionsOverflowButtonSpacing: 20,
+                  actions:  [
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Palette().red,
+                          padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                        ),
+
+                        onPressed: (){
+                          if(_passController.text=="1111"){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                const SearchObjectPage(),
+                              ),
+                            ); _passController.clear();
+                          }
+                          else Fluttertoast.showToast(
+                              msg: "Неверный код!",
+                              toastLength:
+                              Toast.LENGTH_SHORT,
+                              gravity:
+                              ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor:
+                              Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                        }, child: Text("Далее",style: TextStyle(color: Colors.white,fontSize: 18),)),
+
+                  ],
+                  content: Container(width:MediaQuery.of(context).size.width/3,
+                      child:TextField(
+                        cursorColor: Palette().red,
+                        controller: _passController,
+                        keyboardType: TextInputType.number,
+                        decoration: new InputDecoration(
+                          hintText: "",
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.cyan),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Palette().red),
+                          ),
+                        ),
+                      )),
+                );});
+
+              },
+              child: Text(
+                "Страница сотрудника",
                 style: TextStyle(color: Colors.white, fontSize: 18),
               )),
           TextButton(

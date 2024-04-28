@@ -17,3 +17,4 @@ late SelectPageInfo selectPageInfo;
 late SelectRoomInfo selectRoomInfo;
 var verify;
 String myPhone = '';
+String myPhoneVisits = '0';
