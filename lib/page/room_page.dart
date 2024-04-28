@@ -19,15 +19,16 @@ class RoomPage extends StatefulWidget {
   @override
   State<RoomPage> createState() => _RoomPageState();
 }
-SwipeIndexControllerEvent _ind = SwipeIndexControllerEvent(pos: pos, animation: animation)
+
 int chapter = 1;
-int _indexPhoto=0;
+SwiperController _cont= SwiperController();
 class _RoomPageState extends State<RoomPage> {
   String phone = "";
   String minHour = "";
 
   @override
   void initState() {
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       gg().then(() {mapController.moveCamera(
         animation: const MapAnimation(type: MapAnimationType.linear, duration: 1),
@@ -163,7 +164,7 @@ class _RoomPageState extends State<RoomPage> {
                         Container(
                             width: MediaQuery.of(context).size.width / 1.3,
                             child: Text(
-                              phone,
+                              phone.trim().replaceAll(" +","\n+"),
                               overflow: TextOverflow.clip,
                             )),
                       ],
@@ -172,14 +173,14 @@ class _RoomPageState extends State<RoomPage> {
                   Container(
                       height: 265,
                       child: Swiper(
-                        controller: ,
+controller: _cont,
                         itemBuilder: (context, _indexPhoto) {
                           return Image.network(
                               "https://deart-13.ru${selectRoomInfo.images?[_indexPhoto].photo ?? ""}");
                         },
                         itemCount: selectRoomInfo.numImages ?? 0,
                         control: const SwiperControl(
-                            color: Colors.white,
+                            color: Colors.transparent,
                             iconNext: Icons.arrow_circle_right_outlined,
                             iconPrevious: Icons.arrow_circle_left_outlined),
                       )),
@@ -190,7 +191,11 @@ class _RoomPageState extends State<RoomPage> {
                         Spacer(flex: 3),
                       GestureDetector(
                           onTap: (){
-                           if(_indexPhoto!=0) _indexPhoto--;
+                        /*   if(_indexPhoto!=0) _indexPhoto--;
+                            setState(() {
+
+                            });*/
+                            _cont.previous();
                             setState(() {
 
                             });
@@ -200,7 +205,7 @@ class _RoomPageState extends State<RoomPage> {
                         )),
                         Spacer(flex: 1),
                         GestureDetector(
-                            onTap: (){     _indexPhoto++;
+                            onTap: (){   _cont.next();
                             setState(() {
 
                             });},
@@ -257,7 +262,7 @@ class _RoomPageState extends State<RoomPage> {
                                       )
                                     ],
                                   )),
-                                  Container(
+                                  selectRoomInfo.price?.night.toString() == ""?Container():  Container(
                                       child: Row(
                                     children: [
                                       SvgPicture.asset(
@@ -334,9 +339,9 @@ class _RoomPageState extends State<RoomPage> {
                                   ),
                                   Container(
                                     width:
-                                        MediaQuery.of(context).size.width / 2,
+                                        MediaQuery.of(context).size.width / 2.5,
                                     child: Text(
-                                      phone,
+                                      phone.trim().replaceAll(" +","\n+"),
                                       style: TextStyle(
                                           decorationThickness: 2, fontSize: 16),
                                     ),

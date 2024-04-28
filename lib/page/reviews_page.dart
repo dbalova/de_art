@@ -172,7 +172,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
                                 height: 24,
                               ),
                               Text(
-                                allReviews[index].dateAdd.toString(),
+                                allReviews[index].dateAdd.toString().trim().substring(0, 10),
                                 style: TextStyle(
                                     fontSize: 13,
                                     color: Color.fromRGBO(74, 74, 74, 1)),

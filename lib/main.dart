@@ -60,10 +60,6 @@ String bar = "";
 
 final _scrollController = ScrollController();
 
-void _scrollToIndex(index) {
-  _scrollController.animateTo(800.0 * 2,
-      duration: const Duration(seconds: 2), curve: Curves.easeIn);
-}
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -216,11 +212,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       )))
             ],
           )),
-      body: ListView(
+      body: ListView(controller: _scrollController,
         children: [
           SingleChildScrollView(
               physics: NeverScrollableScrollPhysics(),
-              controller: _scrollController,
+
               child: Container(
                   child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -265,7 +261,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                        pageBuilder: (BuildContext context, _, __) =>
                                            BookingPage()));*/
 
-                                      _scrollToIndex(1);
+                                      _scrollController.animateTo(600,
+                                          duration:  Duration(seconds: 1), curve: Curves.easeInOut);
                                     },
                                     child: RedButton(
                                         Color.fromRGBO(255, 255, 255, 1),
@@ -1481,7 +1478,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     )
                                                   ],
                                                 )),
-                                                Container(
+                                                allHotels.hotels?.h1?.rooms?[index].price?.night.toString()==''?Container():   Container(
                                                     child: Row(
                                                   children: [
                                                     SvgPicture.asset(
@@ -1777,7 +1774,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     )
                                                   ],
                                                 )),
-                                                Container(
+                                                allHotels.hotels?.h4?.rooms?[index].price?.night.toString() == "" ?Container():Container(
                                                     child: Row(
                                                   children: [
                                                     SvgPicture.asset(
@@ -2073,7 +2070,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     )
                                                   ],
                                                 )),
-                                                Container(
+                                                allHotels.hotels?.h2?.rooms?[index].price?.night.toString() == ""?Container():   Container(
                                                     child: Row(
                                                   children: [
                                                     SvgPicture.asset(
@@ -2369,7 +2366,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     )
                                                   ],
                                                 )),
-                                                Container(
+                                                allHotels.hotels?.h5?.rooms?[index].price?.night.toString() == ""?Container(): Container(
                                                     child: Row(
                                                   children: [
                                                     SvgPicture.asset(
@@ -2665,7 +2662,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     )
                                                   ],
                                                 )),
-                                                Container(
+                                                allHotels.hotels?.h6?.rooms?[index].price?.night.toString() == ""?Container():  Container(
                                                     child: Row(
                                                   children: [
                                                     SvgPicture.asset(
@@ -2910,7 +2907,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   height: 24,
                                 ),
                                 Text(
-                                  allReviews[i].dateAdd.toString(),
+                                  allReviews[i].dateAdd.toString().trim().substring(0, 10),
                                   style: TextStyle(
                                       fontSize: 13,
                                       color: Color.fromRGBO(74, 74, 74, 1)),
@@ -2922,7 +2919,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         itemCount: allReviews.length,
                         //pagination: const SwiperPagination(),
                       )),
-                  Row(
+            /*      Row(
                     children: [
                       Spacer(flex: 3),
                       SvgPicture.asset(
@@ -2934,7 +2931,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       Spacer(flex: 3),
                     ],
-                  ),
+                  ),*/
                   Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(

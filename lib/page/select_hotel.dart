@@ -153,7 +153,7 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                           Container(
                               width: MediaQuery.of(context).size.width / 1.3,
                               child: Text(
-                                phone,
+                                phone.trim().replaceAll(" +","\n+"),
                                 overflow: TextOverflow.clip,
                               ))
                         ],
@@ -483,7 +483,7 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                 ),
                               ),
                             )),
-                        selectHotelInfo.numFilter! >= 1
+                       /* selectHotelInfo.numFilter! >= 1
                             ? GestureDetector(
                                 onTap: () async {
                                   _filter[1] = !_filter[1];
@@ -537,7 +537,7 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                     ),
                                   ),
                                 ))
-                            : Container(),
+                            : Container(),*/
                         selectHotelInfo.numFilter! >= 2
                             ? GestureDetector(
                                 onTap: () async {
@@ -814,7 +814,7 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                                     )
                                                   ],
                                                 )),
-                                                Container(
+                                                selectHotelInfo.rooms?[index].price?.night.toString()=='' ?Container():  Container(
                                                     child: Row(
                                                   children: [
                                                     SvgPicture.asset(
@@ -1037,7 +1037,7 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                       height: 24,
                                     ),
                                     Text(
-                                      selectReviews[i].dateAdd.toString(),
+                                      selectReviews[i].dateAdd.toString().trim().substring(0, 10),
                                       style: TextStyle(
                                           fontSize: 13,
                                           color: Color.fromRGBO(74, 74, 74, 1)),
@@ -1050,7 +1050,7 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                             //pagination: const SwiperPagination(),
                           )),
                     ),
-                    Row(
+                /*    Row(
                       children: [
                         Spacer(flex: 3),
                         SvgPicture.asset(
@@ -1062,7 +1062,7 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                         ),
                         Spacer(flex: 3),
                       ],
-                    ),
+                    ),*/
                     Align(
                         alignment: Alignment.centerLeft,
                         child: Text(

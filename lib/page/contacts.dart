@@ -247,7 +247,7 @@ class _ContactsState extends State<Contacts> {
                           padding: EdgeInsets.only(right: 8.0),
                           child: Icon(Icons.place),
                         ),
-                        Text(selectHotelInfo.hotel?.address ?? "")
+                        Text(selectHotelInfo.hotel?.address.toString().trim() ?? "")
                       ],
                     ),
                   ),
@@ -262,7 +262,7 @@ class _ContactsState extends State<Contacts> {
                         Container(
                             width: MediaQuery.of(context).size.width / 1.3,
                             child: Text(
-                              phone,
+                              phone.trim().replaceAll(" +","\n+"),
                               overflow: TextOverflow.clip,
                             ))
                       ],
@@ -281,7 +281,7 @@ class _ContactsState extends State<Contacts> {
                       ),
                     ),
                   ),
-                  Padding(
+                  selectHotelInfo.hotel?.goTransport==""?Container():  Padding(
                     padding: const EdgeInsets.only(bottom: 24.0),
                     child: HowToGet(
                         context,
@@ -289,7 +289,7 @@ class _ContactsState extends State<Contacts> {
                         "Общественным транспортом:",
                         selectHotelInfo.hotel?.goTransport ?? ""),
                   ),
-                  Padding(
+                  selectHotelInfo.hotel?.goWalking==""? Container():   Padding(
                     padding: const EdgeInsets.only(bottom: 24.0),
                     child: HowToGet(context, 'assets/IconHuman.svg', "Пешком:",
                         selectHotelInfo.hotel?.goWalking ?? ""),

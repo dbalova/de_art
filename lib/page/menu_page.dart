@@ -9,6 +9,7 @@ import 'package:de_art/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../main.dart';
 import '../service/api.dart';
@@ -129,14 +130,14 @@ class _MenuPageState extends State<MenuPage> {
 
 print('НАЖАЛИ');
               //  FirebaseFirestore.instance.collection("visits").doc('новый телефон').set({'visit':'6'});
-                List<String> _ph = [];
+
 
                  QuerySnapshot qSnap = await FirebaseFirestore.instance.collection('visits').get();
                  int documents = qSnap.docs.length;
 
 
 
-
+List<String> _ph = [];
                 for(var _i=0; _i<  documents; _i++){
                  _ph.add(qSnap.docs[_i].id.toString()) ;
 
@@ -235,10 +236,11 @@ Navigator.pop(context);
                 "Кропоткинская",
                 style: TextStyle(color: Colors.white, fontSize: 18),
               )),
+
           SizedBox(
-            height: 50,
+            height: 30,
           ),
-     
+
           TextButton(
               onPressed: () {
                 Navigator.push(
@@ -249,7 +251,7 @@ Navigator.pop(context);
                 );
               },
               child: Text(
-                "Лояльность",
+                "Программа лояльности",
                 style: TextStyle(color: Colors.white, fontSize: 18),
               )),
           TextButton(
@@ -314,6 +316,10 @@ Navigator.pop(context);
                 "Страница сотрудника",
                 style: TextStyle(color: Colors.white, fontSize: 18),
               )),
+          SizedBox(
+            height: 30,
+          ),
+
           TextButton(
               onPressed: () {
                 Navigator.push(
@@ -327,6 +333,20 @@ Navigator.pop(context);
                 "О De Art 13",
                 style: TextStyle(color: Colors.white, fontSize: 18),
               )),
+          TextButton(
+              onPressed: () async{
+                final Uri url =
+                Uri.parse('https://deart-13.ru/rabota/');
+                if (!await launchUrl(url)) {
+                throw Exception('Could not launch $url');
+                }
+              },
+              child: Text(
+                "Вакансии",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              )),
+
+
           TextButton(
               onPressed: () async {
                 await select_hotel_info("1");
