@@ -236,6 +236,20 @@ Navigator.pop(context);
                 "Кропоткинская",
                 style: TextStyle(color: Colors.white, fontSize: 18),
               )),
+          TextButton(
+              onPressed: () async {
+                await select_hotel_info("7");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => const SelectHotelPage(),
+                  ),
+                );
+              },
+              child: Text(
+                "Авиамоторная",
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              )),
 
           SizedBox(
             height: 30,

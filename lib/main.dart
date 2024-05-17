@@ -82,6 +82,7 @@ class _MyAppState extends State<MyApp> {
       title: 'De Art 13',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        primaryColor: Color(0x902839),
         fontFamily: "CeraPro",
         useMaterial3: true,
       ),
@@ -107,7 +108,8 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       loadInfo().then(() {
-        setState(() {});mapController.moveCamera(
+        setState(() {});
+        mapController.moveCamera(
           animation: const MapAnimation(type: MapAnimationType.linear, duration: 1),
           CameraUpdate.newCameraPosition(
             CameraPosition(
@@ -224,7 +226,23 @@ class _MyHomePageState extends State<MyHomePage> {
                   Container(
                     child: Stack(
                       children: [
-                        Image.asset("assets/hotel.png"),
+                      Container(
+                          height: 560,
+                          child: AspectRatio(
+                            aspectRatio: 550 / 560,
+                            child:Container(
+                              height: 560,
+                          decoration: BoxDecoration(
+                              image: new DecorationImage(
+                                fit: BoxFit.cover,
+                                alignment: FractionalOffset.topCenter,
+                                image: new NetworkImage("https://60minut.ru/uploads/cdn/deart-13/topbox.webp"),
+                              )
+                          ),
+
+
+                        )))
+                        ,
                         Container(
                             width: MediaQuery.of(context).size.width,
                             height: 560,

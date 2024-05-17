@@ -194,7 +194,7 @@ class _VisitPageState extends State<VisitPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.local_phone, color: Colors.black,),
-                Text("+7 (000) 000 00 00",style: TextStyle(
+                Text("+7 (495) 988 57 94",style: TextStyle(
                   fontSize: 18,
                   color: Colors.black,
                 ),textAlign: TextAlign.start,),

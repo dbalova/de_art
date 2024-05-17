@@ -939,7 +939,13 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                                   'assets/stars.svg',
                                                 ),
                                                 GestureDetector(
-                                                    onTap: () {
+                                                    onTap: () async {
+                                                      await select_room_info(
+                                                          selectHotelInfo
+                                                              .rooms?[index]
+                                                              .id
+                                                              .toString() ??
+                                                              "");
                                                       Navigator.of(context).push(
                                                           PageRouteBuilder(
                                                               opaque: false,
@@ -1087,13 +1093,13 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                             padding: EdgeInsets.only(right: 12),
                             child: RichText(
                                 text: TextSpan(children: [
-                              TextSpan(
+                             /* TextSpan(
                                 text: 'Расположение:',
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black),
-                              ),
+                              ),*/
                               TextSpan(
                                 text: selectHotelInfo.hotel?.location
                                         .toString() ??
@@ -1482,7 +1488,7 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                           //Доехать до отеля De art Art 13 можно с помощью метро Таганская и далее пешком 4 минуты (340 метров).
                           TextSpan(
                             text: selectHotelInfo.hotel?.reach.toString() ?? "",
-                            style: TextStyle(fontSize: 14, color: Colors.black),
+                            style: TextStyle(fontSize: 14, color: Colors.black,fontFamily: "CeraPro"),
                           ),
                         ]))),
                     Text(

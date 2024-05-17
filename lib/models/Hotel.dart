@@ -31,8 +31,9 @@ class Hotels {
   H1? h4;
   H1? h5;
   H1? h6;
+  H1? h7;
 
-  Hotels({this.h1, this.h2, this.h4, this.h5, this.h6});
+  Hotels({this.h1, this.h2, this.h4, this.h5, this.h6,this.h7});
 
   Hotels.fromJson(Map<String, dynamic> json) {
     h1 = json['1'] != null ? new H1.fromJson(json['1']) : null;
@@ -40,6 +41,7 @@ class Hotels {
     h4 = json['4'] != null ? new H1.fromJson(json['4']) : null;
     h5 = json['5'] != null ? new H1.fromJson(json['5']) : null;
     h6 = json['6'] != null ? new H1.fromJson(json['6']) : null;
+    h7 = json['7'] != null ? new H1.fromJson(json['7']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -58,6 +60,9 @@ class Hotels {
     }
     if (this.h6 != null) {
       data['6'] = this.h6!.toJson();
+    }
+    if (this.h7 != null) {
+      data['7'] = this.h7!.toJson();
     }
     return data;
   }
