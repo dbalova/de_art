@@ -200,6 +200,30 @@ Widget miniMap( context){
               );
             },
           ),
+          PlacemarkMapObject(
+            mapId: MapObjectId('MapObject 6'),
+            point: Point(latitude:55.750216, longitude: 37.718489 ),
+
+            opacity: 1,
+            icon: PlacemarkIcon.single(
+              PlacemarkIconStyle(
+                image: BitmapDescriptor.fromAssetImage(
+                  'assets/Avia.png',
+                ),
+                scale: 2,
+              ),
+            ),
+            onTap: (_,__) async{
+              await select_hotel_info("7");
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => const SelectHotelPage(),
+                ),
+              );
+            },
+          ),
+
        /*   PlacemarkMapObject(
             mapId: MapObjectId('MapObject 5'),
             point: Point(latitude: 55.747247, longitude: 37.609083),

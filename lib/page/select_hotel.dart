@@ -936,7 +936,9 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                                       .spaceBetween,
                                               children: [
                                                 SvgPicture.asset(
+
                                                   'assets/stars.svg',
+                                                  width: 120,
                                                 ),
                                                 GestureDetector(
                                                     onTap: () async {

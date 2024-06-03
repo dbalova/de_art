@@ -86,13 +86,12 @@ class _MenuPageState extends State<MenuPage> {
             ],
           )),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Divider(
             color: Colors.white,
           ),
-          SizedBox(
-            height: 36,
-          ),
+
           TextButton(
               onPressed: () async {
                 await select_hotel_info("1");
@@ -107,7 +106,7 @@ class _MenuPageState extends State<MenuPage> {
                 "Профсоюзная",
                 style: TextStyle(color: Colors.white, fontSize: 18),
               )),
-        TextButton(
+                  TextButton(
               onPressed: () async {
                 await select_hotel_info("4");
                 Navigator.push(
@@ -128,7 +127,7 @@ class _MenuPageState extends State<MenuPage> {
                Map vis = {_res.first.toString():"${_res.last.toString()}"};
                print(vis.toString());*//*
 
-print('НАЖАЛИ');
+          print('НАЖАЛИ');
               //  FirebaseFirestore.instance.collection("visits").doc('новый телефон').set({'visit':'6'});
 
 
@@ -137,7 +136,7 @@ print('НАЖАЛИ');
 
 
 
-List<String> _ph = [];
+          List<String> _ph = [];
                 for(var _i=0; _i<  documents; _i++){
                  _ph.add(qSnap.docs[_i].id.toString()) ;
 
@@ -147,7 +146,7 @@ List<String> _ph = [];
                  int _phoneIndex=0;
                  _phoneIndex= _ph.indexOf("09090909");
                  int _phoneVisit=0;
-                 
+
                  await FirebaseFirestore.instance.collection("visits").get().then((snapshot) {
                    _phoneVisit = int.parse(snapshot.docs[_phoneIndex].get('visit').toString());
                    print('получили визиты $_phoneVisit');
@@ -172,7 +171,7 @@ List<String> _ph = [];
                            ),
 
                            onPressed: (){
-Navigator.pop(context);
+          Navigator.pop(context);
                            }, child: Text("Далее",style: TextStyle(color: Colors.white,fontSize: 18),)),
 
                      ],
@@ -330,6 +329,7 @@ Navigator.pop(context);
                 "Страница сотрудника",
                 style: TextStyle(color: Colors.white, fontSize: 18),
               )),
+
           SizedBox(
             height: 30,
           ),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:de_art/custom_widget/buttonModel.dart';
 import 'package:de_art/page/Map.dart';
 import 'package:de_art/page/application_Page.dart';
@@ -28,7 +30,8 @@ void main() {
   Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
-
+bool _isActive1 = false;
+bool _isActive2 = false;
 TextEditingController _controllerFrom = TextEditingController();
 TextEditingController _controllerTo = TextEditingController();
 bool _isFilter = false;
@@ -323,7 +326,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Image.asset("assets/Map.png"),
+                             // Image.asset("assets/Map.png"),
                               Padding(
                                   padding: EdgeInsets.only(
                                       top: 24, bottom: 24, left: 12, right: 12),
@@ -1305,6 +1308,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                     children: [
                                       GestureDetector(
                                         onTap: () async{
+                                          _isActive1 = true;
+                                          setState((){});
                                           filter = true;
                                           print("https://deart-13.ru/api/v1/index?token=bQWc9FDWI3DiEEYYk6lQvHwlAUjTfDrw&use_filter=Y${metroPROF}&${metroVIH}&${metroTAG}&${metroTEKST}&${metroKROP}&${timeToWithdraw}"
                                               "&${bed}&${priceFrom}&${priceTo}&${typeEconomy}&${typeLuxury}&${typeDeluxe}&${jacuzzi}&${parking}&${bar}");
@@ -1325,18 +1330,21 @@ class _MyHomePageState extends State<MyHomePage> {
                                             bar,);
 
 
+                                          _isActive1 = false;
 
                                           setState(() {});
                                         },
                                         child: RedButton(
-                                            Palette().red,
+                                            _isActive1?Colors.grey:Palette().red,
                                             "Применить",
                                             Colors.white,
                                             16,
                                             FontWeight.bold),
                                       ),
                                       GestureDetector(
-                                          onTap: () {
+                                          onTap: () async {
+                                            _isActive2 = true;
+                                            setState((){});
                                             _isBar = null;
                                             _isJacuzzi = null;
                                             _isParking = null;
@@ -1346,6 +1354,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                             _time = [false, false, false, false, false,];
                                             _typeBed = [false, false, false, false,];
                                             loadInfo();
+                                           await Timer(Duration(seconds: 1), () {_isActive2 = false; });
+
+
                                             setState(() {});
                                             metroPROF = "";
                                             metroVIH = "";
@@ -1364,7 +1375,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                             bar = "";
                                           },
                                           child: RedButton(
-                                              Palette().red,
+                                             _isActive2?Colors.grey: Palette().red,
                                               "Сбросить",
                                               Colors.white,
                                               16,
@@ -1374,7 +1385,11 @@ class _MyHomePageState extends State<MyHomePage> {
                             ],
                           ))
                       : Container(),
-
+                 (( allHotels.hotels?.h1?.numRooms ==null)
+                 &(allHotels.hotels?.h4?.numRooms ==null)
+                 &(allHotels.hotels?.h2?.numRooms ==null)
+                 &(allHotels.hotels?.h5?.numRooms ==null)
+                 &(allHotels.hotels?.h6?.numRooms ==null)) ?Text("Нет результатов"):Container(),
                   Visibility(
                     visible: allHotels.hotels?.h1?.numRooms == null ? false : true,
                     child: Padding(
@@ -1396,7 +1411,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: ListView.builder(
                         shrinkWrap: true,
                         controller: _scrollController,
-                        itemCount: allHotels.hotels?.h1?.numRooms,
+                        itemCount: allHotels.hotels?.h1?.numRooms ,
                         itemBuilder: (context, index) {
                           return Container(
                             margin: EdgeInsets.only(
@@ -4005,5 +4020,25 @@ class _MyHomePageState extends State<MyHomePage> {
 
       // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+  MaterialColor _getMaterialColor(Color color) {
+    final int red = color.red;
+    final int green = color.green;
+    final int blue = color.blue;
+
+    final Map<int, Color> shades = {
+      50: Color.fromRGBO(red, green, blue, .1),
+      100: Color.fromRGBO(red, green, blue, .2),
+      200: Color.fromRGBO(red, green, blue, .3),
+      300: Color.fromRGBO(red, green, blue, .4),
+      400: Color.fromRGBO(red, green, blue, .5),
+      500: Color.fromRGBO(red, green, blue, .6),
+      600: Color.fromRGBO(red, green, blue, .7),
+      700: Color.fromRGBO(red, green, blue, .8),
+      800: Color.fromRGBO(red, green, blue, .9),
+      900: Color.fromRGBO(red, green, blue, 1),
+    };
+
+    return MaterialColor(color.value, shades);
   }
 }
