@@ -938,7 +938,7 @@ class _SelectHotelPageState extends State<SelectHotelPage> {
                                                 SvgPicture.asset(
 
                                                   'assets/stars.svg',
-                                                  width: 120,
+                                                  width: MediaQuery.of(context).size.width/3.5,
                                                 ),
                                                 GestureDetector(
                                                     onTap: () async {

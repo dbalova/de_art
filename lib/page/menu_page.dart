@@ -85,303 +85,308 @@ class _MenuPageState extends State<MenuPage> {
                       )))
             ],
           )),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Divider(
-            color: Colors.white,
-          ),
+      body: Container(
+        height: MediaQuery.of(context).size.height/1.2,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Divider(
+              color: Colors.white,
+            ),
 
-          TextButton(
-              onPressed: () async {
-                await select_hotel_info("1");
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => const SelectHotelPage(),
-                  ),
-                );
-              },
-              child: Text(
-                "Профсоюзная",
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              )),
-                  TextButton(
-              onPressed: () async {
-                await select_hotel_info("4");
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => const SelectHotelPage(),
-                  ),
-                );
-              },
-              child: Text(
-                "Таганская",
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              )),
+           Padding(
+               padding: EdgeInsets.only(top: 12),
+               child: TextButton(
+                onPressed: () async {
+                  await select_hotel_info("1");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => const SelectHotelPage(),
+                    ),
+                  );
+                },
+                child: Text(
+                  "Профсоюзная",
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ))),
+                    TextButton(
+                onPressed: () async {
+                  await select_hotel_info("4");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => const SelectHotelPage(),
+                    ),
+                  );
+                },
+                child: Text(
+                  "Таганская",
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                )),
 
-          /*TextButton(
-              onPressed: () async {
-            *//*   var _res =  FirebaseFirestore.instance.collection("visits").snapshots();
-               Map vis = {_res.first.toString():"${_res.last.toString()}"};
-               print(vis.toString());*//*
+            /*TextButton(
+                onPressed: () async {
+              *//*   var _res =  FirebaseFirestore.instance.collection("visits").snapshots();
+                 Map vis = {_res.first.toString():"${_res.last.toString()}"};
+                 print(vis.toString());*//*
 
-          print('НАЖАЛИ');
-              //  FirebaseFirestore.instance.collection("visits").doc('новый телефон').set({'visit':'6'});
-
-
-                 QuerySnapshot qSnap = await FirebaseFirestore.instance.collection('visits').get();
-                 int documents = qSnap.docs.length;
+            print('НАЖАЛИ');
+                //  FirebaseFirestore.instance.collection("visits").doc('новый телефон').set({'visit':'6'});
 
 
+                   QuerySnapshot qSnap = await FirebaseFirestore.instance.collection('visits').get();
+                   int documents = qSnap.docs.length;
 
-          List<String> _ph = [];
-                for(var _i=0; _i<  documents; _i++){
-                 _ph.add(qSnap.docs[_i].id.toString()) ;
 
-                }
 
-               if(_ph.contains("09090909")){
-                 int _phoneIndex=0;
-                 _phoneIndex= _ph.indexOf("09090909");
-                 int _phoneVisit=0;
+            List<String> _ph = [];
+                  for(var _i=0; _i<  documents; _i++){
+                   _ph.add(qSnap.docs[_i].id.toString()) ;
 
-                 await FirebaseFirestore.instance.collection("visits").get().then((snapshot) {
-                   _phoneVisit = int.parse(snapshot.docs[_phoneIndex].get('visit').toString());
-                   print('получили визиты $_phoneVisit');
-                 });
-                 print('НАЖАЛИ ${_phoneIndex} ${_phoneVisit}');
-                 _phoneVisit++;
-                 if(_phoneVisit==10){
-                   await FirebaseFirestore.instance.collection("visits").doc("09090909").set({'visit':'0'});
-                   showDialog(context: context, builder: (BuildContext context){
-                     return  AlertDialog(
-                     title: Text("Бесплатное посещение!",style: TextStyle(color: Palette().red, fontSize: 18,fontWeight: FontWeight.bold),),
-                     titleTextStyle:
-                     TextStyle(
-                         fontWeight: FontWeight.bold,
-                         color: Colors.black,fontSize: 20),
-                     actionsOverflowButtonSpacing: 20,
-                     actions:  [
-                       ElevatedButton(
-                           style: ElevatedButton.styleFrom(
-                             backgroundColor: Palette().red,
-                             padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-                           ),
-
-                           onPressed: (){
-          Navigator.pop(context);
-                           }, child: Text("Далее",style: TextStyle(color: Colors.white,fontSize: 18),)),
-
-                     ],
-                     content: Container(width:MediaQuery.of(context).size.width/3,
-                         child:Text('Посетителю доступно 10-ое бесплатное посещение в подарок в одном из предложенных номеров De Art 13.')),
-                   );});
-                 }else {
-                    FirebaseFirestore.instance
-                        .collection("visits")
-                        .doc("09090909")
-                        .set({'visit': _phoneVisit.toString()});
                   }
-                  print('НАЖАЛИ новый визит!${_ph}');
-               }else{ FirebaseFirestore.instance.collection("visits").doc("09090909").set({'visit':'1'});}
 
-              },
-              child: Text(
-                "fb",
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              )),*/
-          TextButton(
-              onPressed: () async {
-                await select_hotel_info("2");
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => const SelectHotelPage(),
-                  ),
-                );
-              },
-              child: Text(
-                "Новокосино",
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              )),
-          TextButton(
-              onPressed: () async {
+                 if(_ph.contains("09090909")){
+                   int _phoneIndex=0;
+                   _phoneIndex= _ph.indexOf("09090909");
+                   int _phoneVisit=0;
 
-               await select_hotel_info("5");
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => const SelectHotelPage(),
-                  ),
-                );
-              },
-              child: Text(
-                "Текстильщики",
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              )),
-          TextButton(
-              onPressed: () async {
-                await select_hotel_info("6");
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => const SelectHotelPage(),
-                  ),
-                );
-              },
-              child: Text(
-                "Кропоткинская",
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              )),
-          TextButton(
-              onPressed: () async {
-                await select_hotel_info("7");
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => const SelectHotelPage(),
-                  ),
-                );
-              },
-              child: Text(
-                "Авиамоторная",
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              )),
+                   await FirebaseFirestore.instance.collection("visits").get().then((snapshot) {
+                     _phoneVisit = int.parse(snapshot.docs[_phoneIndex].get('visit').toString());
+                     print('получили визиты $_phoneVisit');
+                   });
+                   print('НАЖАЛИ ${_phoneIndex} ${_phoneVisit}');
+                   _phoneVisit++;
+                   if(_phoneVisit==10){
+                     await FirebaseFirestore.instance.collection("visits").doc("09090909").set({'visit':'0'});
+                     showDialog(context: context, builder: (BuildContext context){
+                       return  AlertDialog(
+                       title: Text("Бесплатное посещение!",style: TextStyle(color: Palette().red, fontSize: 18,fontWeight: FontWeight.bold),),
+                       titleTextStyle:
+                       TextStyle(
+                           fontWeight: FontWeight.bold,
+                           color: Colors.black,fontSize: 20),
+                       actionsOverflowButtonSpacing: 20,
+                       actions:  [
+                         ElevatedButton(
+                             style: ElevatedButton.styleFrom(
+                               backgroundColor: Palette().red,
+                               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+                             ),
 
-          SizedBox(
-            height: 30,
-          ),
+                             onPressed: (){
+            Navigator.pop(context);
+                             }, child: Text("Далее",style: TextStyle(color: Colors.white,fontSize: 18),)),
 
-          TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => const regPage(),
-                  ),
-                );
-              },
-              child: Text(
-                "Программа лояльности",
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              )),
-          TextButton(
-              onPressed: () async {
-                showDialog(context: context, builder: (BuildContext context){return  AlertDialog(
-                  title: Text("Введите код сотрудника",style: TextStyle(color: Palette().red, fontSize: 18,fontWeight: FontWeight.bold),),
-                  titleTextStyle:
-                  TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,fontSize: 20),
-                  actionsOverflowButtonSpacing: 20,
-                  actions:  [
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Palette().red,
-                          padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-                        ),
+                       ],
+                       content: Container(width:MediaQuery.of(context).size.width/3,
+                           child:Text('Посетителю доступно 10-ое бесплатное посещение в подарок в одном из предложенных номеров De Art 13.')),
+                     );});
+                   }else {
+                      FirebaseFirestore.instance
+                          .collection("visits")
+                          .doc("09090909")
+                          .set({'visit': _phoneVisit.toString()});
+                    }
+                    print('НАЖАЛИ новый визит!${_ph}');
+                 }else{ FirebaseFirestore.instance.collection("visits").doc("09090909").set({'visit':'1'});}
 
-                        onPressed: (){
-                          if(_passController.text=="1111"){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                const SearchObjectPage(),
-                              ),
-                            ); _passController.clear();
-                          }
-                          else Fluttertoast.showToast(
-                              msg: "Неверный код!",
-                              toastLength:
-                              Toast.LENGTH_SHORT,
-                              gravity:
-                              ToastGravity.CENTER,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor:
-                              Colors.red,
-                              textColor: Colors.white,
-                              fontSize: 16.0);
-                        }, child: Text("Далее",style: TextStyle(color: Colors.white,fontSize: 18),)),
+                },
+                child: Text(
+                  "fb",
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                )),*/
+            TextButton(
+                onPressed: () async {
+                  await select_hotel_info("2");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => const SelectHotelPage(),
+                    ),
+                  );
+                },
+                child: Text(
+                  "Новокосино",
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                )),
+            TextButton(
+                onPressed: () async {
 
-                  ],
-                  content: Container(width:MediaQuery.of(context).size.width/3,
-                      child:TextField(
-                        cursorColor: Palette().red,
-                        controller: _passController,
-                        keyboardType: TextInputType.number,
-                        decoration: new InputDecoration(
-                          hintText: "",
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.cyan),
+                 await select_hotel_info("5");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => const SelectHotelPage(),
+                    ),
+                  );
+                },
+                child: Text(
+                  "Текстильщики",
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                )),
+            TextButton(
+                onPressed: () async {
+                  await select_hotel_info("6");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => const SelectHotelPage(),
+                    ),
+                  );
+                },
+                child: Text(
+                  "Кропоткинская",
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                )),
+            TextButton(
+                onPressed: () async {
+                  await select_hotel_info("7");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => const SelectHotelPage(),
+                    ),
+                  );
+                },
+                child: Text(
+                  "Авиамоторная",
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                )),
+
+            SizedBox(
+              height: 10,
+            ),
+
+            TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => const regPage(),
+                    ),
+                  );
+                },
+                child: Text(
+                  "Программа лояльности",
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                )),
+            TextButton(
+                onPressed: () async {
+                  showDialog(context: context, builder: (BuildContext context){return  AlertDialog(
+                    title: Text("Введите код сотрудника",style: TextStyle(color: Palette().red, fontSize: 18,fontWeight: FontWeight.bold),),
+                    titleTextStyle:
+                    TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,fontSize: 20),
+                    actionsOverflowButtonSpacing: 20,
+                    actions:  [
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Palette().red,
+                            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
                           ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Palette().red),
+
+                          onPressed: (){
+                            if(_passController.text=="1111"){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                  const SearchObjectPage(),
+                                ),
+                              ); _passController.clear();
+                            }
+                            else Fluttertoast.showToast(
+                                msg: "Неверный код!",
+                                toastLength:
+                                Toast.LENGTH_SHORT,
+                                gravity:
+                                ToastGravity.CENTER,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor:
+                                Colors.red,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                          }, child: Text("Далее",style: TextStyle(color: Colors.white,fontSize: 18),)),
+
+                    ],
+                    content: Container(width:MediaQuery.of(context).size.width/3,
+                        child:TextField(
+                          cursorColor: Palette().red,
+                          controller: _passController,
+                          keyboardType: TextInputType.number,
+                          decoration: new InputDecoration(
+                            hintText: "",
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.cyan),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Palette().red),
+                            ),
                           ),
-                        ),
-                      )),
-                );});
+                        )),
+                  );});
 
-              },
-              child: Text(
-                "Страница сотрудника",
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              )),
+                },
+                child: Text(
+                  "Страница сотрудника",
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                )),
 
-          SizedBox(
-            height: 30,
-          ),
+            SizedBox(
+              height: 10,
+            ),
 
-          TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => const AboutUs(),
-                  ),
-                );
-              },
-              child: Text(
-                "О De Art 13",
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              )),
-          TextButton(
-              onPressed: () async{
-                final Uri url =
-                Uri.parse('https://deart-13.ru/rabota/');
-                if (!await launchUrl(url)) {
-                throw Exception('Could not launch $url');
-                }
-              },
-              child: Text(
-                "Вакансии",
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              )),
+            TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => const AboutUs(),
+                    ),
+                  );
+                },
+                child: Text(
+                  "О De Art 13",
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                )),
+            TextButton(
+                onPressed: () async{
+                  final Uri url =
+                  Uri.parse('https://deart-13.ru/rabota/');
+                  if (!await launchUrl(url)) {
+                  throw Exception('Could not launch $url');
+                  }
+                },
+                child: Text(
+                  "Вакансии",
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                )),
 
 
-          TextButton(
-              onPressed: () async {
-                await select_hotel_info("1");
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => const Contacts(),
-                  ),
-                );
-              },
-              child: Text(
-                "Контакты",
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              )),
-          TextButton(
-              onPressed: () {},
-              child: Text(
-                "+7 (499) 460 52 13",
-                style: TextStyle(color: Colors.white, fontSize: 18),
-              )),
-        ],
+            TextButton(
+                onPressed: () async {
+                  await select_hotel_info("1");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => const Contacts(),
+                    ),
+                  );
+                },
+                child: Text(
+                  "Контакты",
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                )),
+            TextButton(
+                onPressed: () {},
+                child: Text(
+                  "+7 (499) 460 52 13",
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                )),
+          ],
+        ),
       ),
     );
   }
