@@ -343,7 +343,7 @@ controller: _cont,
                                     child: Text(
                                       phone.trim().replaceAll(" +","\n+"),
                                       style: TextStyle(
-                                          decorationThickness: 2, fontSize: 16),
+                                          decorationThickness: 2, fontSize:14),
                                     ),
                                   ),
                                 ],
@@ -379,10 +379,11 @@ controller: _cont,
                           ),
                           Padding(
                             padding:
-                                const EdgeInsets.only(top: 24.0, bottom: 32),
+                                const EdgeInsets.only(top: 24.0, bottom: 32, left: 12),
                             child: Container(
                               width: MediaQuery.of(context).size.width / 2,
                               child: Row(
+crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [

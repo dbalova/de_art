@@ -1929,6 +1929,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                               children: [
                                                 SvgPicture.asset(
                                                   'assets/stars.svg',
+                                                  width: MediaQuery.of(context).size.width/3.5,
                                                 ),
                                                 GestureDetector(
                                                     onTap: () async {
@@ -2225,6 +2226,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                               children: [
                                                 SvgPicture.asset(
                                                   'assets/stars.svg',
+                                                  width: MediaQuery.of(context).size.width/3.5,
                                                 ),
                                                 GestureDetector(
                                                     onTap: () async {
@@ -2521,6 +2523,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                               children: [
                                                 SvgPicture.asset(
                                                   'assets/stars.svg',
+                                                  width: MediaQuery.of(context).size.width/3.5,
                                                 ),
                                                 GestureDetector(
                                                     onTap: () async {
@@ -2817,6 +2820,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                               children: [
                                                 SvgPicture.asset(
                                                   'assets/stars.svg',
+                                                  width: MediaQuery.of(context).size.width/3.5,
                                                 ),
                                                 GestureDetector(
                                                     onTap: () async {
@@ -2929,6 +2933,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                                 SvgPicture.asset(
                                   'assets/stars.svg',
+                                  width: MediaQuery.of(context).size.width/3.5,
                                 ),
                                 Text(
                                   allReviews[i].text.toString(),
